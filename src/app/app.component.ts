@@ -10,5 +10,6 @@ import { RouterModule } from '@angular/router';  // Importa RouterModule complet
 })
 export class AppComponent {
   title = 'chancha-angular';
+  
 }
 
