@@ -5,7 +5,7 @@ export interface Player {
     image:string;
     team:string;
     stature: number;
-    weight: number;
+    average: number;
     shirtNumber: number;
     position: string;
 }
