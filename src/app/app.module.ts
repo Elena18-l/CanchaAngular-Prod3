@@ -26,14 +26,14 @@ const routes: Routes = [
 ];
 
 @NgModule({
-/* declarations: [
+ declarations: [
     AppComponent,
     DashboardComponent,
     PlayerDetailComponent,
     PlayerMediaComponent,
     PlayerSearchComponent,
     PlayersComponent,
-  ],*/  //hacer export de cada componente en sus respectivos ts
+  ],  //hacer export de cada componente en sus respectivos ts
   imports: [BrowserModule, RouterModule.forRoot(routes)],
   exports: [RouterModule],
   providers: [],
