@@ -6,6 +6,7 @@ import { PlayerDetailComponent } from './player-detail/player-detail.component';
 import { PlayerMediaComponent } from './player-media/player-media.component';
 import { PlayerSearchComponent } from './player-search/player-search.component';
 import { PlayersComponent } from './players/players.component';
+
 @NgModule({
   declarations: [
     AppComponent,
