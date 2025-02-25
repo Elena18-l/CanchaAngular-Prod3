@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-player-media',
-  imports: [],
+  standalone: false,
   templateUrl: './player-media.component.html',
   styleUrl: './player-media.component.css'
 })
