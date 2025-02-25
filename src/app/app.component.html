@@ -1,27 +1,21 @@
-
 <main class="main">
   <div class="content">
     <nav class="navbar" style="background-color: #FACD7A">
       <div class="container-fluid d-flex justify-content-between align-items-center">    
-        <a class="navbar-brand" href="#">
+        <a class="navbar-brand" routerLink="/">
           <img src="/assets/logo.svg" class="logo">
         </a>     
-        <h1 class="shohoku-title mx-auto">Shohoku</h1>
+        <h1 class="shohoku-title mx-auto" style="font-family: 'Inter', sans-serif; font-weight: bold;">
+          Shohoku
+        </h1>
+        <div>
+          <a routerLink="/dashboard" class="nav-link">Dashboard</a>
+          <a routerLink="/players" class="nav-link">Players</a>
+        </div>
       </div>
     </nav>
-    
-    <div class="left-side">
-     
-      <h1>Hello, {{ title }}</h1>
-      <p>Congratulations! Your app is running. 🎉</p>
-    </div>
-    <div class="divider" role="separator" aria-label="Divider"></div>
-    
-     
-     
-    </div>
 
+    <!-- Aquí Angular insertará las páginas dinámicamente -->
+    <router-outlet></router-outlet>
+  </div>
 </main>
-
-
-<router-outlet />
