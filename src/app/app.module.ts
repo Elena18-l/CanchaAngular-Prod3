@@ -13,11 +13,11 @@ import { PlayerDetailComponent } from './player-detail/player-detail.component';
 import { PlayerMediaComponent } from './player-media/player-media.component';
 import { PlayerSearchComponent } from './player-search/player-search.component';
 import { PlayersComponent } from './players/players.component';
-
+import { bootstrapApplication } from '@angular/platform-browser';
 // Enrutamiento
 import { RouterModule, Routes } from '@angular/router';
 import { appRoutes } from './app.routes';  // Importa tus rutas desde un archivo separado
-
+bootstrapApplication(AppComponent).catch((err) => console.error(err));
 const routes: Routes = [
   { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
   { path: 'dashboard', component: DashboardComponent },
@@ -26,17 +26,9 @@ const routes: Routes = [
 ];
 
 @NgModule({
- /* declarations: [
-    AppComponent,
-    DashboardComponent,
-    PlayerDetailComponent,
-    PlayerMediaComponent,
-    PlayerSearchComponent,
-    PlayersComponent,
-  ],*/
-  imports: [BrowserModule, RouterModule.forRoot(routes)],
-  exports: [RouterModule],
-  providers: [],
+imports: [BrowserModule, RouterModule.forRoot(routes)],
+exports: [RouterModule], 
+
 
 })
 export class AppModule {}
