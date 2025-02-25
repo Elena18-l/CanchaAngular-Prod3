@@ -1,0 +1,22 @@
+import { Injectable } from '@angular/core';
+//import { InMemoryDbService } from 'angular-in-memory-web-api';
+import{Player} from './player';
+
+@Injectable({
+    providedIn: 'root'
+  })
+  export class InMemoryDataService  {
+    createDb() {
+      const players = [
+        { id: 1, name: 'player 1' },
+        { id: 2, name: 'player 2' },
+        { id: 3, name: 'player 3' },
+        { id: 4, name: 'player 4' },        
+      ];
+      return {players};
+    
+  }
+  genId(players: Player[]): number {
+    return players.length > 0 ? Math.max(...players.map(player => player.id)) + 1 : 11;
+  } 
+}
