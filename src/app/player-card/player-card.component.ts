@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Player } from '../services/mockup-players';
+import { Player} from '../services/mockup-players';
 import { PlayerService } from '../services/playerService';
 
 @Component({
