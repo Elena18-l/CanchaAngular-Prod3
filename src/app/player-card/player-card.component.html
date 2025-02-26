@@ -1,12 +1,13 @@
 <p>player-card works!</p>
 
-<div class="playerCard">
+<div class="playerCard" *ngFor="let player of players">
     <p class="playerNumber">
-        <!--{{player.number}}-->
+        {{player.shirtNumber}}
     </p>
     <p class="playerName">
-        <!-- {{player.name}}-->
+        {{player.name}}
     </p>
-    <p class="playerRol">
-         <!--{{player.position}}-->
+    <p class="playerPosition">
+         {{player.position}}
+    </p>
 </div>
