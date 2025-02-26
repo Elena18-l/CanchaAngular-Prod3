@@ -4,7 +4,7 @@ import { Component } from '@angular/core';
   selector: 'app-player-detail',  
   templateUrl: './player-detail.component.html',
   styleUrl: './player-detail.component.css',
-  standalone: false
+  
 })
 export class PlayerDetailComponent {
 

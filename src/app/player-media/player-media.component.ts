@@ -4,7 +4,7 @@ import { Component } from '@angular/core';
   selector: 'app-player-media',
   templateUrl: './player-media.component.html',
   styleUrl: './player-media.component.css',
-  standalone: false
+
 })
 export class PlayerMediaComponent {
 

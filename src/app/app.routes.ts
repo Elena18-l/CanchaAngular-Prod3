@@ -12,8 +12,8 @@ export const appRoutes: Routes = [
   { path: 'player/:id', component: PlayerDetailComponent },
   {path: 'player-card', component: PlayerCardComponent},
 ];
-@NgModule({
-  imports: [RouterModule.forRoot(appRoutes)],
-  exports: [RouterModule]
-})
-export class AppRoutingModule { }
+// @NgModule({
+//   imports: [RouterModule.forRoot(appRoutes)],
+//   exports: [RouterModule]
+// })
+// export class AppRoutingModule { }

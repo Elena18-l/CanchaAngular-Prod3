@@ -5,7 +5,7 @@ import { PlayerCardComponent } from '../player-card/player-card.component';
   selector: 'app-players',  
   templateUrl: './players.component.html',
   styleUrl: './players.component.css',
-  standalone: false,
+
 })
 export class PlayersComponent {
 

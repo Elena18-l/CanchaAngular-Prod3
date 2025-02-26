@@ -6,7 +6,7 @@ import { PlayerService } from '../services/playerService';
   selector: 'app-player-card',
   templateUrl: './player-card.component.html',
   styleUrl: './player-card.component.css',
-  standalone: false,
+
 })
 export class PlayerCardComponent implements OnInit {
 
