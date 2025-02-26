@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Player} from '../services/mockup-players';
+import { Player } from '../services/player';
 import { PlayerService } from '../services/playerService';
 
 @Component({
@@ -8,7 +8,7 @@ import { PlayerService } from '../services/playerService';
   styleUrl: './player-card.component.css',
   standalone: false,
 })
-export class PlayerCardComponent {
+export class PlayerCardComponent implements OnInit {
 
   players: Player[] = [];
 
