@@ -1,17 +1,19 @@
 import { Injectable } from '@angular/core';
-//import { InMemoryDbService } from 'angular-in-memory-web-api';
+import { InMemoryDbService } from 'angular-in-memory-web-api';
 import{Player} from './player';
 
 @Injectable({
     providedIn: 'root'
   })
-  export class InMemoryDataService  {
+  export class InMemoryDataService implements InMemoryDbService  {
     createDb() {
       const players = [
-        { id: 1, name: 'player 1' },
-        { id: 2, name: 'player 2' },
-        { id: 3, name: 'player 3' },
-        { id: 4, name: 'player 4' },        
+        {id: 1, name: 'Takenori Akagi', age: 18, team: 'Shohoku', stature: 193, average: 9.6, shirtNumber: 4, position: 'Pivot'},
+        {id: 2, name: 'Kiminoru Kogure', age: 18, team: 'Shohoku', stature: 178, average: 8.4, shirtNumber: 5, position: 'Alero'},   
+        {id: 3, name: 'Ryouta Miyagi', age: 17, team: 'Shohoku', stature: 168, average: 9, shirtNumber: 7, position: 'Base'},   
+        {id: 4, name: 'Hanamichi Sakuragi', age: 15, team: 'Shohoku', stature: 189.2, average: 9, shirtNumber: 10, position: 'Ala-Pivot'},   
+        {id: 5, name: 'Kaede Rukawa', age: 15, team: 'Shohoku', stature: 187, average: 9.2, shirtNumber: 11, position: 'Alero'},   
+        {id: 6, name: 'Hisashi Mitsui', age: 18, team: 'Shohoku', stature: 176, average: 8.4, shirtNumber: 14, position: 'Escolta'},
       ];
       return {players};
     
