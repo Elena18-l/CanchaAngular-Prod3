@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Player } from '../services/player';
 import { PlayerService } from '../services/playerService';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-player-card',
+  imports:[CommonModule],
   templateUrl: './player-card.component.html',
   styleUrl: './player-card.component.css',
 
