@@ -5,7 +5,8 @@ import { PlayerService } from '../services/playerService';
 @Component({
   selector: 'app-player-card',
   templateUrl: './player-card.component.html',
-  styleUrl: './player-card.component.css'
+  styleUrl: './player-card.component.css',
+  standalone: false,
 })
 export class PlayerCardComponent {
 
