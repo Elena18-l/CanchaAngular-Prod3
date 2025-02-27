@@ -6,7 +6,8 @@ import {Players} from './mockup-players';
 
 @Injectable({providedIn: 'root'})
 export class PlayerService {
-getPlayerDetails(id: number) {
+getPlayerDetails(id: number) { //patata
+  return this.playersMock;
   throw new Error('Method not implemented.');
 }
 

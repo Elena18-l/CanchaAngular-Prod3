@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { PlayerService } from '../services/playerService';
 import {Player} from '../services/player';
+import { ActivatedRoute } from '@angular/router';
+import {Players} from '../services/mockup-players';
 
 @Component({
   selector: 'app-player-detail',  
@@ -13,13 +15,13 @@ export class PlayerDetailComponent implements OnInit {
   
   
 
-  constructor(private playerService: PlayerService) { };
-  ngOnInit() {
+  constructor(private route: ActivatedRoute, private playerService: PlayerService) { };
+  ngOnInit():void {
     this.getPlayerDetails();
+  }
+  getPlayerDetails(): void {
+    const playerId = 1; // Asigna el ID del jugador que quieres mostrar (sin depender de la URL)
+    this.player = Players.find(player => player.id === playerId);
+  }
+}
 
-    getPlayerDetails(): void {  
-      this.playerService.getPlayerById(1).subscribe(player => {
-        this.player = player;
-
-    });
-  }}
