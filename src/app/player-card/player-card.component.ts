@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Player } from '../services/player';
 import { PlayerService } from '../services/playerService';
 import { CommonModule } from '@angular/common';
+import { Players} from '../services/in-memory-data-service';
 
 @Component({
   selector: 'app-player-card',
