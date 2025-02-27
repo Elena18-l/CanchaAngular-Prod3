@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { PlayerCardComponent } from '../player-card/player-card.component';
 import { CommonModule } from '@angular/common';
+import {Players} from '../services/mockup-players';
 
 @Component({
   selector: 'app-players',  
@@ -10,5 +11,5 @@ import { CommonModule } from '@angular/common';
 
 })
 export class PlayersComponent {
-
+  players = Players;
 }

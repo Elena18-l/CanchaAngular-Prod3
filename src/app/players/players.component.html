@@ -6,7 +6,20 @@
 <a routerLink="/player-card" class="nav-link">player-card</a>  
 <h2>Shohoku Players</h2>
 
+<tbody>
+<tr *ngFor = "let player of players">
+    <td>
+        {{player.shirtNumber}}
+    </td>
+    <td>
+        {{player.name}}
 
-<!-- <app-player-card></app-player-card> -->
-<!--<app-player-card *ngFor="let player of players" [player]="player"></app-player-card> <==revisar esto porque no acabo de ver como puede iterar una a una todas las card. -->
+    </td>
+    <td>
+        {{player.position}}
+    </td>
+    
+</tr>
+</tbody>
+
 </div>

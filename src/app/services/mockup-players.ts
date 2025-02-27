@@ -1,7 +1,7 @@
 import {Player} from './player';
 
 export const Players: Player[] = [
-  {id: 1, name: 'Takenori Akagi', age: 18, team: 'Shohoku', stature: 193, average: 9.6, shirtNumber: 4, position: 'Pivot'},
+  {id: 1, name: 'Takenori Akagi', age: 18, team: 'Shohoku', stature: 193, average: 9.6, shirtNumber: 4, position: 'Pivot',},
   {id: 2, name: 'Kiminoru Kogure', age: 18, team: 'Shohoku', stature: 178, average: 8.4, shirtNumber: 5, position: 'Alero'},   
   {id: 3, name: 'Ryouta Miyagi', age: 17, team: 'Shohoku', stature: 168, average: 9, shirtNumber: 7, position: 'Base'},   
   {id: 4, name: 'Hanamichi Sakuragi', age: 15, team: 'Shohoku', stature: 189.2, average: 9, shirtNumber: 10, position: 'Ala-Pivot'},   

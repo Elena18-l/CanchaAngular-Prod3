@@ -2,7 +2,7 @@ export interface Player {
     id:number;
     name:string;
     age:number;
-    //image:string; cuando tengamos las imagenes lo descomentamos
+    // foto:string;  a ver si lo vamos solucionando.
     team:string;
     stature: number;
     average: number;
