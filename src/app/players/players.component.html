@@ -9,7 +9,9 @@
 <tbody>
 <tr *ngFor = "let player of players">
     <td>
+        <a [routerLink]="['/player', player.id]">
         {{player.shirtNumber}}
+        </a>
     </td>
     <td>
         {{player.name}}
@@ -18,6 +20,10 @@
     <td>
         {{player.position}}
     </td>
+  
+    <img [src]= "player.portrait" alt="foto" width="100" height="100">
+        
+    
     
 </tr>
 </tbody>

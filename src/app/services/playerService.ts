@@ -6,6 +6,9 @@ import {Players} from './mockup-players';
 
 @Injectable({providedIn: 'root'})
 export class PlayerService {
+getPlayerDetails(id: number) {
+  throw new Error('Method not implemented.');
+}
 
 private playersMock: Player[] = Players;
 
