@@ -1,10 +1,9 @@
-<p>player-detail works!
-</p>
+<p>player-detail works!</p>
 
-<!-- <div *ngIf="player">
-    <h2>{{player.name}}</h2>   
-    </div>
-<div>
-    <h2>{{player.name}}</h2>
-</div> -->
+<!-- Solo muestra el nombre del jugador si player está definido -->
+<a *ngIf="player" [routerLink]="['/player-detail']" [state]="{ player: player }">
+    {{ player.name }}
+</a>
 
+<!-- Mensaje opcional si no hay jugador -->
+<p *ngIf="!player">No player data available.</p>
