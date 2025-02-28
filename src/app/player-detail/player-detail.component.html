@@ -11,9 +11,14 @@
     </div>
 </div>
 
-<a [routerLink]="['/player-card', player?.id, 'media']" class="nav-link">
-  Media
-</a>
+<a [routerLink]="['/player', player?.id, 'media']" class="nav-link">
+    Ver Media
+  </a>
+  
+  <button class="btn btn-primary" *ngIf="player" (click)="getMedia()">
+    Ver Media
+  </button>
+  
 
 
 <!-- <button type="button" class="btn btn-outline-primary" *ngIf="player" (click)="getMedia()" >Media</button> -->

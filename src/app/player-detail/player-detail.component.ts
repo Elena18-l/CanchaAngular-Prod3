@@ -39,7 +39,12 @@ export class PlayerDetailComponent implements OnInit {
   goBack(): void {
     this.location.back();
   }
-
+  getMedia(): void {
+    if (this.player) {
+      this.router.navigate(['/player', this.player.id, 'media']); // Redirige a la página de media
+    }
+  }
+  
   // getMedia(): void {
   //   const playerId = Number(this.route.snapshot.paramMap.get('id')); // Obtiene el ID de la URL
   //   console.log('ID del jugador:', playerId); // <-- Agregar esto para depurar
