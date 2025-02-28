@@ -9,4 +9,5 @@ export interface Player {
     average: number;
     shirtNumber: number;
     position: string;
+    gallery: string[];
 }
