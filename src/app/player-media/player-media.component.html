@@ -1,100 +1,54 @@
-<p>player-media works!</p>
-
-<p class="fotoStyle">
-    esto seria una foto del jugador
-</p>
-<p class="fotoStyle">
-    esto seria una foto del jugador
-</p>
-<p class="fotoStyle">
-    esto seria una foto del jugador
-</p>
-<p class="fotoStyle">
-    esto seria una foto del jugador
-</p>
-<p class="fotoStyle">
-    esto seria una foto del jugador
-</p>
-<p class="fotoStyle">
-    esto seria una foto del jugador
-</p>
-
-<p class="videoStyle">
-    esto seria un video del jugador
-</p>
-
-<p class="videoStyle">
-    esto seria un video del jugador
-</p>
-
+<!-- Galería de Imágenes -->
 <div class="container mt-5">
     <h2>Galería de Imágenes</h2>
     <div class="row">
-        <!-- Miniaturas -->
-        <div class="col-md-4">
-            <img src="https://via.placeholder.com/800x400/ff7f7f/333333?text=Imagen+1" class="img-thumbnail open-carousel" data-bs-target="#carouselModal" data-bs-slide-to="0">
-        </div>
-        <div class="col-md-4">
-            <img src="https://via.placeholder.com/800x400/7f7fff/333333?text=Imagen+2" class="img-thumbnail open-carousel" data-bs-target="#carouselModal" data-bs-slide-to="1">
-        </div>
-        <div class="col-md-4">
-            <img src="https://via.placeholder.com/800x400/7fff7f/333333?text=Imagen+3" class="img-thumbnail open-carousel" data-bs-target="#carouselModal" data-bs-slide-to="2">
-        </div>
+      <!-- Miniaturas -->
+      <div class="col-md-4" *ngFor="let image of player?.gallery; let i = index">
+        <img 
+          [src]="image" 
+          class="img-thumbnail open-carousel" 
+          data-bs-toggle="modal" 
+          data-bs-target="#carouselModal" 
+          [attr.data-bs-slide-to]="i" 
+          alt="Imagen {{i + 1}}">
+      </div>
     </div>
-</div>
-
-<!-- Modal -->
-<div class="modal fade" id="carouselModal" tabindex="-1" aria-labelledby="carouselModalLabel" aria-hidden="true">
+  </div>
+  
+  <!-- Modal -->
+  <div class="modal fade" id="carouselModal" tabindex="-1" aria-labelledby="carouselModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Galería de Imágenes</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <!-- Carrusel -->
-                <div id="carouselExample" class="carousel slide">
-                    <div class="carousel-inner">
-                        <div class="carousel-item active">
-                            <img src='player.gallery[0]' class="d-block w-100" alt="Imagen 1">
-                        </div>
-                        <div class="carousel-item">
-                            <img src='player.gallery[1]' class="d-block w-100" alt="Imagen 2">
-                        </div>
-                        <div class="carousel-item">
-                            <img src='player.gallery[2]' class="d-block w-100" alt="Imagen 3">
-                        </div>
-                    </div>
-                    <!-- Controles -->
-                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
-                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Anterior</span>
-                    </button>
-                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
-                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Siguiente</span>
-                    </button>
-                </div>
-            </div>
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="carouselModalLabel">Galería de Imágenes</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
-    </
-div>
-</div>
-<!-- Bootstrap JS -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
-<script>
-    document.querySelectorAll('.open-carousel').forEach((img, index) => {
-        img.addEventListener('click', function () {
-            let carousel = new bootstrap.Carousel(document.getElementById('carouselExample'));
-            carousel.to(index); // Ir a la imagen seleccionada
-            let modal = new bootstrap.Modal(document.getElementById('carouselModal'));
-            modal.show();
-        });
-    });
-</script>
-
-
-
-
-<button type="button" class="btn btn-outline-primary" (click)="goBack()" >Volver</button>
+        <div class="modal-body">
+          <!-- Carrusel -->
+          <div id="carouselExample" class="carousel slide">
+            <div class="carousel-inner">
+              <div 
+                class="carousel-item" 
+                *ngFor="let image of player?.gallery; let i = index" 
+                [class.active]="i === 0">
+                <img [src]="image" class="d-block w-100" alt="Imagen {{i + 1}}">
+              </div>
+            </div>
+            <!-- Controles del Carrusel -->
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Anterior</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Siguiente</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Botón para regresar -->
+  <button type="button" class="btn btn-outline-primary" (click)="goBack()">Volver</button>
+  

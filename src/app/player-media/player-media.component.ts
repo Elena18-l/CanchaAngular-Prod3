@@ -1,39 +1,42 @@
 import { Component, OnInit } from '@angular/core';
-import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
-import { CommonModule } from '@angular/common'; // <-- IMPORTAR CommonModule
-
+import { ActivatedRoute } from '@angular/router';
 import { PlayerService } from '../services/playerService';
-import {Player} from '../services/player';
-import {Router, ActivatedRoute, RouterModule } from '@angular/router';
-import {Players} from '../services/mockup-players';
-import { Location } from '@angular/common';  //esto es para ir para atrás
-import { FormsModule } from '@angular/forms';
+import { Player } from '../services/player';
+import { Players } from '../services/mockup-players';
+import { Location } from '@angular/common';
+import { CommonModule } from '@angular/common'; // Importa CommonModule aquí
+import { RouterModule } from '@angular/router'; // Si necesitas enrutamiento
 
 @Component({
   selector: 'app-player-media',
   templateUrl: './player-media.component.html',
-  styleUrl: './player-media.component.css',
-  imports: [CommonModule, FormsModule, RouterModule],
-  
+  styleUrls: ['./player-media.component.css'],
+  standalone: true, // Asegúrate de marcar el componente como standalone
+  imports: [
+    CommonModule, // Asegúrate de importar CommonModule para que funcione ngFor
+    RouterModule // Si necesitas enrutamiento, asegúrate de importar RouterModule
+  ]
 })
-export class PlayerMediaComponent {
-  player?: Player;  
+export class PlayerMediaComponent implements OnInit {
+  player?: Player;
 
-  constructor
-  (private route: ActivatedRoute, 
-  private playerService: PlayerService,
-  private location: Location ) { }
-  ngOnInit():void {
+  constructor(
+    private route: ActivatedRoute,
+    private playerService: PlayerService,
+    private location: Location
+  ) { }
+
+  ngOnInit(): void {
     this.getPlayerDetails();
   }
+
   getPlayerDetails(): void {
     const playerId = Number(this.route.snapshot.paramMap.get('id')); // Obtiene el ID de la URL
-    console.log('ID del jugador:', playerId); // <-- Agregar esto para depurar
+    console.log('ID del jugador:', playerId);
     this.player = Players.find(player => player.id === playerId);
-    console.log('Jugador encontrado:', this.player); // <-- Verificar si el jugador existe
+    console.log('Jugador encontrado:', this.player); // Verifica si el jugador existe
   }
-  
+
   goBack(): void {
     this.location.back();
   }
