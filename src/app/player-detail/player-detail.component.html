@@ -11,6 +11,13 @@
     </div>
 </div>
 
+<a [routerLink]="['/player-card', player?.id, 'media']" class="nav-link">
+  Media
+</a>
+
+
+<!-- <button type="button" class="btn btn-outline-primary" *ngIf="player" (click)="getMedia()" >Media</button> -->
+
 <button type="button" class="btn btn-outline-primary" (click)="goBack()" >Volver</button>
 <!--
 🔹 *ngIf="player" → Solo muestra los datos si player tiene valor.
