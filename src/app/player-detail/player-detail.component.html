@@ -8,11 +8,11 @@
 </div> -->
 
 <div *ngIf="player">
-    <h2>{{ player?.name | uppercase }} Details</h2>
-    <div><span>id: </span>{{ player?.id }}</div>
+    <h2>{{ player.name | uppercase }} Details</h2>
+    <div><span>id: </span>{{ player.id }}</div>
     <div>
       <label for="player-name">Player name: </label>
-      <p id="player-name">{{ player?.name }}</p>  <!-- Nombre como texto en vez de input -->
+      <p id="player-name">{{ player.name }}</p>  <!-- Nombre como texto en vez de input -->
     </div>
 </div>
 
