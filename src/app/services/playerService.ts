@@ -6,9 +6,9 @@ import {Players} from './mockup-players';
 
 @Injectable({providedIn: 'root'})
 export class PlayerService {
-getPlayerDetails(id: number) { //patata
-  return this.playersMock;
-  throw new Error('Method not implemented.');
+getPlayerDetails(id: number): Player | undefined { //patata
+  return this.playersMock.find(player => player.id === id);
+ 
 }
 
 private playersMock: Player[] = Players;
