@@ -11,10 +11,7 @@
     </div>
 </div>
 
-<a [routerLink]="['/player', player?.id, 'media']" class="nav-link">
-    Ver Media
-  </a>
-  
+
   <button class="btn btn-primary" *ngIf="player" (click)="getMedia()">
     Ver Media
   </button>
