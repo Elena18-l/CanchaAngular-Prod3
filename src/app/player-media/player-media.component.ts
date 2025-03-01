@@ -19,6 +19,7 @@ import { RouterModule } from '@angular/router'; // Si necesitas enrutamiento
 })
 export class PlayerMediaComponent implements OnInit {
   player?: Player;
+  activeIndex = 0; // Índice de la imagen activa en el carrusel
 
   constructor(
     private route: ActivatedRoute,
@@ -31,13 +32,17 @@ export class PlayerMediaComponent implements OnInit {
   }
 
   getPlayerDetails(): void {
-    const playerId = Number(this.route.snapshot.paramMap.get('id')); // Obtiene el ID de la URL
+    const playerId = Number(this.route.snapshot.paramMap.get('id'));
     console.log('ID del jugador:', playerId);
     this.player = Players.find(player => player.id === playerId);
-    console.log('Jugador encontrado:', this.player); // Verifica si el jugador existe
   }
 
   goBack(): void {
     this.location.back();
   }
+
+  setActiveImage(index: number): void {
+    this.activeIndex = index;
+  }
 }
+
