@@ -5,7 +5,7 @@
 }
 
 .team-container {
-    max-width: 900px;
+    max-width: 1100px;
     margin: auto;
     text-align: center;
 }
@@ -28,11 +28,11 @@
     grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
     gap: 10px;
     justify-content: center;
-    padding: 20px;
+    padding: 10px;
 }
 
 .playerCard {
-    width: 130px;
+    width: 160px;
     background-color: #C02A2D;
     color: white;
     text-align: center;
@@ -61,7 +61,7 @@
     left: 0px;
     background-color: rgba(192, 42, 45, 0.9);
     color: white;
-    font-size: 12px;
+    font-size: 13px;
     font-weight: bold;
     padding: 0px 1px;
     border-radius: 3px;
@@ -76,7 +76,7 @@
     transform: translateX(-50%);
     width: 90%;
     text-align: center;
-    padding: 5px 0;
+    padding: 0px ;
     border-radius: 8px;
     background: transparent;
     z-index: 3;
@@ -98,7 +98,7 @@
     font-size: 13px;
     color: white; 
     margin: 0;
-    padding: 2px;
+    padding: 3px;
     font-weight: bold;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
 }
