@@ -37,3 +37,12 @@
     width: 180px;
     
 }
+.boton-cancha {
+  font-family: 'Inter', sans-serif;
+  height: 40px;
+  border: 2px solid #FACD7A; 
+  background-color: #FACD7A;
+  color: black;
+  border-radius: 8px;
+  box-shadow: none;
+}
