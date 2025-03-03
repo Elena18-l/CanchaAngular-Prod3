@@ -1,16 +1,45 @@
-<p>player-detail works!</p>
 
-
+<img src="assets/logosho.png" class=logoshohoku>
 
 <div *ngIf="player">
-    <h2>{{ player.name | uppercase }} Details</h2>
-    <div><span>id: </span>{{ player.id }}</div>
-    <div>
-      <label for="player-name">Player name: </label>
-      <p id="player-name">{{ player.name }}</p>  <!-- Nombre como texto en vez de input -->
-    </div>
+    <h2>{{ player.name}}</h2>
+     
 </div>
 
+
+
+<div class="container playerData">
+  <div class="row">
+
+  <!-- tabla de datos columna izquierda -->
+  <div class="colIzq col-md-4">
+    <div class="fila"><div class="label">Nombre</div><div class="value fw-bold">{{player?.name}}</div></div>
+    <div class="fila"><div class="label">Posición</div><div class="value fw-bold">{{player?.position}}</div></div>
+    <div class="fila"><div class="label">Camiseta</div><div class="value fw-bold">{{player?.shirtNumber}}</div></div>
+  
+</div>
+
+<!-- foto jugador central -->
+<div class="col-md-3 text-center player-image-container">
+  <img [src]="player?.foto" alt="Player Image" class="player-image">
+</div>
+ <!-- tabla de datos columna derecha -->
+<div class="colDer col-md-">
+    <div class="fila"><div class="label">Edad</div><div class="value fw-bold">{{player?.age}}</div></div>
+    <div class="fila"><div class="label">Altura</div><div class="value fw-bold">{{player?.stature}}</div></div>
+    <div class="fila"><div class="label">Media</div><div class="value fw-bold">{{player?.average}}</div></div>    
+</div>
+</div>
+
+</div>
+
+<h3>Estadísticas</h3>
+
+<div> Físico:{{player?.skills?.fisico}}</div>
+<div> Técnica:{{player?.skills?.tecnica}}</div>
+<div> Fuerza Mental:{{player?.skills?.fuerzaMental}}</div>
+<div> Resistencia:{{player?.skills?.resistencia}}</div>
+<div> Habilidad Especial:{{player?.skills?.habilidadEspecial}}</div>
 
   <button class="btn btn-primary" *ngIf="player" (click)="getMedia()">
     Ver Media

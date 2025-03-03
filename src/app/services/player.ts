@@ -10,14 +10,15 @@ export interface Player {
     id:number;
     name:string;
     age:number;
-    foto:string;
-    portrait:string;  //a ver si lo vamos solucionando.
+    foto:string; // esta es la de cuerpo entero
+    portrait:string;  //a ver si lo vamos solucionando. esta es la card
     team:string;
     stature: number;
     average: number;
     shirtNumber: number;
     position: string;
-    gallery: string[];
+    gallery: string[]; // las fotos de la galeria
     bio: string;
     skills:Skills;
+    
 }

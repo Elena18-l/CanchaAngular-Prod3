@@ -10,6 +10,7 @@ import {Players} from '../services/mockup-players';
 import { Location } from '@angular/common';  //esto es para ir para atrás
 import { FormsModule } from '@angular/forms';
 import { PlayerMediaComponent } from '../player-media/player-media.component';
+import { Skills } from '../services/player';
 @Component({
   selector: 'app-player-detail',  
   standalone: true,
@@ -33,8 +34,11 @@ export class PlayerDetailComponent implements OnInit {
     const playerId = Number(this.route.snapshot.paramMap.get('id')); // Obtiene el ID de la URL
     console.log('ID del jugador:', playerId); // <-- Agregar esto para depurar
     this.player = Players.find(player => player.id === playerId);
-    console.log('Jugador encontrado:', this.player); // <-- Verificar si el jugador existe
+    console.log('Jugador encontrado:', this.player);
+    // this.player = Players.find(player=> player.name === playerName); // <-- Verificar si el jugador existe
   }
+
+
   
   goBack(): void {
     this.location.back();

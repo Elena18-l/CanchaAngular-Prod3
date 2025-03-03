@@ -1,0 +1,55 @@
+.fila {
+    display: flex;
+    justify-content: space-between; /* Separa el texto y el dato */
+    align-items: center; /* Alinea verticalmente */
+    padding: 5px 0; /* Espaciado */
+    border-bottom: 1px solid #ddd; /* Opcional: línea divisoria */
+  }
+  
+  .fila div {
+    flex: 1; /* Hace que ambos divs ocupen el mismo espacio */
+    padding-right: 10px; /* Espaciado entre columnas */
+  }
+  
+  .colIzq {
+    max-width: 300px; /* Ajusta el ancho si es necesario */
+  }
+  .colDer {
+    max-width: 300px; /* Ajusta el ancho si es necesario */
+  }
+
+  .player-container {
+    margin-top: 20px;
+  }
+  
+  .player-info {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .fila {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid #000;
+  }
+  
+  .label {
+    background: black;
+    color: white;
+    padding: 5px 10px;
+    flex: 1;
+    text-align: left;
+  }
+  
+  .value {
+    padding: 5px 10px;
+    flex: 1;
+    text-align: left;
+  }
+  
+  .player-image {
+    max-width: 100%;
+    height: auto;
+  }
