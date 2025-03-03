@@ -1,37 +1,33 @@
+<img src="assets/logosho.png" class="logoshohoku">
 
-<!-- <a class="navbar-brand" routerLink="/">  le quito el enlace de vuelta ya que tenemos el logo en el header y un botón abajo con la misma función-->
-<img src="assets/logosho.png" class=logoshohoku>
-<!-- </a>  -->
-<div>
-<!-- <a routerLink="/player-card" class="nav-link">player-card</a>  no hace falta tener esto aquí pero no lo borro hasta comentarlo con todos -->
+<div class="team-container">
+    <p class="team-description">
+        Shohoku pasó de ser un equipo sin relevancia a convertirse en un rival temible gracias a la llegada de nuevos talentos. 
+        <strong> Su estilo de juego se basa en una ofensiva rápida </strong>, con 
+        <strong>gran capacidad de anotación en distintas áreas</strong> y un fuerte
+        <strong> dominio en los rebotes ofensivos.</strong>
+        <br><br>
+        Son un equipo intenso en defensa, aunque menos disciplinado que otros conjuntos de élite. Sus principales debilidades incluyen 
+        una banca muy limitada, problemas de resistencia física y acumulación de faltas, lo que los hace vulnerables en partidos largos. 
+        Además, dependen en exceso de jugadas individuales y carecen de un entrenamiento tan riguroso como otros equipos fuertes.
+    </p>
 
+    <h2 class="team-title">El equipo Shohoku está formado por:</h2>
 
-<p>Shohoku pasó de ser un equipo sin relevancia a convertirse en un rival temible gracias a la llegada de nuevos talentos. <strong> Su estilo de juego se basa en una ofensiva rápida </strong>, con <strong>gran capacidad de anotación en distintas áreas</strong> y un fuerte<strong> dominio en los rebotes ofensivos.</strong>
-
-    Son un equipo intenso en defensa, aunque menos disciplinado que otros conjuntos de élite. Sus principales debilidades incluyen una banca muy limitada, problemas de resistencia física y acumulación de faltas, lo que los hace vulnerables en partidos largos. Además, dependen en exceso de jugadas individuales y carecen de un entrenamiento tan riguroso como otros equipos fuertes.</p>
-
-<h2>Shohoku esta formado por:</h2> <!-- debemos estilarlo para que se vea como un h4 como mucho -->
-
-    <tbody>
-<tr *ngFor = "let player of players">
-    <td>
-        <a [routerLink]="['/player', player.id]">
-        {{player.shirtNumber}}
-        </a>
-    </td>
-    <td>
-        {{player.name}}
-
-    </td>
-    <td>
-        {{player.position}}
-    </td>
-  
-    <img [src]= "player.portrait" alt="foto" width="100" height="100">
+    <div class="players-grid">
+        <div class="playerCard" *ngFor="let player of players">
+            <a [routerLink]="['/player', player.id]" class="player-link">
+                <div class="player-img-container">
+                    <p class="playerNumber">{{player.shirtNumber}}</p>
+                    <img [src]="player.portrait" alt="foto de {{player.name}}" class="player-img">
+                    <div class="player-info">
+                        <p class="font-player-sho">{{player.name}}</p>
+                        <p class="font-rol-sho">{{player.position}}</p>
+                    </div>
+                </div>
+            </a>
+        </div>
         
-    
-    
-</tr>
-</tbody>
-<button type="button" class="btn btn-outline-primary" (click)="goBack()" >Volver a equipos</button>
+
+    <button type="button" class="btn btn-outline-primary" (click)="goBack()">Volver a equipos</button>
 </div>

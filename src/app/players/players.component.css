@@ -1,4 +1,102 @@
-.logoshohoku{
+.logoshohoku {
     width: 180px;
-    
+    display: block;
+    margin: 20px auto;
+}
+
+.team-container {
+    max-width: 900px;
+    margin: auto;
+    text-align: center;
+}
+
+.team-description {
+    font-size: 16px;
+    text-align: justify;
+    margin: 20px;
+}
+
+.team-title {
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+    margin-top: 20px;
+}
+
+.players-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 30px;
+    justify-content: center;
+    padding: 20px;
+}
+
+.playerCard {
+    width: 150px;
+    background-color: #C02A2D;
+    color: white;
+    text-align: center;
+    padding: 5px;
+    border-radius: 8px;
+    overflow: hidden;
+    position: relative;
+}
+
+.player-img-container {
+    position: relative;
+    width: 100%;
+}
+
+/* Imagen del jugador */
+.player-img {
+    width: 100%;
+    display: block;
+    border-radius: 5px;
+}
+
+/* Número en la esquina superior izquierda */
+.playerNumber {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    background-color: rgba(192, 42, 45, 0.9);
+    color: white;
+    font-size: 14px;
+    font-weight: bold;
+    padding: 3px 6px;
+    border-radius: 3px;
+    z-index: 2;
+}
+
+/* Nombre y rol en la parte superior de la imagen */
+.player-info {
+    position: absolute;
+    bottom: 0px; /* Lo coloca en la parte inferior con un pequeño margen */
+    left: 50%;
+    transform: translateX(-50%); /* Centra horizontalmente */
+    width: 90%; /* Que no ocupe todo el ancho para dejar algo de margen */
+    text-align: center;
+    padding: 0px 0;
+    border-radius: 3px; /* Bordes redondeados */
+    background: transparent; /* Sin fondo */
+    z-index: 3; /* Asegura que esté sobre la imagen */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Ajustes para el nombre y el rol */
+.font-player-sho, .font-rol-sho {
+    font-family: "Inter", sans-serif; 
+    font-size: 14px;
+    color: white; 
+    margin: 0;
+    padding: 2px;
+    font-weight: bold;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8); /* Sombra para mejor visibilidad */
+}
+
+.font-rol-sho {
+    font-size: 12px;
+    font-weight: normal;
 }
