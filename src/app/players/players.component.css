@@ -71,18 +71,25 @@
 /* Nombre y rol en la parte superior de la imagen */
 .player-info {
     position: absolute;
-    bottom: 0px; /* Lo coloca en la parte inferior con un pequeño margen */
+    bottom: 5px;
     left: 50%;
-    transform: translateX(-50%); /* Centra horizontalmente */
-    width: 90%; /* Que no ocupe todo el ancho para dejar algo de margen */
+    transform: translateX(-50%);
+    width: 90%;
     text-align: center;
-    padding: 0px 0;
-    border-radius: 3px; /* Bordes redondeados */
-    background: transparent; /* Sin fondo */
-    z-index: 3; /* Asegura que esté sobre la imagen */
+    padding: 5px 0;
+    border-radius: 8px;
+    background: transparent;
+    z-index: 3;
     display: flex;
     flex-direction: column;
     align-items: center;
+    opacity: 0; /* Oculto por defecto */
+    transition: opacity 0.3s ease-in-out; /* Transición suave */
+}
+
+/* Mostrar el texto solo cuando se haga hover en la tarjeta */
+.playerCard:hover .player-info {
+    opacity: 1; /* Se hace visible al pasar el mouse */
 }
 
 /* Ajustes para el nombre y el rol */
@@ -90,12 +97,10 @@
     font-family: "Inter", sans-serif; 
     font-size: 13px;
     color: white; 
-    background-color: #C02A2D;
-    
     margin: 0;
     padding: 2px;
     font-weight: bold;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8); /* Sombra para mejor visibilidad */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
 }
 
 .font-rol-sho {
