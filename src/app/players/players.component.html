@@ -1,12 +1,18 @@
 
-<a class="navbar-brand" routerLink="/">
+<!-- <a class="navbar-brand" routerLink="/">  le quito el enlace de vuelta ya que tenemos el logo en el header y un botón abajo con la misma función-->
 <img src="assets/logosho.png" class=logoshohoku>
-</a> 
+<!-- </a>  -->
 <div>
-<a routerLink="/player-card" class="nav-link">player-card</a>  
-<h2>Shohoku Players</h2>
+<!-- <a routerLink="/player-card" class="nav-link">player-card</a>  no hace falta tener esto aquí pero no lo borro hasta comentarlo con todos -->
 
-<tbody>
+
+<p>Shohoku pasó de ser un equipo sin relevancia a convertirse en un rival temible gracias a la llegada de nuevos talentos. <strong> Su estilo de juego se basa en una ofensiva rápida </strong>, con <strong>gran capacidad de anotación en distintas áreas</strong> y un fuerte<strong> dominio en los rebotes ofensivos.</strong>
+
+    Son un equipo intenso en defensa, aunque menos disciplinado que otros conjuntos de élite. Sus principales debilidades incluyen una banca muy limitada, problemas de resistencia física y acumulación de faltas, lo que los hace vulnerables en partidos largos. Además, dependen en exceso de jugadas individuales y carecen de un entrenamiento tan riguroso como otros equipos fuertes.</p>
+
+<h2>Shohoku esta formado por:</h2> <!-- debemos estilarlo para que se vea como un h4 como mucho -->
+
+    <tbody>
 <tr *ngFor = "let player of players">
     <td>
         <a [routerLink]="['/player', player.id]">
@@ -27,5 +33,5 @@
     
 </tr>
 </tbody>
-
+<button type="button" class="btn btn-outline-primary" (click)="goBack()" >Volver a equipos</button>
 </div>

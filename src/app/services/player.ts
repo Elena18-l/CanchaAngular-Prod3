@@ -1,3 +1,11 @@
+export interface Skills{
+    fisico:number;
+    tecnica:number;
+    fuerzaMental:number;
+    habilidadEspecial:number;
+    resistencia:number;
+}
+
 export interface Player {
     id:number;
     name:string;
@@ -10,4 +18,6 @@ export interface Player {
     shirtNumber: number;
     position: string;
     gallery: string[];
+    bio: string;
+    skills:Skills;
 }
