@@ -26,13 +26,13 @@
 .players-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-    gap: 30px;
+    gap: 10px;
     justify-content: center;
     padding: 20px;
 }
 
 .playerCard {
-    width: 160px;
+    width: 130px;
     background-color: #C02A2D;
     color: white;
     text-align: center;
@@ -61,9 +61,9 @@
     left: 0px;
     background-color: rgba(192, 42, 45, 0.9);
     color: white;
-    font-size: 14px;
+    font-size: 12px;
     font-weight: bold;
-    padding: 3px 6px;
+    padding: 0px 1px;
     border-radius: 3px;
     z-index: 2;
 }
