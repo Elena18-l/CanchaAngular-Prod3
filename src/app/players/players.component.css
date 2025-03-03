@@ -32,7 +32,7 @@
 }
 
 .playerCard {
-    width: 150px;
+    width: 160px;
     background-color: #C02A2D;
     color: white;
     text-align: center;
@@ -88,8 +88,10 @@
 /* Ajustes para el nombre y el rol */
 .font-player-sho, .font-rol-sho {
     font-family: "Inter", sans-serif; 
-    font-size: 14px;
+    font-size: 13px;
     color: white; 
+    background-color: #C02A2D;
+    
     margin: 0;
     padding: 2px;
     font-weight: bold;
