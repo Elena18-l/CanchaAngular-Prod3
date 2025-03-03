@@ -23,7 +23,12 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <div id="carouselExample" class="carousel slide">
+        <div id="carouselExampleIndicators" class="carousel slide">
+          
+
+         
+
+          <!-- Carrusel de Imágenes -->
           <div class="carousel-inner">
             <div 
               class="carousel-item" 
@@ -32,11 +37,25 @@
               <img [src]="image" class="d-block w-100" alt="Imagen {{i + 1}}">
             </div>
           </div>
-          <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+
+          <!-- Miniaturas en lugar de indicadores -->
+          <div class="d-flex justify-content-center mb-2">
+            <div class="thumb-container">
+              <img 
+                *ngFor="let image of player?.gallery; let i = index"
+                [src]="image" 
+                class="img-thumbnail small-thumb"
+                [class.active-thumb]="i === activeIndex"
+                (click)="setActiveImage(i)"
+                alt="Miniatura {{i + 1}}">
+            </div>
+          </div>
+          <!-- Controles -->
+          <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
             <span class="visually-hidden">Anterior</span>
           </button>
-          <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+          <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
             <span class="carousel-control-next-icon" aria-hidden="true"></span>
             <span class="visually-hidden">Siguiente</span>
           </button>
@@ -45,6 +64,11 @@
     </div>
   </div>
 </div>
+
+<!-- Botón Volver -->
+<button type="button" class="btn btn-outline-primary" (click)="goBack()">Volver</button>
+
+
 
 <div class="container mt-5">
 <h2>Galería de Videos</h2>

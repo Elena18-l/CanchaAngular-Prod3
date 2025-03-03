@@ -6,3 +6,34 @@
     width:100px;
     background-color: green;
 }
+/* Contenedor de miniaturas (se alinearán debajo del carrusel) */
+.thumb-container {
+    display: flex;
+    justify-content: center; /* Centra las miniaturas */
+    gap: 5px; /* Espacio entre miniaturas */
+    margin-top: 10px; /* Espacio con respecto al carrusel */
+    overflow-x: auto; /* Permite scroll horizontal si hay muchas imágenes */
+    padding: 5px;
+  }
+  
+  /* Miniaturas */
+  .small-thumb {
+    width: 50px;  /* Tamaño fijo de miniaturas */
+    height: 50px; /* Tamaño fijo de miniaturas */
+    object-fit: cover; /* Recorta la imagen para que encaje sin deformarse */
+    cursor: pointer;
+    border: 2px solid transparent;
+    border-radius: 5px;
+    transition: transform 0.2s, border 0.2s;
+  }
+  
+  /* Efecto cuando se selecciona una miniatura */
+  .small-thumb:hover {
+    transform: scale(1.1);
+  }
+  
+  .active-thumb {
+    border: 2px solid #007bff; /* Borde azul en miniatura activa */
+    transform: scale(1.15); /* Aumenta un poco el tamaño */
+  }
+  
