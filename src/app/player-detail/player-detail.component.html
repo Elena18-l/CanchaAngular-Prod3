@@ -8,14 +8,14 @@
 
 
 
-<div class="container playerData">
+<div class="container-playerData">
   <div class="row">
 
   <!-- tabla de datos columna izquierda -->
   <div class="colIzq col-md-4">
-    <div class="fila"><div class="label">Nombre</div><div class="value fw-bold">{{player?.name}}</div></div>
-    <div class="fila"><div class="label">Posición</div><div class="value fw-bold">{{player?.position}}</div></div>
-    <div class="fila"><div class="label">Camiseta</div><div class="value fw-bold">{{player?.shirtNumber}}</div></div>
+    <div class="fila"><div class="label">Nombre</div><div class="fw-bold">{{player?.name}}</div></div>
+    <div class="fila"><div class="label">Posición</div><div class="fw-bold">{{player?.position}}</div></div>
+    <div class="fila"><div class="label">Camiseta</div><div class="fw-bold">{{player?.shirtNumber}}</div></div>
   
 </div>
 
@@ -24,10 +24,10 @@
   <img [src]="player?.foto" alt="Player Image" class="player-image">
 </div>
  <!-- tabla de datos columna derecha -->
-<div class="colDer col-md-">
-    <div class="fila"><div class="label">Edad</div><div class="value fw-bold">{{player?.age}}</div></div>
-    <div class="fila"><div class="label">Altura</div><div class="value fw-bold">{{player?.stature}}</div></div>
-    <div class="fila"><div class="label">Media</div><div class="value fw-bold">{{player?.average}}</div></div>    
+<div class="colDer col-md-4">
+    <div class="fila"><div class="label">Edad</div><div class="fw-bold">{{player?.age}}</div></div>
+    <div class="fila"><div class="label">Altura</div><div class="fw-bold">{{player?.stature}}</div></div>
+    <div class="fila"><div class="label">Media</div><div class="fw-bold">{{player?.average}}</div></div>    
 </div>
 </div>
 
@@ -41,7 +41,7 @@
 <div> Resistencia:{{player?.skills?.resistencia}}</div>
 <div> Habilidad Especial:{{player?.skills?.habilidadEspecial}}</div>
 
-  <button class="btn btn-primary" *ngIf="player" (click)="getMedia()">
+  <button class="boton-canchaMas" *ngIf="player" (click)="getMedia()">
     Ver Media
   </button>
   
@@ -49,7 +49,7 @@
 
 <!-- <button type="button" class="btn btn-outline-primary" *ngIf="player" (click)="getMedia()" >Media</button> -->
 
-<button type="button" class="btn btn-outline-primary" (click)="goBack()" ><i class="bi bi-arrow-left"></i>Volver al equipo</button>
+<button type="button" class="boton-cancha" (click)="goBack()" ><i class="bi bi-arrow-left"></i>Volver al equipo</button>
 <!--
 🔹 *ngIf="player" → Solo muestra los datos si player tiene valor.
 🔹 {{ player?.name | uppercase }} → Muestra el nombre en mayúsculas.

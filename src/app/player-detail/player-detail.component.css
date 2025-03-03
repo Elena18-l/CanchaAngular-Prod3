@@ -1,55 +1,72 @@
 .fila {
-    display: flex;
-    justify-content: space-between; /* Separa el texto y el dato */
-    align-items: center; /* Alinea verticalmente */
-    padding: 5px 0; /* Espaciado */
-    border-bottom: 1px solid #ddd; /* Opcional: línea divisoria */
-  }
-  
-  .fila div {
-    flex: 1; /* Hace que ambos divs ocupen el mismo espacio */
-    padding-right: 10px; /* Espaciado entre columnas */
-  }
-  
-  .colIzq {
-    max-width: 300px; /* Ajusta el ancho si es necesario */
-  }
-  .colDer {
-    max-width: 300px; /* Ajusta el ancho si es necesario */
-  }
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid #000;
+  margin-bottom: 8px; /* Espaciado entre filas */
+  padding: 0px 0px; /* Espaciado interno */
+  min-width: 350px; /* Ajusta este valor según sea necesario */
+  width: 100%; /* Todas las filas serán igual de anchas */
+}
+ 
+ 
 
-  .player-container {
-    margin-top: 20px;
-  }
-  
   .player-info {
     display: flex;
     flex-direction: column;
     gap: 10px;
   }
   
-  .fila {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border: 1px solid #000;
-  }
   
+  
+  
+  
+
+  
+
   .label {
+    font-family: Inter;
     background: black;
     color: white;
     padding: 5px 10px;
-    flex: 1;
+    flex-basis: 50%; /* Ocupa la mitad del ancho */
     text-align: left;
-  }
-  
-  .value {
-    padding: 5px 10px;
-    flex: 1;
-    text-align: left;
-  }
-  
-  .player-image {
-    max-width: 100%;
-    height: auto;
-  }
+    max-width: 100px;
+}
+
+.fw-bold {
+  font-family: Inter;
+  font-style: bold;
+  font-size: 16px;
+  padding: 5px 10px;
+  flex-grow: 1; /* Permite que el contenido se expanda */
+  text-align: left;
+  max-width: unset; /* Elimina la restricción de ancho */
+  white-space: nowrap; /* Evita el salto de línea */
+  overflow: hidden; /* Esconde el texto extra en caso de ser muy largo */
+  text-overflow: ellipsis; /* Muestra "..." si el texto es demasiado largo */
+}
+
+.container-playerData {
+  display: flex;
+  justify-content: center;
+  align-items: center; /* Mantiene el contenido centrado verticalmente */
+  width: 100%;
+  height: auto; /* Ajusta la altura según el contenido */
+  gap: 40px; /* Espaciado entre columnas */
+  padding: 20px 0; /* Reduce el espacio superior e inferior */
+}
+
+.player-image-container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start; /* Alinea la imagen más arriba */
+  padding: 0px; /* Elimina espaciado adicional */
+  margin-top: -20px; /* Sube la imagen ligeramente */
+}
+
+.player-image {
+  max-width: 350px;
+  height: auto;
+  display: block;
+}

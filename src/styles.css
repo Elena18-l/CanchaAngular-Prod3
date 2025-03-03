@@ -48,3 +48,14 @@
   border-radius: 8px;
   box-shadow: none;
 }
+.boton-canchaMas {
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  font-style: bold;
+  height: 40px;
+  border: 2px solid #C02A2D; 
+  background-color: #C02A2D;
+  color: rgb(255, 255, 255);
+  border-radius: 8px;
+  box-shadow: none;
+}
