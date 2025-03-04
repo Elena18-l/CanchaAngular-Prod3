@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { RouterModule } from '@angular/router';  // Importa RouterModule completo
+import { RouterModule } from '@angular/router'; 
+import { SearchService } from './services/searchService'; // Importa RouterModule completo
 
 @Component({
   selector: 'app-root',
@@ -10,4 +11,11 @@ import { RouterModule } from '@angular/router';  // Importa RouterModule complet
 })
 export class AppComponent {
   title = 'chancha-angular';
+
+  constructor(private searchService: SearchService) { }
+
+  onSearchChange(event:Event){
+    const input = event.target as HTMLInputElement;
+    this.searchService.updateSearchText(input.value);
+  }
 }

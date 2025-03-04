@@ -1,4 +1,3 @@
-import { Component } from '@angular/core';
 import { Pipe, PipeTransform } from '@angular/core';
 import { Player } from '../services/player';
 
@@ -7,28 +6,21 @@ import { Player } from '../services/player';
   pure: false // Se actualizará en tiempo real
 })
 
-export class PlayerSearchComponent implements PipeTransform {
+export class PlayerSearchPipe implements PipeTransform {
 
-  transform(players: Player[], searchText: string, filters: any): Player[] {
-    if (!players) return [];
+  transform(players: Player[], searchText: string): Player[] {
+    if (!players || !searchText)  return []; // Si no hay jugadores o no hay texto, devolver array vacío
 
-    let filteredPlayers = players;
+    searchText = searchText.toLowerCase();
 
-    // Filtrar por búsqueda en search bar
-    if (searchText) {
-      searchText = searchText.toLowerCase();
-      filteredPlayers = filteredPlayers.filter(player =>
-        player.name.toLowerCase().includes(searchText) ||
-        player.team.toLowerCase().includes(searchText) ||
-        player.position.toLowerCase().includes(searchText) ||
-        player.age.toString().includes(searchText) ||
-        player.stature.toString().includes(searchText) ||
-        player.average.toString().includes(searchText) ||
-        player.shirtNumber.toString().includes(searchText)
-      );
-    } 
-    
-    return filteredPlayers;
+    return players.filter((player) =>
+      Object.values(player).some(
+        (value) =>
+          value !== null &&
+          value !== undefined &&
+          String(value).toLowerCase().includes(searchText) // Compara si el valor contiene el texto de búsqueda
+      )
+    );
   }
 }
 
