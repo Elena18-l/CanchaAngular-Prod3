@@ -28,6 +28,8 @@ export class PlayerSearchComponent implements PipeTransform {
       );
     }
 
+    
+
     // Aplicar filtros avanzados
     if (filters) {
       filteredPlayers = filteredPlayers.filter(player => {
