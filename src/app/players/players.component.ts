@@ -1,29 +1,58 @@
 import { Component } from '@angular/core';
-import { PlayerCardComponent } from '../player-card/player-card.component';
 import { CommonModule } from '@angular/common';
-import {Players} from '../services/mockup-players';
+import { Players } from '../services/mockup-players';
 import { RouterModule } from '@angular/router';
 import { Location } from '@angular/common';
-
+import { FormsModule } from '@angular/forms';
+import { Player } from '../services/player'; // Importa la interfaz de Player
+import { PlayerCardComponent } from '../player-card/player-card.component';
 @Component({
-  selector: 'app-players',  
-  imports:[CommonModule, RouterModule],
+  selector: 'app-players',
+  standalone: true,
+  imports: [CommonModule, RouterModule, FormsModule, PlayerCardComponent],
   templateUrl: './players.component.html',
   styleUrl: './players.component.css',
-
+  
 })
-
 
 export class PlayersComponent {
   players = Players;
-  
-  constructor(private location: Location) { }
+  searchText: string = '';
+  selectedFilters: Partial<Player> = {}; // Filtros opcionales
+  showFilterModal: boolean = false;
 
+  constructor(private location: Location) {}
+
+  get filteredPlayers() {
+    return this.players.filter(player => {
+      // Buscar en todas las propiedades si el texto coincide
+      const matchesSearch = this.searchText
+        ? Object.keys(player).some(key =>
+            player[key as keyof Player]?.toString().toLowerCase().includes(this.searchText.toLowerCase())
+          )
+        : true;
+
+      // Aplicar filtros específicos
+      const matchesFilters = (Object.keys(this.selectedFilters) as (keyof Player)[]).every(key =>
+        this.selectedFilters[key] !== undefined
+          ? player[key] === this.selectedFilters[key]
+          : true
+      );
+
+      return matchesSearch && matchesFilters;
+    });
+  }
+
+  toggleFilterModal() {
+    this.showFilterModal = !this.showFilterModal;
+  }
+
+  clearFilters() {
+    this.selectedFilters = {};
+    this.searchText = '';
+  }
 
   goBack(): void {
     this.location.back();
   }
-
 }
-
-

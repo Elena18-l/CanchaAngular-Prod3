@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Player } from '../services/player';
 import { PlayerService } from '../services/playerService';
 import { CommonModule } from '@angular/common';
@@ -15,6 +15,7 @@ import { RouterModule } from '@angular/router';
 })
 export class PlayerCardComponent implements OnInit {
 
+  @Input() player: Player | undefined;
   players: Player[] = [];
 
   constructor(private playerService: PlayerService, private router:Router) { }
