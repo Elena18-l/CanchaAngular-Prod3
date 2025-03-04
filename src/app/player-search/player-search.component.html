@@ -1,1 +1,42 @@
 <p>player-search works!</p>
+
+<!-- ESTO ES UNA PRUEBA DE FILTROS-->
+ <!-- Barra de búsqueda -->
+ <input 
+ type="text" 
+ [(ngModel)]="searchText" 
+ placeholder="Buscar jugador..."
+ />
+ 
+ <!-- Botón para abrir el modal de filtros -->
+ <button (click)="toggleFilterModal()">Filtrar 🔍</button>
+ 
+ <!-- Modal de filtros (se muestra solo si showFilterModal es true) -->
+ <div *ngIf="showFilterModal" class="modal">
+ <h3>Filtrar Jugadores</h3>
+ 
+ <label>Posición:</label>
+ <select [(ngModel)]="selectedFilters.position">
+   <option value="">Todas</option>
+   <option value="Base">Base</option>
+   <option value="Alero">Alero</option>
+   <option value="Pivot">Pívot</option>
+ </select>
+ 
+ <label>Equipo:</label>
+ <select [(ngModel)]="selectedFilters.team">
+   <option value="">Todos</option>
+   <option value="Shohoku">Shohoku</option>
+ </select>
+ 
+ <button (click)="toggleFilterModal()">Aplicar</button>
+ <button (click)="clearFilters()">Limpiar filtros</button>
+ </div>
+ 
+ <!-- Lista de jugadores filtrados -->
+ <div *ngFor="let player of filteredPlayers">
+ <app-player-card [player]="player"></app-player-card>
+ </div>
+ 
+ </div>
+ 

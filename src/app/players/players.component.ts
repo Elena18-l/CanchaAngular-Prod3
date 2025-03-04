@@ -6,10 +6,11 @@ import { Location } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Player } from '../services/player'; // Importa la interfaz de Player
 import { PlayerCardComponent } from '../player-card/player-card.component';
+import { PlayerSearchComponent } from '../player-search/player-search.component';
 @Component({
   selector: 'app-players',
   standalone: true,
-  imports: [CommonModule, RouterModule, FormsModule, PlayerCardComponent],
+  imports: [CommonModule, RouterModule, FormsModule, PlayerCardComponent, PlayerSearchComponent],
   templateUrl: './players.component.html',
   styleUrl: './players.component.css',
   

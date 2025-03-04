@@ -26,41 +26,41 @@ export class PlayerSearchComponent implements PipeTransform {
         player.average.toString().includes(searchText) ||
         player.shirtNumber.toString().includes(searchText)
       );
-    }
-
+    } 
     
-
-    // Aplicar filtros avanzados
-    if (filters) {
-      filteredPlayers = filteredPlayers.filter(player => {
-        let matches = true;
-
-        if (filters.name) {
-          matches = matches && player.name.toLowerCase().includes(filters.name.toLowerCase());
-        }
-        if (filters.team && filters.team !== 'Todos') {
-          matches = matches && player.team.toLowerCase() === filters.team.toLowerCase();
-        }
-        if (filters.position && filters.position !== 'Todos') {
-          matches = matches && player.position.toLowerCase() === filters.position.toLowerCase();
-        }
-        if (filters.age) {
-          matches = matches && player.age === filters.age;
-        }
-        if (filters.stature) {
-          matches = matches && player.stature >= filters.stature.min && player.stature <= filters.stature.max;
-        }
-        if (filters.average) {
-          matches = matches && player.average >= filters.average.min && player.average <= filters.average.max;
-        }
-        if (filters.shirtNumber) {
-          matches = matches && player.shirtNumber === filters.shirtNumber;
-        }
-
-        return matches;
-      });
-    }
-
     return filteredPlayers;
   }
 }
+
+
+
+// // Aplicar filtros avanzados
+// if (filters) {
+//   filteredPlayers = filteredPlayers.filter(player => {
+//     let matches = true;
+
+//     if (filters.name) {
+//       matches = matches && player.name.toLowerCase().includes(filters.name.toLowerCase());
+//     }
+//     if (filters.team && filters.team !== 'Todos') {
+//       matches = matches && player.team.toLowerCase() === filters.team.toLowerCase();
+//     }
+//     if (filters.position && filters.position !== 'Todos') {
+//       matches = matches && player.position.toLowerCase() === filters.position.toLowerCase();
+//     }
+//     if (filters.age) {
+//       matches = matches && player.age === filters.age;
+//     }
+//     if (filters.stature) {
+//       matches = matches && player.stature >= filters.stature.min && player.stature <= filters.stature.max;
+//     }
+//     if (filters.average) {
+//       matches = matches && player.average >= filters.average.min && player.average <= filters.average.max;
+//     }
+//     if (filters.shirtNumber) {
+//       matches = matches && player.shirtNumber === filters.shirtNumber;
+//     }
+
+//     return matches;
+//   });
+// }
