@@ -15,7 +15,7 @@
     overflow-x: auto; /* Permite scroll horizontal si hay muchas imágenes */
     padding: 5px;
   }
-  
+
   /* Miniaturas */
   .small-thumb {
     width: 50px;  /* Tamaño fijo de miniaturas */
@@ -37,3 +37,19 @@
     transform: scale(1.15); /* Aumenta un poco el tamaño */
   }
   
+ .d-block{
+min-height: 650px;
+ 
+ }
+.modal-content{
+  max-width: fit-content;
+  
+}
+.carousel-item{
+  max-height: 70vh;
+}
+
+
+  .modal-lg, .modal-xl {
+      --bs-modal-width: 400px;
+  }
