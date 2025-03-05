@@ -4,38 +4,39 @@ import { Players } from '../services/mockup-players';
 import { RouterModule } from '@angular/router';
 import { Location } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Player } from '../services/player'; // Importa la interfaz de Player
+import { Player } from '../services/player';
 import { PlayerCardComponent } from '../player-card/player-card.component';
+
 @Component({
   selector: 'app-players',
   standalone: true,
   imports: [CommonModule, RouterModule, FormsModule, PlayerCardComponent],
   templateUrl: './players.component.html',
   styleUrl: './players.component.css',
-  
 })
-
 export class PlayersComponent {
   players = Players;
   searchText: string = '';
-  selectedFilters: Partial<Player> = {}; // Filtros opcionales
-  showFilterModal: boolean = false;
+  selectedFilters: Partial<Player> = {};
+  showFilterDropdown: boolean = false; // Ahora usamos dropdown en vez de modal
 
   constructor(private location: Location) {}
 
   get filteredPlayers() {
     return this.players.filter(player => {
-      // Buscar en todas las propiedades si el texto coincide
       const matchesSearch = this.searchText
-        ? Object.keys(player).some(key =>
-            player[key as keyof Player]?.toString().toLowerCase().includes(this.searchText.toLowerCase())
-          )
+        ? (Object.keys(player) as (keyof Player)[])
+            .some(key => {
+              const value = player[key];
+              return typeof value === 'string' || typeof value === 'number'
+                ? value.toString().toLowerCase().includes(this.searchText.toLowerCase())
+                : false;
+            })
         : true;
 
-      // Aplicar filtros específicos
-      const matchesFilters = (Object.keys(this.selectedFilters) as (keyof Player)[]).every(key =>
-        this.selectedFilters[key] !== undefined
-          ? player[key] === this.selectedFilters[key]
+      const matchesFilters = Object.entries(this.selectedFilters).every(([key, value]) =>
+        value !== undefined && value !== ''
+          ? (player as any)[key] == value
           : true
       );
 
@@ -43,8 +44,8 @@ export class PlayersComponent {
     });
   }
 
-  toggleFilterModal() {
-    this.showFilterModal = !this.showFilterModal;
+  toggleFilterDropdown() {
+    this.showFilterDropdown = !this.showFilterDropdown;
   }
 
   clearFilters() {
@@ -56,3 +57,4 @@ export class PlayersComponent {
     this.location.back();
   }
 }
+
