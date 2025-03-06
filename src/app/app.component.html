@@ -14,6 +14,20 @@
         </div>
       </div>
     </nav>
+    <!-- Barra de búsqueda -->
+    <div class="search-bar">
+      <input 
+        type="text" 
+        (input)="onSearchChange($event)" 
+        placeholder="Buscar jugador..." 
+        class="form-control">
+    </div>
+<!-- Aqui salta el modal con los resultados de la busqueda -->
+<div *ngIf="searchText.length > 0" class="modal">
+  <div class="modal-content">
+    <app-player-results></app-player-results>
+  </div>
+</div>
 
     <!-- Aquí Angular insertará las páginas dinámicamente -->
     <router-outlet></router-outlet>

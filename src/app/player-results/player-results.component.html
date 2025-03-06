@@ -1,0 +1,11 @@
+<h4>Resultados de la búsqueda</h4>
+<ul *ngIf="searchText.length > 0">
+  <li *ngFor="let player of players | playerFilter:searchText">
+    <strong>{{ player.name }}</strong> - {{ player.team }} ({{ player.position }})
+    | Edad: {{ player.age }}
+    | Altura: {{ player.stature }}m
+    | Promedio: {{ player.average }}
+    | Nº Camiseta: {{ player.shirtNumber }}
+  </li>
+</ul>
+<p *ngIf="searchText.length === 0">No hay resultados para mostrar.</p>

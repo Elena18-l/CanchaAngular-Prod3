@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { PlayerSearchComponent } from './player-search.component';
+import { PlayerSearchPipe } from './player-search.pipe';
 
-describe('PlayerSearchComponent', () => {
-  let component: PlayerSearchComponent;
-  let fixture: ComponentFixture<PlayerSearchComponent>;
+describe('PlayerSearchPipe', () => {
+  let component: PlayerSearchPipe;
+  let fixture: ComponentFixture<PlayerSearchPipe>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [PlayerSearchComponent]
+      imports: [PlayerSearchPipe]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(PlayerSearchComponent);
+    fixture = TestBed.createComponent(PlayerSearchPipe);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
