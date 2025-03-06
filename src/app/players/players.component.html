@@ -1,34 +1,85 @@
 <img src="assets/logosho.png" class="logoshohoku">
 
-<div class="team-container">
-    <p class="team-description">
-        Shohoku pasó de ser un equipo sin relevancia a convertirse en un rival temible gracias a la llegada de nuevos talentos. 
-        <strong> Su estilo de juego se basa en una ofensiva rápida </strong>, con 
-        <strong>gran capacidad de anotación en distintas áreas</strong> y un fuerte
-        <strong> dominio en los rebotes ofensivos.</strong>
-        <br><br>
-        Son un equipo intenso en defensa, aunque menos disciplinado que otros conjuntos de élite. Sus principales debilidades incluyen 
-        una banca muy limitada, problemas de resistencia física y acumulación de faltas, lo que los hace vulnerables en partidos largos. 
-        Además, dependen en exceso de jugadas individuales y carecen de un entrenamiento tan riguroso como otros equipos fuertes.
-    </p>
+<div class="filter-container">
+  <!-- Botón para abrir/cerrar el dropdown -->
+  <button (click)="toggleFilterDropdown()" class="filter-button">
+    Filtrar ▼
+  </button>
 
-    <h2 class="team-title">El equipo Shohoku está formado por:</h2>
+  <!-- Dropdown de filtros -->
+  <div *ngIf="showFilterDropdown" class="filter-dropdown">
+    <h3>Filtrar Jugadores</h3>
+    <label>Dorsal</label>
+    <select [(ngModel)]="selectedFilters.shirtNumber">
+      <option value="">Todos</option>
+      <option value="4">4</option> 
+      <option value="5">5</option>
+      <option value="7">7</option> 
+      <option value="10">10</option>    
+      <option value="11">11</option> 
+      <option value="14">14</option>    
+    </select>
+    <label>Posición:</label>
+    <select [(ngModel)]="selectedFilters.position">
+      <option value="">Todas</option>
+      <option value="Base">Base</option>
+      <option value="Alero">Alero</option>
+      <option value="Pivot">Pívot</option>
+      <option value="Ala">Ala</option>
+      <option value="Escolta">Escolta</option>
+    </select>
 
-    <div class="players-grid">
-        <div class="playerCard" *ngFor="let player of players">
-            <a [routerLink]="['/player', player.id]" class="player-link">
-                <div class="player-img-container">
-                    <p class="playerNumber">{{player.shirtNumber}}</p>
-                    <img [src]="player.portrait" alt="foto de {{player.name}}" class="player-img">
-                    <div class="player-info">
-                        <p class="font-player-sho">{{player.name}}</p>
-                        <p class="font-rol-sho">{{player.position}}</p>
-                    </div>
-                </div>
-            </a>
-        </div>
-        
+    <label>Media:</label>
+    <select [(ngModel)]="selectedFilters.average">
+      <option value="">Todos</option>
+      <option value="0-8">8 o menos</option>
+      <option value="8.1-9">entre 8 y 9</option>
+      <option value="9.1-10">más de 9</option>
+    </select>
+    <label>Edad:</label>
+    <select [(ngModel)]="selectedFilters.age">
+      <option value="">Todas</option>
+      <option value="15">15</option>
+      <option value="16">16</option>      
+      <option value="17">17</option>
+      <option value="18">18</option>
+      <option value="19">19</option>
+     
+    </select>
+    <label>Altura:</label>
+    <select [(ngModel)]="selectedFilters.stature">
+      <option value="">Todas</option>
+      <option value="0-175">175 cm o menos</option>
+      <option value="175-180">Entre 1.75 y 1.80</option>
+      <option value="180-185">Entre 1.80 y 1.85</option>
+      <option value="185-190">Entre 1.85 y 1.90</option>
+      <option value="190-195">Entre 1.90 y 1.95</option>
+      <option value="195-200">Entre 1.95 y 2.00</option>
+      <option value="200-300">Más de 2m</option> 
+    </select>
 
-   
+    <button (click)="toggleFilterDropdown()">Aplicar</button>
+    <button (click)="clearFilters()">Limpiar filtros</button>
+  </div>
 </div>
-<button type="button" class="boton-cancha"  (click)="goBack()">Volver a equipos</button>
+
+<!-- Lista de jugadores filtrados -->
+<h2 class="team-title">El equipo Shohoku está formado por:</h2>
+
+<div class="players-grid">
+  <div class="playerCard" *ngFor="let player of filteredPlayers">
+    <a [routerLink]="['/player', player.id]" class="player-link">
+      <div class="player-img-container">
+        <p class="playerNumber">{{ player.shirtNumber }}</p>
+        <img [src]="player.portrait" alt="foto de {{ player.name }}" class="player-img">
+        <div class="player-info">
+          <p class="font-player-sho">{{ player.name }}</p>
+          <p class="font-rol-sho">{{ player.position }}</p>
+        </div>
+      </div>
+    </a>
+  </div>
+</div>
+
+<!-- Botón para volver -->
+<button type="button" class="boton-cancha" (click)="goBack()">Volver a equipos</button>

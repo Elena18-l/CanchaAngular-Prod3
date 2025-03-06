@@ -1,29 +1,73 @@
 import { Component } from '@angular/core';
-import { PlayerCardComponent } from '../player-card/player-card.component';
 import { CommonModule } from '@angular/common';
-import {Players} from '../services/mockup-players';
+import { Players } from '../services/mockup-players';
 import { RouterModule } from '@angular/router';
 import { Location } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { Player } from '../services/player';
+import { PlayerCardComponent } from '../player-card/player-card.component';
 
 @Component({
-  selector: 'app-players',  
-  imports:[CommonModule, RouterModule],
+  selector: 'app-players',
+  standalone: true,
+  imports: [CommonModule, RouterModule, FormsModule, PlayerCardComponent],
   templateUrl: './players.component.html',
   styleUrl: './players.component.css',
-
 })
-
-
 export class PlayersComponent {
   players = Players;
-  
-  constructor(private location: Location) { }
+  searchText: string = '';
+  selectedFilters: Partial<Player & { stature?: string; average?: string }> = {}; 
+  showFilterDropdown: boolean = false;
 
+  constructor(private location: Location) {}
+
+  get filteredPlayers() {
+    return this.players.filter(player => {
+      const matchesSearch = this.searchText
+        ? (Object.keys(player) as (keyof Player)[]).some(key => {
+            const value = player[key];
+            return typeof value === 'string' || typeof value === 'number'
+              ? value.toString().toLowerCase().includes(this.searchText.toLowerCase())
+              : false;
+          })
+        : true;
+
+      const matchesFilters = Object.entries(this.selectedFilters).every(([key, value]) => {
+        if (key === 'stature' && value) {
+          return this.isWithinRange(player.stature, value);
+        }
+        if (key === 'average' && value) {
+          return this.isWithinRange(player.average, value);
+        }
+        
+        return value !== undefined && value !== '' ? (player as any)[key] == value : true;
+      });
+
+      return matchesSearch && matchesFilters;
+    });
+  }
+
+  isWithinRange(playerValue: number, selectedRange: string): boolean {
+    if (!selectedRange) return true;
+    const [min, max] = this.parseRange(selectedRange);
+    return playerValue >= min && playerValue <= max;
+  }
+
+  parseRange(range: string): [number, number] {
+    return range.split('-').map(Number) as [number, number];
+  }
+
+  toggleFilterDropdown() {
+    this.showFilterDropdown = !this.showFilterDropdown;
+  }
+
+  clearFilters() {
+    this.selectedFilters = {};
+    this.searchText = '';
+  }
 
   goBack(): void {
     this.location.back();
   }
-
 }
-
-
