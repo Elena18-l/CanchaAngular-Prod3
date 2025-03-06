@@ -56,7 +56,7 @@
   .filter-dropdown button {
     width: 100%;
     margin-top: 5px;
-    padding: 5px;
+    padding: 2px;
     background-color: #C02A2D;
     color: white;
     border: none;
@@ -65,7 +65,7 @@
   }
   
   .filter-dropdown button:hover {
-    background-color: #A02025;
+    background-color: #C02A2D;
   }
   
 
@@ -162,24 +162,24 @@
     border-radius: 3px;
     z-index: 2;
 }
-
 .player-info {
     position: absolute;
     bottom: 5px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 90%;
-    text-align: center;
-    padding: 0px;
+    left: 5px; /* Mueve la info más a la izquierda */
+    transform: none; /* Elimina la transformación */
+    width: auto; /* Ajusta el ancho según el contenido */
+    text-align: left; /* Alinea el texto a la izquierda */
+    padding: 2px 5px; /* Reduce el padding */
     border-radius: 8px;
     background: transparent;
     z-index: 3;
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: flex-start; /* Alinea los textos a la izquierda */
     opacity: 0;
     transition: opacity 0.3s ease-in-out;
 }
+
 
 .playerCard:hover .player-info {
     opacity: 1;

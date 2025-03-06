@@ -1,27 +1,29 @@
 /* You can add global styles to this file, and also import other style files */
 .font-player-sho {
-    font-family: "Inter", sans-serif; 
-    font-weight: 200; 
-    font-style: normal;
-    background-color: #C02A2D; 
-    font-size: 16px;
-    color: white; 
-    padding: 10px; 
-    display: inline-block;
-    
-  }
-  
-  .font-rol-sho {
-    font-family: "Inter", sans-serif;  
-    font-weight: 700; 
-    font-style: bold;
-    background-color: #C02A2D; 
-    font-size: 16px;
-    color: white; 
-    padding: 10px; 
-    display: inline-block;
-    
-  }
+  font-family: "Inter", sans-serif;
+  font-size: 13px;
+  font-weight: 700; /* Hace que el texto sea en negrita */
+  color: white;
+  background-color: #C02A2D;
+  padding: 2px 5px;
+  margin: 0;
+  display: block;
+  line-height: 1.1;
+}
+
+.font-rol-sho {
+  font-family: "Inter", sans-serif;
+  font-size: 13px;
+  font-weight: 400; /* Mantiene el texto normal (sin negrita) */
+  color: white;
+  background-color: #C02A2D;
+  padding: 2px 5px;
+  margin: 0;
+  display: block;
+  line-height: 1.1;
+}
+
+
   .logo{
     width: 50px;
     height: 44.9px;
