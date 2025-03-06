@@ -9,7 +9,16 @@
   <!-- Dropdown de filtros -->
   <div *ngIf="showFilterDropdown" class="filter-dropdown">
     <h3>Filtrar Jugadores</h3>
-
+    <label>Dorsal</label>
+    <select [(ngModel)]="selectedFilters.shirtNumber">
+      <option value="">Todos</option>
+      <option value="4">4</option> 
+      <option value="5">5</option>
+      <option value="7">7</option> 
+      <option value="10">10</option>    
+      <option value="11">11</option> 
+      <option value="14">14</option>    
+    </select>
     <label>Posición:</label>
     <select [(ngModel)]="selectedFilters.position">
       <option value="">Todas</option>
@@ -20,10 +29,12 @@
       <option value="Escolta">Escolta</option>
     </select>
 
-    <label>Equipo:</label>
-    <select [(ngModel)]="selectedFilters.team">
+    <label>Media:</label>
+    <select [(ngModel)]="selectedFilters.average">
       <option value="">Todos</option>
-      <option value="Shohoku">Shohoku</option>
+      <option value="0-8">8 o menos</option>
+      <option value="8.1-9">entre 8 y 9</option>
+      <option value="9.1-10">más de 9</option>
     </select>
     <label>Edad:</label>
     <select [(ngModel)]="selectedFilters.age">
@@ -33,7 +44,20 @@
       <option value="17">17</option>
       <option value="18">18</option>
       <option value="19">19</option>
-    </select> 
+     
+    </select>
+    <label>Altura:</label>
+    <select [(ngModel)]="selectedFilters.stature">
+      <option value="">Todas</option>
+      <option value="0-175">175 cm o menos</option>
+      <option value="175-180">Entre 1.75 y 1.80</option>
+      <option value="180-185">Entre 1.80 y 1.85</option>
+      <option value="185-190">Entre 1.85 y 1.90</option>
+      <option value="190-195">Entre 1.90 y 1.95</option>
+      <option value="195-200">Entre 1.95 y 2.00</option>
+      <option value="200-300">Más de 2m</option> 
+    </select>
+
     <button (click)="toggleFilterDropdown()">Aplicar</button>
     <button (click)="clearFilters()">Limpiar filtros</button>
   </div>

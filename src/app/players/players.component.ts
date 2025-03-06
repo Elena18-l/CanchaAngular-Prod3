@@ -17,31 +17,45 @@ import { PlayerCardComponent } from '../player-card/player-card.component';
 export class PlayersComponent {
   players = Players;
   searchText: string = '';
-  selectedFilters: Partial<Player> = {};
-  showFilterDropdown: boolean = false; // Ahora usamos dropdown en vez de modal
+  selectedFilters: Partial<Player & { stature?: string; average?: string }> = {}; 
+  showFilterDropdown: boolean = false;
 
   constructor(private location: Location) {}
 
   get filteredPlayers() {
     return this.players.filter(player => {
       const matchesSearch = this.searchText
-        ? (Object.keys(player) as (keyof Player)[])
-            .some(key => {
-              const value = player[key];
-              return typeof value === 'string' || typeof value === 'number'
-                ? value.toString().toLowerCase().includes(this.searchText.toLowerCase())
-                : false;
-            })
+        ? (Object.keys(player) as (keyof Player)[]).some(key => {
+            const value = player[key];
+            return typeof value === 'string' || typeof value === 'number'
+              ? value.toString().toLowerCase().includes(this.searchText.toLowerCase())
+              : false;
+          })
         : true;
 
-      const matchesFilters = Object.entries(this.selectedFilters).every(([key, value]) =>
-        value !== undefined && value !== ''
-          ? (player as any)[key] == value
-          : true
-      );
+      const matchesFilters = Object.entries(this.selectedFilters).every(([key, value]) => {
+        if (key === 'stature' && value) {
+          return this.isWithinRange(player.stature, value);
+        }
+        if (key === 'average' && value) {
+          return this.isWithinRange(player.average, value);
+        }
+        
+        return value !== undefined && value !== '' ? (player as any)[key] == value : true;
+      });
 
       return matchesSearch && matchesFilters;
     });
+  }
+
+  isWithinRange(playerValue: number, selectedRange: string): boolean {
+    if (!selectedRange) return true;
+    const [min, max] = this.parseRange(selectedRange);
+    return playerValue >= min && playerValue <= max;
+  }
+
+  parseRange(range: string): [number, number] {
+    return range.split('-').map(Number) as [number, number];
   }
 
   toggleFilterDropdown() {
@@ -57,4 +71,3 @@ export class PlayersComponent {
     this.location.back();
   }
 }
-
