@@ -7,38 +7,33 @@
         [src]="image" 
         class="img-thumbnail" 
         data-bs-toggle="modal" 
-        data-bs-target="#carouselModal"
+        data-bs-target="#carouselImageModal"
         (click)="setActiveImage(i)" 
         alt="Imagen {{i + 1}}">
     </div>
   </div>
 </div>
 
-<!-- Modal con Carrusel -->
-<div class="modal fade" id="carouselModal" tabindex="-1" aria-labelledby="carouselModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-lg">
+<!-- Modal con Carrusel de Imágenes -->
+<div class="modal fade" id="carouselImageModal" tabindex="-1" aria-labelledby="carouselImageModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered"> <!-- Ajuste para que el modal se centre -->
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="carouselModalLabel">Galería de Imágenes</h5>
+        <h5 class="modal-title" id="carouselImageModalLabel">Galería de Imágenes</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
         <div id="carouselExampleIndicators" class="carousel slide">
-          
-
-         
-
-          <!-- Carrusel de Imágenes -->
           <div class="carousel-inner">
             <div 
               class="carousel-item" 
               *ngFor="let image of player?.gallery; let i = index" 
               [class.active]="i === activeIndex">
-              <img [src]="image" class="d-block  " alt="Imagen {{i + 1}}">
+              <img [src]="image" class="d-block" alt="Imagen {{i + 1}}">
             </div>
           </div>
 
-          <!-- Miniaturas en lugar de indicadores -->
+          <!-- Miniaturas -->
           <div class="d-flex justify-content-center mb-2">
             <div class="thumb-container">
               <img 
@@ -50,6 +45,7 @@
                 alt="Miniatura {{i + 1}}">
             </div>
           </div>
+
           <!-- Controles -->
           <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -65,54 +61,55 @@
   </div>
 </div>
 
-<!-- Botón Volver -->
-<button type="button" class="btn btn-outline-primary" (click)="goBack()">Volver</button>
-
-
-
+<!-- Galería de Videos -->
 <div class="container mt-5">
-<h2>Galería de Videos</h2>
+  <h2>Galería de Videos</h2>
 
-<button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#videoModal">
-  Ver Videos
-</button>
+  <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#carouselVideoModal">
+    Ver Videos
+  </button>
 
-<!-- Modal con Carrusel -->
-<div class="modal fade" id="videoModal" tabindex="-1" aria-labelledby="videoModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-lg">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="videoModalLabel">Galería de Videos</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <div id="carouselVideos" class="carousel slide" data-bs-ride="carousel">
-          <div class="carousel-inner">
-            <div 
-              class="carousel-item" 
-              *ngFor="let video of player?.video; let i = index" 
-              [class.active]="i === activeIndex">
-              <iframe 
-                [src]="video | safeUrl" 
-                class="d-block w-100" 
-                height="500"
-                frameborder="0"
-                allowfullscreen>
-              </iframe>
+  <!-- Modal con Carrusel de Videos -->
+  <div class="modal fade" id="carouselVideoModal" tabindex="-1" aria-labelledby="carouselVideoModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg"> <!-- Modal grande para videos -->
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="carouselVideoModalLabel">Galería de Videos</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div id="carouselVideos" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner">
+              <div 
+                class="carousel-item" 
+                *ngFor="let video of player?.video; let i = index" 
+                [class.active]="i === activeIndex">
+                <div class="video-container">
+                  <iframe 
+                    [src]="video | safeUrl" 
+                    class="d-block"
+                    frameborder="0"
+                    allowfullscreen>
+                  </iframe>
+                </div>
+              </div>
             </div>
+
+            <!-- Controles -->
+           
           </div>
-          <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Anterior</span>
-          </button>
-          <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Siguiente</span>
-          </button>
         </div>
       </div>
     </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselVideos" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Anterior</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselVideos" data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Siguiente</span>
+    </button>
   </div>
 </div>
 
-<button type="button" class="btn btn-outline-primary" (click)="goBack()" >Volver</button>
+<button type="button" class="btn btn-outline-primary" (click)="goBack()">Volver</button>
