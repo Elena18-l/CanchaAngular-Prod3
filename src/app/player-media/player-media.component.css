@@ -33,7 +33,7 @@
   }
   
   .active-thumb {
-    border: 2px solid #007bff; /* Borde azul en miniatura activa */
+    border: 2px solid #C02A2D; /* Borde azul en miniatura activa */
     transform: scale(1.15); /* Aumenta un poco el tamaño */
   }
   
@@ -43,6 +43,7 @@ min-height: 650px;
  }
 .modal-content{
   max-width: fit-content;
+  background-color: #FFE9BF;
   
 }
 .carousel-item{
