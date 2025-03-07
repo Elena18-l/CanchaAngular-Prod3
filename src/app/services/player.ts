@@ -20,5 +20,6 @@ export interface Player {
     gallery: string[]; // las fotos de la galeria
     bio: string;
     skills:Skills;
+    video: string[];
     
 }

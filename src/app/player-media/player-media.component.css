@@ -51,6 +51,6 @@ min-height: 650px;
 }
 
 
-  .modal-lg, .modal-xl {
-      --bs-modal-width: 400px;
-  }
+.modal-lg, .modal-xl {
+    --bs-modal-width: 400px;
+}

@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { PlayerService } from '../services/playerService';
 import { Player } from '../services/player';
 import { Players } from '../services/mockup-players';
+import { SafeUrlPipe } from '../player-media/safe-url.pipe';
 import { Location } from '@angular/common';
 import { CommonModule } from '@angular/common'; // Importa CommonModule aquí
 import { RouterModule } from '@angular/router'; // Si necesitas enrutamiento
@@ -14,7 +15,8 @@ import { RouterModule } from '@angular/router'; // Si necesitas enrutamiento
   standalone: true, // Asegúrate de marcar el componente como standalone
   imports: [
     CommonModule, // Asegúrate de importar CommonModule para que funcione ngFor
-    RouterModule // Si necesitas enrutamiento, asegúrate de importar RouterModule
+    RouterModule, // Si necesitas enrutamiento, asegúrate de importar RouterModule
+    SafeUrlPipe
   ]
 })
 export class PlayerMediaComponent implements OnInit {
@@ -42,6 +44,10 @@ export class PlayerMediaComponent implements OnInit {
   }
 
   setActiveImage(index: number): void {
+    this.activeIndex = index;
+  }
+
+  setActiveVideo(index: number): void {
     this.activeIndex = index;
   }
 }
