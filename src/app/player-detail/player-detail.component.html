@@ -42,6 +42,11 @@
 <div> Resistencia:{{player?.skills?.resistencia}}</div>
 <div> Habilidad Especial:{{player?.skills?.habilidadEspecial}}</div>
 
+<div *ngIf="player">
+<app-pentagon *ngIf="player?.skills" [skills]="player!.skills"></app-pentagon>
+</div>
+
+
   <button class="boton-canchaMas" *ngIf="player" (click)="getMedia()">
     Ver Media
   </button>

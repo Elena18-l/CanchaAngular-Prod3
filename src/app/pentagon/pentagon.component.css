@@ -1,0 +1,63 @@
+.radar-container {
+    position: relative;
+    width: 350px;
+    height: 350px;
+    margin: auto;
+  }
+  
+  canvas {
+    width: 100% !important;
+    height: 100% !important;
+  }
+  
+  .stat-box {
+    position: absolute;
+    background: black;
+    color: white;
+    padding: 5px 10px;
+    text-align: center;
+    border: 1px solid black;
+    font-size: 14px;
+    font-weight: bold;
+  }
+  
+  .stat-box span {
+    display: block;
+    font-size: 12px;
+    color: white;
+  }
+  
+  .stat-box strong {
+    display: block;
+    background: white;
+    color: black;
+    padding: 3px;
+    font-size: 16px;
+  }
+  
+  .top {
+    top: -20px;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  
+  .right {
+    top: 30%;
+    right: -60px;
+  }
+  
+  .bottom-right {
+    bottom: -20px;
+    right: 20px;
+  }
+  
+  .bottom-left {
+    bottom: -20px;
+    left: 20px;
+  }
+  
+  .left {
+    top: 30%;
+    left: -60px;
+  }
+  
