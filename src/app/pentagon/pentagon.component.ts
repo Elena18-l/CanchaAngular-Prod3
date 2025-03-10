@@ -36,59 +36,61 @@ private updatePlayerStats() {
   ];
 }
 
-  createRadarChart() {
-    if (!this.chartRef.nativeElement || !this.skills){
+createRadarChart() {
+  if (!this.chartRef.nativeElement || !this.skills) {
     console.error("Canvas o skills no disponible");
-    const stats = [
-      this.skills.fisico,
-      this.skills.tecnica,
-      this.skills.fuerzaMental,
-      this.skills.resistencia,
-      this.skills.habilidadEspecial,
-    ];
-      return;
-    };
+    return;
+  }
 
-    this.chart = new Chart(this.chartRef.nativeElement, {
-      type: 'radar',
-      data: {
-        labels: ['Físico', 'Técnica', 'Fuerza mental', 'Resistencia', 'Habilidades Especiales'],
-        datasets: [
-          {
-            label: 'Estadísticas',
-            data: stats,
-            backgroundColor: 'rgba(255, 165, 0, 0.2)',
-            borderColor: '#FF9809',
-            borderWidth: 2,
-            pointBackgroundColor: 'orange',
-          },
-        ],
-      },
-      options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        scales: {
-          r: {
-            beginAtZero: true,
-            min: 0,
-            max: 10,
-            ticks: {
-              stepSize: 2,
-              color: '#000',
-            },
-            grid: {
-              color: '#000',
-            }
-          }
+  const stats = [
+    this.skills.fisico,
+    this.skills.tecnica,
+    this.skills.fuerzaMental,
+    this.skills.resistencia,
+    this.skills.habilidadEspecial,
+  ];
+
+  this.chart = new Chart(this.chartRef.nativeElement, {
+    type: 'radar',
+    data: {
+      labels: ['Físico', 'Técnica', 'Fuerza mental', 'Resistencia', 'Habilidades Especiales'],
+      datasets: [
+        {
+          label: 'Estadísticas',
+          data: stats,  // Ahora stats está correctamente definido
+          backgroundColor: 'rgba(255, 165, 0, 0.2)',
+          borderColor: '#FF9809',
+          borderWidth: 2,
+          pointBackgroundColor: 'orange',
         },
-        plugins: {
-          legend: {
-            display: false
+      ],
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      scales: {
+        r: {
+          beginAtZero: true,
+          min: 0,
+          max: 10,
+          ticks: {
+            stepSize: 2,
+            color: '#000',
+          },
+          grid: {
+            color: '#000',
           }
         }
+      },
+      plugins: {
+        legend: {
+          display: false
+        }
       }
-    });
-  }
+    }
+  });
+}
+
   private updateChart() {
     if (this.chart) {
       this.chart.data.datasets[0].data = this.playerStats;
