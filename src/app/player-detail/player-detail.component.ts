@@ -11,12 +11,13 @@ import { Location } from '@angular/common';  //esto es para ir para atrás
 import { FormsModule } from '@angular/forms';
 import { PlayerMediaComponent } from '../player-media/player-media.component';
 import { Skills } from '../services/player';
+import { PentagonComponent } from '../pentagon/pentagon.component';
 @Component({
   selector: 'app-player-detail',  
   standalone: true,
   templateUrl: './player-detail.component.html',
   styleUrl: './player-detail.component.css',
-  imports: [CommonModule, FormsModule, RouterModule],
+  imports: [CommonModule, FormsModule, RouterModule, PentagonComponent],
 })
 export class PlayerDetailComponent implements OnInit {
   player?: Player;
@@ -35,6 +36,7 @@ export class PlayerDetailComponent implements OnInit {
     console.log('ID del jugador:', playerId); // <-- Agregar esto para depurar
     this.player = Players.find(player => player.id === playerId);
     console.log('Jugador encontrado:', this.player);
+    console.log(this.player?.skills);
     // this.player = Players.find(player=> player.name === playerName); // <-- Verificar si el jugador existe
   }
 
