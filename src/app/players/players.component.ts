@@ -1,26 +1,28 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Players } from '../services/mockup-players';
-import { RouterModule } from '@angular/router';
+import { RouterModule, Router } from '@angular/router';  // Asegúrate de importar Router
 import { Location } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Player } from '../services/player';
 import { PlayerSearchPipe } from '../player-search/player-search.pipe';
+import { PlayerCardComponent } from '../player-card/player-card.component';
 
 @Component({
   selector: 'app-players',
   standalone: true,
-  imports: [CommonModule, RouterModule, FormsModule, PlayerSearchPipe],
+  imports: [CommonModule, RouterModule, FormsModule, PlayerSearchPipe, PlayerCardComponent],
   templateUrl: './players.component.html',
   styleUrl: './players.component.css',
 })
 export class PlayersComponent {
   players = Players;
   searchText: string = '';
-  selectedFilters: Partial<Player & { stature?: string; average?: string }> = {}; 
+  selectedFilters: Partial<Player & { stature?: string; average?: string }> = {};
   showFilterDropdown: boolean = false;
+  selectedPlayer: Player | null = null;
 
-  constructor(private location: Location) {}
+  constructor(private location: Location, private router: Router) {}  // Asegúrate de inyectar Router
 
   get filteredPlayers() {
     return this.players.filter(player => {
@@ -40,7 +42,6 @@ export class PlayersComponent {
         if (key === 'average' && value) {
           return this.isWithinRange(player.average, value);
         }
-        
         return value !== undefined && value !== '' ? (player as any)[key] == value : true;
       });
 
@@ -65,6 +66,11 @@ export class PlayersComponent {
   clearFilters() {
     this.selectedFilters = {};
     this.searchText = '';
+  }
+
+  selectPlayer(player: Player) {
+    // Navegar directamente a la página de detalles del jugador
+    this.router.navigate(['/player', player.id]);
   }
 
   goBack(): void {

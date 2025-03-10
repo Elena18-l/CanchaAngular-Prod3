@@ -1,62 +1,70 @@
-import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
-import { CommonModule } from '@angular/common'; // <-- IMPORTAR CommonModule
-
-import { Component, OnInit } from '@angular/core';
-import { PlayerService } from '../services/playerService';
-import {Player} from '../services/player';
-import {Router, ActivatedRoute, RouterModule } from '@angular/router';
-import {Players} from '../services/mockup-players';
-import { Location } from '@angular/common';  //esto es para ir para atrás
-import { FormsModule } from '@angular/forms';
-import { PlayerMediaComponent } from '../player-media/player-media.component';
-import { Skills } from '../services/player';
+import { Component, OnInit, OnDestroy, Input } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Location } from '@angular/common';
+import { Player } from '../services/player';
+import { Players } from '../services/mockup-players';
+import { Subscription } from 'rxjs';
+import { CommonModule } from '@angular/common'; 
 import { PentagonComponent } from '../pentagon/pentagon.component';
+import { PlayerMediaComponent } from '../player-media/player-media.component';
 @Component({
-  selector: 'app-player-detail',  
-  standalone: true,
+  selector: 'app-player-detail',
+  standalone: true,  // Marcamos como standalone
+  imports: [CommonModule, PentagonComponent, PlayerDetailComponent],  // Importamos CommonModule para usar directivas como *ngIf
   templateUrl: './player-detail.component.html',
-  styleUrl: './player-detail.component.css',
-  imports: [CommonModule, FormsModule, RouterModule, PentagonComponent],
+  styleUrls: ['./player-detail.component.css'],
 })
-export class PlayerDetailComponent implements OnInit {
-  player?: Player;
-  
-  constructor
-  (private route: ActivatedRoute, 
-  private playerService: PlayerService,
-  private location: Location,
-  private router: Router ) { }
-  ngOnInit():void {
-    this.getPlayerDetails();
-    // this.getMedia();
-  }
-  getPlayerDetails(): void {
-    const playerId = Number(this.route.snapshot.paramMap.get('id')); // Obtiene el ID de la URL
-    console.log('ID del jugador:', playerId); // <-- Agregar esto para depurar
-    this.player = Players.find(player => player.id === playerId);
-    console.log('Jugador encontrado:', this.player);
-    console.log(this.player?.skills);
-    // this.player = Players.find(player=> player.name === playerName); // <-- Verificar si el jugador existe
-  }
+export class PlayerDetailComponent implements OnInit, OnDestroy {
 
+  private routeSub: Subscription = new Subscription(); // Para manejar la suscripción
+  @Input() player?: Player;  // Asegúrate de que player tenga el tipo adecuado
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private location: Location
+  ) {}
 
-  
-  goBack(): void {
-    this.location.back();
-  }
-  getMedia(): void {
+  ngOnInit(): void {
+    // Nos suscribimos a los cambios de la URL y obtenemos el jugador con el ID actual
+    this.routeSub = this.route.paramMap.subscribe(params => {
+      const playerId = Number(params.get('id'));
+      if (playerId !== 0) {
+        this.getPlayerDetails(playerId); // Obtenemos los detalles del jugador con el ID de la URL
+      }
+    });
+
+    // Si ya tenemos un jugador recibido desde el Input, lo mostramos
     if (this.player) {
-      this.router.navigate(['/player', this.player.id, 'media']); // Redirige a la página de media
+      console.log('Jugador recibido desde Input:', this.player);
     }
   }
-  
-  // getMedia(): void {
-  //   const playerId = Number(this.route.snapshot.paramMap.get('id')); // Obtiene el ID de la URL
-  //   console.log('ID del jugador:', playerId); // <-- Agregar esto para depurar
-  //   this.player = Players.find(player => player.id === playerId);
-  //   console.log('Jugador encontrado:', this.player); // <-- Verificar si el jugador existe
-  //   this.router.navigate(['/player/:id/media']);
-  // }
-}
 
+  ngOnDestroy(): void {
+    // Limpiar la suscripción cuando el componente se destruya
+    if (this.routeSub) {
+      this.routeSub.unsubscribe();
+    }
+  }
+
+  getPlayerDetails(playerId: number): void {
+    if (playerId === 0) return;
+
+    // Buscamos al jugador en el mockup usando el ID
+    this.player = Players.find(player => player.id === playerId);
+    if (this.player) {
+      console.log('Jugador encontrado:', this.player);
+    } else {
+      console.log('Jugador no encontrado');
+    }
+  }
+
+  goBack(): void {
+    this.location.back();  // Volver a la página anterior
+  }
+
+  getMedia(): void {
+    if (this.player) {
+      this.router.navigate(['/player', this.player.id, 'media']); // Navegar a los detalles del jugador
+    }
+  }
+}
