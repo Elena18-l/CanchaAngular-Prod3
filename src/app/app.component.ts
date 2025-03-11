@@ -31,7 +31,7 @@ import { Player } from './services/player';
 export class AppComponent {
   title = 'chancha-angular';
   searchText = ''; // Variable para almacenar el texto de búsqueda
-  selectedPlayer: Player | undefined = undefined; // Cambiado de null a undefined
+  selectedPlayer: Player | null = null;
   activeComponent: string = 'players'; // Establecer componente inicial
 
   constructor(private searchService: SearchService) {
@@ -41,7 +41,7 @@ export class AppComponent {
   }
 
   onPlayerSelected(player: Player) {
-    this.selectedPlayer = player;
+    this.selectedPlayer = player; 
   }
 
   onSearchChange(event: Event) {

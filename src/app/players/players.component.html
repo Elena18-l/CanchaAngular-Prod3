@@ -1,79 +1,69 @@
 <img src="assets/logosho.png" class="logoshohoku">
 
+<!-- Contenedor de filtros -->
 <div class="filter-container">
-  <!-- Botón para abrir/cerrar el dropdown -->
   <button (click)="toggleFilterDropdown()" class="filter-button">
     Filtrar ▼
   </button>
 
-  <!-- Dropdown de filtros -->
   <div *ngIf="showFilterDropdown" class="filter-dropdown">
     <h3>Filtrar Jugadores</h3>
+
     <label>Dorsal</label>
     <select [(ngModel)]="selectedFilters.shirtNumber">
       <option value="">Todos</option>
-      <option value="4">4</option> 
-      <option value="5">5</option>
-      <option value="7">7</option> 
-      <option value="10">10</option>    
-      <option value="11">11</option> 
-      <option value="14">14</option>    
+      <option *ngFor="let num of [4,5,7,10,11,14]" [value]="num">{{ num }}</option>
     </select>
+
     <label>Posición:</label>
     <select [(ngModel)]="selectedFilters.position">
       <option value="">Todas</option>
-      <option value="Base">Base</option>
-      <option value="Alero">Alero</option>
-      <option value="Pivot">Pívot</option>
-      <option value="Ala">Ala</option>
-      <option value="Escolta">Escolta</option>
+      <option *ngFor="let pos of ['Base', 'Alero', 'Pívot', 'Ala', 'Escolta']" [value]="pos">
+        {{ pos }}
+      </option>
     </select>
 
     <label>Media:</label>
     <select [(ngModel)]="selectedFilters.average">
       <option value="">Todos</option>
-      <option value="0-8">8 o menos</option>
-      <option value="8.1-9">entre 8 y 9</option>
-      <option value="9.1-10">más de 9</option>
+      <option *ngFor="let avg of ['0-8', '8.1-9', '9.1-10']" [value]="avg">
+        {{ avg === '0-8' ? '8 o menos' : avg === '8.1-9' ? 'entre 8 y 9' : 'más de 9' }}
+      </option>
     </select>
+
     <label>Edad:</label>
     <select [(ngModel)]="selectedFilters.age">
       <option value="">Todas</option>
-      <option value="15">15</option>
-      <option value="16">16</option>      
-      <option value="17">17</option>
-      <option value="18">18</option>
-      <option value="19">19</option>
-     
+      <option *ngFor="let age of [15, 16, 17, 18, 19]" [value]="age">{{ age }}</option>
     </select>
+
     <label>Altura:</label>
     <select [(ngModel)]="selectedFilters.stature">
       <option value="">Todas</option>
-      <option value="0-175">175 cm o menos</option>
-      <option value="175-180">Entre 1.75 y 1.80</option>
-      <option value="180-185">Entre 1.80 y 1.85</option>
-      <option value="185-190">Entre 1.85 y 1.90</option>
-      <option value="190-195">Entre 1.90 y 1.95</option>
-      <option value="195-200">Entre 1.95 y 2.00</option>
-      <option value="200-300">Más de 2m</option> 
+      <option *ngFor="let range of ['0-175', '175-180', '180-185', '185-190', '190-195', '195-200', '200-300']" 
+              [value]="range">
+        {{ range === '0-175' ? '175 cm o menos' : 
+           range === '200-300' ? 'Más de 2m' : 'Entre ' + range.replace('-', ' y ') }}
+      </option>
     </select>
 
-    <button (click)="toggleFilterDropdown()">Aplicar</button>
-    <button (click)="clearFilters()">Limpiar filtros</button>
+    <div class="filter-buttons">
+      <button (click)="toggleFilterDropdown()">Aplicar</button>
+      <button (click)="clearFilters()">Limpiar filtros</button>
+    </div>
   </div>
 </div>
 
-<!-- Lista de jugadores filtrados -->
+<!-- Título -->
 <h2 class="team-title">El equipo Shohoku está formado por:</h2>
 
+<!-- Lista de jugadores -->
 <div class="players-grid">
-  <!-- Lista de jugadores -->
   <div *ngFor="let player of filteredPlayers">
-    <!-- Para la selección directa, emitimos el jugador cuando se hace clic -->
+    <!-- Opción 1: Emitir evento cuando se hace clic (para mostrar en la misma página) -->
     <app-player-card [player]="player" (click)="selectPlayer(player)"></app-player-card>
-  </div>
-  <div class="playerCard" *ngFor="let player of filteredPlayers">
-    <!-- Usamos routerLink para la navegación hacia el detalle del jugador -->
+
+    <!-- Opción 2: Navegar a la página de detalles del jugador -->
     <a [routerLink]="['/player', player.id]" class="player-link">
       <div class="player-img-container">
         <p class="playerNumber">{{ player.shirtNumber }}</p>
@@ -87,5 +77,3 @@
   </div>
 </div>
 
-<!-- Botón para volver -->
-<button type="button" class="boton-cancha" (click)="goBack()">Volver a equipos</button>

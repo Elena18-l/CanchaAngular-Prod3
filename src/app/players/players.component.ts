@@ -1,28 +1,30 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Players } from '../services/mockup-players';
-import { RouterModule, Router } from '@angular/router';  // Asegúrate de importar Router
-import { Location } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Player } from '../services/player';
 import { PlayerSearchPipe } from '../player-search/player-search.pipe';
 import { PlayerCardComponent } from '../player-card/player-card.component';
-
+import { RouterModule, Router } from '@angular/router';
+import { Location } from '@angular/common'; 
 @Component({
   selector: 'app-players',
   standalone: true,
-  imports: [CommonModule, RouterModule, FormsModule, PlayerSearchPipe, PlayerCardComponent],
+  imports: [CommonModule, FormsModule,RouterModule, PlayerSearchPipe, PlayerCardComponent],
   templateUrl: './players.component.html',
   styleUrl: './players.component.css',
+  providers:[Location]
 })
 export class PlayersComponent {
+  @Output() playerSelected = new EventEmitter<Player>();
+
   players = Players;
   searchText: string = '';
   selectedFilters: Partial<Player & { stature?: string; average?: string }> = {};
   showFilterDropdown: boolean = false;
   selectedPlayer: Player | null = null;
 
-  constructor(private location: Location, private router: Router) {}  // Asegúrate de inyectar Router
+  constructor(private location: Location, private router: Router) {} 
 
   get filteredPlayers() {
     return this.players.filter(player => {
@@ -69,11 +71,6 @@ export class PlayersComponent {
   }
 
   selectPlayer(player: Player) {
-    // Navegar directamente a la página de detalles del jugador
-    this.router.navigate(['/player', player.id]);
-  }
-
-  goBack(): void {
-    this.location.back();
+    this.playerSelected.emit(player); // ✅ Ahora emite correctamente el jugador seleccionado
   }
 }
