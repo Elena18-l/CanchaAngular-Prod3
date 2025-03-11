@@ -24,14 +24,14 @@
     </div>
 
     <!-- Aquí mostramos los jugadores -->
-    <app-players (playerSelected)="onPlayerSelected($event)"></app-players>
+     <app-players (playerSelected)="onPlayerSelected($event)"></app-players> 
 
     <!-- Si se selecciona un jugador, muestra los detalles -->
-    <div *ngIf="selectedPlayer">
+    <!-- <div *ngIf="selectedPlayer">
       <app-player-detail [player]="selectedPlayer"></app-player-detail>
       <app-pentagon></app-pentagon>
       <app-player-media></app-player-media>
-    </div>
+    </div> -->
 
     <!-- Aquí Angular insertará las páginas dinámicamente -->
     <router-outlet></router-outlet>

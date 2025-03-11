@@ -5,7 +5,7 @@ import { PlayerMediaComponent } from './player-media/player-media.component';
 
 export const appRoutes: Routes = [
   { path: '', redirectTo: 'players', pathMatch: 'full' }, // Redirigir correctamente
-  { path: 'players', component: PlayersComponent }, // Lista de jugadores
+  // Lista de jugadores
   { path: 'player/:id', component: PlayerDetailComponent }, // Detalle de un jugador
   {path: 'player/:id/media', component: PlayerMediaComponent},
 ];
