@@ -26,12 +26,12 @@
     <!-- Aquí mostramos los jugadores -->
      <app-players (playerSelected)="onPlayerSelected($event)"></app-players> 
 
-    <!-- Si se selecciona un jugador, muestra los detalles -->
-    <!-- <div *ngIf="selectedPlayer">
-      <app-player-detail [player]="selectedPlayer"></app-player-detail>
-      <app-pentagon></app-pentagon>
-      <app-player-media></app-player-media>
-    </div> -->
+ <!-- Aqui salta el modal con los resultados de la busqueda -->
+<div *ngIf="searchText.length > 0" class="modal">
+  <div class="modal-content">
+    <app-player-results></app-player-results>
+  </div>
+</div>
 
     <!-- Aquí Angular insertará las páginas dinámicamente -->
     <router-outlet></router-outlet>

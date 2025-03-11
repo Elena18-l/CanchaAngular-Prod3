@@ -10,6 +10,7 @@ import { PlayerMediaComponent } from './player-media/player-media.component';
 import { PentagonComponent } from './pentagon/pentagon.component';
 import { Player } from './services/player'; 
 
+
 @Component({
   selector: 'app-root',
   standalone: true,
