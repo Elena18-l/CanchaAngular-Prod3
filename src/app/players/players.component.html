@@ -7,8 +7,8 @@
   </button>
 
   <div *ngIf="showFilterDropdown" class="filter-dropdown">
-    <h3>Filtrar Jugadores</h3>
-
+    <div class="filter-header"><h3>Filtrar Jugadores</h3></div>
+<div class="filter-controls">
     <label>Dorsal</label>
     <select [(ngModel)]="selectedFilters.shirtNumber">
       <option value="">Todos</option>
@@ -46,7 +46,7 @@
            range === '200-300' ? 'Más de 2m' : 'Entre ' + range.replace('-', ' y ') }}
       </option>
     </select>
-
+  </div>
     <div class="filter-buttons">
       <button (click)="toggleFilterDropdown()">Aplicar</button>
       <button (click)="clearFilters()">Limpiar filtros</button>
@@ -59,7 +59,7 @@
 
 <!-- Lista de jugadores -->
 <div class="players-grid">
-  <div class="playerCard" *ngFor="let player of filteredPlayers">   
+  <div class="playerCard" *ngFor="let player of filteredPlayers; trackBy: trackByPlayerId">   
 
     <a [routerLink]="['/player', player.id]" class="player-link">
       <div class="player-img-container">
@@ -73,4 +73,4 @@
     </a>
   </div>
 </div>
-
+<button *ngIf="isFilterApplied()" (click)="clearFilters()">Limpiar filtros</button>

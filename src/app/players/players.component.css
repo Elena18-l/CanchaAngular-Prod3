@@ -17,57 +17,111 @@
 }
 
 .filter-container {
-    position: relative;
-    display: inline-block;
+    position:relative;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end; /* Lo envía a la derecha */
     margin-bottom: 20px;
+    gap: 10px;
+    right:12px;
   }
   
   .filter-button {
     background-color: #C02A2D;
     color: white;
-    padding: 10px;
+    padding: 10px 15px;
+    right:12px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    font-size:14px;
   }
   
   .filter-dropdown {
     position: absolute;
+    top:100%;
     background: white;
     border: 1px solid #ccc;
-    padding: 10px;
-    width: 200px;
+    padding: 15px;
+    min-width: 650px; /* Asegura que sea ancho */
+    display: flex;
+    flex-direction:column;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 10px; /* Espacio entre los elementos */
     box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
     border-radius: 5px;
     z-index: 10;
-  }
+}
   
   .filter-dropdown h3 {
-    margin: 0 0 10px;
+    margin-bottom:10px;
+    /* margin: 0 0 10px; */
     font-size: 16px;
+    text-align:left;
   }
-  
-  .filter-dropdown select {
+    /* Contenedor de los filtros // esta no sé si tiene ningun sentido.*/
+    .filter-fields {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        justify-content: space-between;
+    }
+    
+  /* .filter-dropdown select {
     width: 100%;
     padding: 5px;
     margin-bottom: 10px;
-  }
+  } */
   
+  .filter-dropdown select,
+  .filter-dropdown input {
+      flex: 1; /* Hace que ocupen el mismo espacio */
+      min-width: 120px;
+      max-width: 200px; /* Para evitar que se encojan demasiado */
+      padding: 5px;
+      margin-bottom: 10px;
+  }
+
   .filter-dropdown button {
-    width: 100%;
-    margin-top: 5px;
-    padding: 2px;
+    padding: 6px 10px;
     background-color: #C02A2D;
     color: white;
     border: none;
     cursor: pointer;
     border-radius: 5px;
-  }
-  
+}
+
   .filter-dropdown button:hover {
     background-color: #C02A2D;
   }
-  
+  /* Asegurar que los botones de "Aplicar" y "Limpiar filtros" estén alineados */
+.filter-buttons {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    gap:10px;
+}
+
+.filter-buttons button {
+    flex: 1;
+    margin: 5px;
+}
+
+.filter-controls {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.filter-controls select {
+    flex:1;
+    padding: 5px;
+    min-width:120px;
+}
+
 
 /* Modal */
 .modal-overlay {
@@ -122,9 +176,9 @@
 
 .players-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(120px, max-content));
     gap: 10px;
-    justify-content: center;
+    justify-content: left;
     padding: 10px;
 }
 
@@ -134,6 +188,7 @@
     color: white;
     text-align: center;
     padding: 5px;
+    margin: 10px;
     border-radius: 8px;
     overflow: hidden;
     position: relative;
@@ -198,4 +253,33 @@
 
 .boton-cancha:hover {
     background-color: #a02225;
+}
+
+/* Forzar que los filtros no queden partidos mal */
+@media (max-width: 500px) {
+    .filter-controls {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        justify-content: flex-end; /* Mantiene los elementos alineados a la derecha */
+        align-items: center; /* Asegura que estén alineados verticalmente */
+    }
+
+    .filter-controls select {
+        flex: 1 1 150px; /* Permite que se reduzcan pero no menos de 150px */
+        max-width: 100%;
+    }
+
+    .filter-dropdown {
+        position: absolute;
+        top: 100%;
+        right: 12px; /* Agrega margen a la derecha para que no esté pegado */
+        min-width: 300px; /* Ajusta según necesidad */
+        padding: 15px;
+        background: white;
+        border: 1px solid #ccc;
+        box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+        border-radius: 5px;
+        z-index: 10;
+    }
 }

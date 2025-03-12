@@ -80,4 +80,11 @@ export class PlayersComponent {
       this.showFilterDropdown = false;
     }
   }
+  isFilterApplied(): boolean {
+    return Object.values(this.selectedFilters).some(value => value !== undefined && value !== '');
+  }
+
+  trackByPlayerId(index: number, player: any): number {
+    return player.id;
+  }
 }
