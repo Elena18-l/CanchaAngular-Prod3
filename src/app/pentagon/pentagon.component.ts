@@ -53,7 +53,7 @@ createRadarChart() {
   this.chart = new Chart(this.chartRef.nativeElement, {
     type: 'radar',
     data: {
-      labels: ['Físico', 'Técnica', 'Fuerza mental', 'Resistencia', 'Habilidades Especiales'],
+      labels: [' ', ' ', ' ', ' ', ' '], 
       datasets: [
         {
           label: 'Estadísticas',

@@ -27,6 +27,7 @@
 .fw-bold {
   font-family: Inter;
   font-style: bold;
+  background-color: white;
   font-size: 16px;
   padding: 5px 10px;
   flex-grow: 1; /* Permite que el contenido se expanda */
@@ -36,6 +37,46 @@
   overflow: hidden; /* Esconde el texto extra en caso de ser muy largo */
   text-overflow: ellipsis; /* Muestra "..." si el texto es demasiado largo */
 }
+
+.stats-title{
+display:flex;
+width: auto;
+justify-content: center;
+
+
+}
+
+.label-title, .fw-bold-title{
+  flex:1;
+  text-align:center;
+}
+
+.label-title {
+  font-family: Inter;
+  font-size:20px;
+  font-weight: 400;
+  background: black;
+  color: white;
+  padding: 10px 8px ;
+  /* Ocupa la mitad del ancho */
+  text-align: right;
+  
+}
+
+.fw-bold-title {
+font-family: Inter;
+font-weight: 700;
+background-color: white;
+font-size: 20px;
+padding: 10px 8px;
+text-align: left;
+border: 1px solid black;
+
+}
+
+
+
+
 /* .containerDetail {
   display: flex;
   flex-direction: column;
@@ -50,15 +91,15 @@
   z-index: 1; /* Asegura que el logo esté por encima del fondo */
 }
 
-.containerDetail::after {
+/* .containerDetail::after {
   content: "";
   position: absolute;
   bottom: 0;
   width: 100%;
-  height: 50%; /* Hace que el fondo rojo llegue hasta la mitad del logo */
-  background-color:#C02A2D; /* Cambia según el color del fondo de la página */
-  z-index: 0;
-}
+  height: 50%; 
+  background-color:#C02A2D; 
+  z-index: -1;
+} */
 .container-playerData {
   display: flex;
   justify-content: center;

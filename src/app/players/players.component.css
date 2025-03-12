@@ -14,6 +14,7 @@
     font-size: 20px;
     font-weight: bold;
     margin-top: 20px;
+    padding-left: 10px;
 }
 
 .filter-container {
@@ -178,7 +179,7 @@
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(120px, max-content));
     gap: 10px;
-    justify-content: left;
+    justify-content: space-evenly;
     padding: 10px;
 }
 
@@ -188,7 +189,7 @@
     color: white;
     text-align: center;
     padding: 5px;
-    margin: 10px;
+    
     border-radius: 8px;
     overflow: hidden;
     position: relative;

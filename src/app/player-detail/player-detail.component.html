@@ -1,5 +1,5 @@
 <div class="containerDetail">
-  <img src="assets/logosho.png" class="logoshohoku">
+  
 
   <div *ngIf="player">
     <h2 class="player-name-title">{{ player.name }}</h2>
@@ -7,14 +7,11 @@
 </div>
 
 <div class="container-playerData">
-  <div class="row">
+  <div class="row px-2 d-flex justify-content-between">
 
     <!-- Tabla de datos columna izquierda -->
     <div class="colIzq col-md-4">
-      <div class="fila">
-        <div class="label">Nombre</div>
-        <div class="fw-bold">{{ player?.name }}</div>
-      </div>
+      
       <div class="fila">
         <div class="label">Posición</div>
         <div class="fw-bold">{{ player?.position }}</div>
@@ -23,15 +20,6 @@
         <div class="label">Camiseta</div>
         <div class="fw-bold">{{ player?.shirtNumber }}</div>
       </div>
-    </div>
-
-    <!-- Foto jugador central -->
-    <div class="col-md-3 text-center player-image-container">
-      <img [src]="player?.foto" alt="Player Image" class="player-image">
-    </div>
-
-    <!-- Tabla de datos columna derecha -->
-    <div class="colDer col-md-4">
       <div class="fila">
         <div class="label">Edad</div>
         <div class="fw-bold">{{ player?.age }}</div>
@@ -44,22 +32,40 @@
         <div class="label">Media</div>
         <div class="fw-bold">{{ player?.average }}</div>
       </div>
+
+      
+      <div class="player-bio col-md-4 w-100">   <!-- tiene que ser :nth-last-child(1)-->
+        <h3>Biografía</h3>
+        <p class="glass">{{ player?.bio }}</p>
+  
+      </div>
+    </div>
+
+    
+    
+
+    <!-- Foto jugador central -->
+    <div class="col-md-3 text-center player-image-container">
+      <img [src]="player?.foto" alt="Player Image" class="player-image">
+    </div>
+
+    <!-- Tabla de datos columna derecha (pentagono)-->
+    <div class="colDer col-md-4">
+
+      <div class="stats-title">
+      <h3 class="label-title">Estadísticas</h3>
+      <h3 class="fw-bold-title">de Jugador</h3>
+      </div>
+
+<div *ngIf="player">
+  <app-pentagon *ngIf="player?.skills" [skills]="player!.skills"></app-pentagon>
+</div>
     </div>
 
   </div>
 </div>
 
-<h3>Estadísticas</h3>
 
-<div> Físico: {{ player?.skills?.fisico }}</div>
-<div> Técnica: {{ player?.skills?.tecnica }}</div>
-<div> Fuerza Mental: {{ player?.skills?.fuerzaMental }}</div>
-<div> Resistencia: {{ player?.skills?.resistencia }}</div>
-<div> Habilidad Especial: {{ player?.skills?.habilidadEspecial }}</div>
-
-<div *ngIf="player">
-  <app-pentagon *ngIf="player?.skills" [skills]="player!.skills"></app-pentagon>
-</div>
 
 <!-- Botón para ver medios -->
 <button class="boton-canchaMas" *ngIf="player" (click)="getMedia()">

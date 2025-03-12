@@ -72,6 +72,8 @@
 
 <!-- Lista de jugadores -->
 <div class="players-grid">
+
+  
   <div class="playerCard" *ngFor="let player of filteredPlayers; trackBy: trackByPlayerId">   
 
     <a [routerLink]="['/player', player.id]" class="player-link">
