@@ -1,7 +1,7 @@
 .logoshohoku {
     width: 180px;
     display: block;
-    margin: 20px auto;
+    margin: 10px 15px;
 }
 
 .team-container {
@@ -235,7 +235,30 @@
     transition: opacity 0.3s ease-in-out;
 }
 
+/* YY */
+.player-img-container {
+    position: relative;
+    display: inline-block;
+}
 
+.player-img-container::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(192, 42, 45, 0.5); /* Rojo #C02A2D con 50% de opacidad */
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+}
+
+.player-img-container:hover::after {
+    opacity: 1;
+}
+/* YY */
+
+/* color(#C02A2D) */
 .playerCard:hover .player-info {
     opacity: 1;
 }
@@ -254,6 +277,57 @@
 .boton-cancha:hover {
     background-color: #a02225;
 }
+
+.text-block-shohoku{
+    background-color: white;
+    border: #C02A2D 4px, solid;
+    border-radius: 8px;
+    font-size: 14px;
+    margin-top: 20px;
+    width: 250px;
+    padding: 10px;
+}
+.text-block-shohoku:nth-child(2){
+    width:340px;
+}
+
+.faja-superior{
+    background-color: #C02A2D;
+    position:absolute;
+    z-index: -1;
+    height: 96px;
+    width: 100%;
+}
+.shohoku-intro{
+    display:flex;
+    justify-content:space-between;
+    margin:0;
+    
+}
+.sho-intro-1{
+    display:flex;
+    width: 50%;
+    height: 50%;
+    
+    max-width:180px;
+    
+    margin:0;
+
+}
+.sho-intro-2{
+    gap:20px;
+    display:flex;
+    flex-direction:row;
+    margin-right:12px;
+    
+}
+
+
+
+
+
+
+
 
 /* Forzar que los filtros no queden partidos mal */
 @media (max-width: 500px) {

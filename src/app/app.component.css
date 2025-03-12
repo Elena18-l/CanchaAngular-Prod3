@@ -16,3 +16,17 @@
     border-radius: 10px;
     width: 50%;
   }
+
+  .cuerpo-web{
+    display:flex;
+    flex-direction: column;
+  }
+  .cuerpo-web-hijo{
+    max-width: 1200px;
+    background-color: #1e8c7453;
+    align-self: center;
+    justify-content: center;
+    position:relative;
+    align-items: center;
+
+  }

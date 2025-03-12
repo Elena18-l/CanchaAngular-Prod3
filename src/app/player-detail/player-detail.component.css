@@ -8,21 +8,11 @@
   min-width: 350px; /* Ajusta este valor según sea necesario */
   width: 100%; /* Todas las filas serán igual de anchas */
 }
- 
- 
-
   .player-info {
     display: flex;
     flex-direction: column;
     gap: 10px;
-  }
-  
-  
-  
-  
-  
-
-  
+  }  
 
   .label {
     font-family: Inter;
@@ -46,14 +36,15 @@
   overflow: hidden; /* Esconde el texto extra en caso de ser muy largo */
   text-overflow: ellipsis; /* Muestra "..." si el texto es demasiado largo */
 }
-.containerDetail {
+/* .containerDetail {
   display: flex;
   flex-direction: column;
   align-items: center;
   background-color: #ffffff;
   position: relative;
-  padding-top: 50px; /* Ajusta según sea necesario */
-}
+  padding-top: 50px; 
+} 
+*/
 .logoshohoku {
   position: relative;
   z-index: 1; /* Asegura que el logo esté por encima del fondo */
@@ -92,8 +83,20 @@
   display: block;
 }
 
+.player{
+  background-color: rgb(216, 140, 18);
+}
+
 .player-name-title{
-font-family: 'Inter', sans-serif;
-font-style:bold;
-color:#ffffff
-  }
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 50px;
+color: white;
+font-family: Inter;
+background-color:#C02A2D;
+font-weight: 700;
+margin:0;
+}
+
