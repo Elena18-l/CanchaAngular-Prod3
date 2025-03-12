@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Output, ElementRef, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Players } from '../services/mockup-players';
 import { FormsModule } from '@angular/forms';
@@ -24,7 +24,7 @@ export class PlayersComponent {
   showFilterDropdown: boolean = false;
   selectedPlayer: Player | null = null;
 
-  constructor(private location: Location, private router: Router) {} 
+  constructor(private location: Location, private router: Router, private eRef:ElementRef) {} 
 
   get filteredPlayers() {
     return this.players.filter(player => {
@@ -72,5 +72,12 @@ export class PlayersComponent {
 
   selectPlayer(player: Player) {
     this.playerSelected.emit(player); // ✅ Ahora emite correctamente el jugador seleccionado
+  }
+
+  @HostListener('document:click', ['$event'])
+  onClickOutside(event: Event) {
+    if (this.showFilterDropdown && !this.eRef.nativeElement.contains(event.target)) {
+      this.showFilterDropdown = false;
+    }
   }
 }
