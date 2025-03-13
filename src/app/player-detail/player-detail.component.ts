@@ -7,11 +7,10 @@ import { Subscription } from 'rxjs';
 import { CommonModule } from '@angular/common'; 
 import { PentagonComponent } from '../pentagon/pentagon.component';
 import { PlayerMediaComponent } from '../player-media/player-media.component';
-import { SafeUrlPipe } from './player-detail/safe-url.pipe';
 @Component({
   selector: 'app-player-detail',
   standalone: true,  // Marcamos como standalone
-  imports: [CommonModule, PentagonComponent, PlayerDetailComponent, SafeUrlPipe],  // Importamos CommonModule para usar directivas como *ngIf
+  imports: [CommonModule, PentagonComponent, PlayerDetailComponent ],  // Importamos CommonModule para usar directivas como *ngIf
   templateUrl: './player-detail.component.html',
   styleUrls: ['./player-detail.component.css'],
 })
