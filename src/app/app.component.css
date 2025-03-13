@@ -20,6 +20,8 @@
   .cuerpo-web{
     display:flex;
     flex-direction: column;
+    min-height: 100vh;
+
   }
   .cuerpo-web-hijo{
     max-width: 1200px;
@@ -29,4 +31,15 @@
     position:relative;
     align-items: center;
 
+  }
+  footer{
+    background-color: #36332E;
+    color:white;
+    padding: 10px;
+    font-size: 10px;
+    display:block;
+    left:0;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
   }
