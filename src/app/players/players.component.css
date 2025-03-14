@@ -20,9 +20,7 @@
 
 /* filtros  */
 
-
-
-.filter-container {
+/* .filter-container {
     position:relative;
     display: flex;
     border-top: #a02225 2px solid;
@@ -73,7 +71,7 @@
     -webkit-backdrop-filter: blur(5px);
     border:none;
     border-bottom: solid 1px #C02A2D;
-}
+} */
 
 
 
@@ -129,6 +127,10 @@
 .modal-buttons button:hover {
     background-color: #a02225;
 }
+
+
+
+
 
 .players-grid {
     display: grid;
@@ -241,15 +243,7 @@
     background-color: #a02225;
 }
 
-.text-block-shohoku{
-    background-color: white;
-    border: #C02A2D 4px, solid;
-    border-radius: 8px;
-    font-size: 14px;
-    margin-top: 20px;
-    width: 250px;
-    padding: 10px;
-}
+
 .text-block-shohoku:nth-child(2){
     width:340px;
 }
@@ -261,31 +255,43 @@
     height: 96px;
     width: 100%;
 }
+/* 
+.text-block-shohoku{
+    background-color: white;
+    border: #C02A2D 4px, solid;
+    border-radius: 8px;
+    font-size: 14px;
+    margin-top: 20px;
+    width: 250px;
+    padding: 10px;
+}
+
+
 .shohoku-intro{
     position:relative;
     display:flex;
     flex-wrap: wrap;
     justify-content:space-between;
-    margin:0;
+    margin-left:8px;
     
 }
 .sho-intro-1{
     display:flex;
     width: 50%;
     height: 50%;
-    
     max-width:180px;
-    
-    margin:0;
+    margin-left:10px;
 
 }
 .sho-intro-2{
-    gap:20px;
+    
     display:flex;
     flex-direction:row;
+    flex-wrap: wrap;
     margin-right:12px;
+    gap:10px;
     
-}
+} */
 
 .cuerpo-players{
     max-width:1200px;
@@ -293,34 +299,262 @@
 
 
 
+/* Media queries para versión DESKTOP!!!!! */
 
+@media (min-width: 635px){
 
+    .logoshohoku {
+        width: 180px;
+        display: block;
+        margin: 10px 15px;
+    }
 
-/* Forzar que los filtros no queden partidos mal */
-@media (max-width: 500px) {
-    .filter-controls {
-        display: flex;
+    .text-block-shohoku{
+        background-color: white;
+        border: #C02A2D 4px, solid;
+        border-radius: 8px;
+        font-size: 14px;
+        margin-top: 20px;
+        width: 250px;
+        padding: 10px;
+    }
+    
+    .shohoku-intro{
+        position:relative;
+        display:flex;
         flex-wrap: wrap;
-        gap: 10px;
-        justify-content: flex-end; /* Mantiene los elementos alineados a la derecha */
-        align-items: center; /* Asegura que estén alineados verticalmente */
+        justify-content:space-between;
+        margin-left:8px;
+        
+    }
+    .sho-intro-1{
+        display:flex;
+        width: 50%;
+        height: 50%;
+        max-width:180px;
+        margin-left:10px;
+    
+    }
+    .sho-intro-2{
+        
+        display:flex;
+        flex-direction:row;
+        flex-wrap: wrap;
+        margin-right:12px;
+        gap:10px;
+        
     }
 
-    .filter-controls select {
-        flex: 1 1 150px; /* Permite que se reduzcan pero no menos de 150px */
-        max-width: 100%;
-    }
+    /* seccion filtros  */
 
-    .filter-dropdown {
-        position: absolute;
-        top: 100%;
-        right: 12px; /* Agrega margen a la derecha para que no esté pegado */
-        min-width: 300px; /* Ajusta según necesidad */
-        padding: 15px;
-        background: white;
-        border: 1px solid #ccc;
-        box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
-        border-radius: 5px;
-        z-index: 10;
-    }
+.filter-container {
+    position:relative;
+    display: flex;
+    border-top: #a02225 2px solid;
+    border-bottom: #a02225 2px solid;
+    padding: 8px;
+    gap: 10px;  
+    font-size:14px;
+
+  }
+ .filter-header{
+    width:120px;
+
+ }
+  .filter-container h3{
+    font-size: 16px;
+    font-weight: bold;
+  }
+  
+  .filter-button {
+    
+    position:relative; 
+    background-color: #C02A2D;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size:14px;
+  }
+  
+
+.filter-controls {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 8px;
+    align-items:center;
+   
 }
+
+
+.filter-controls select {
+    flex:1;
+    padding: 5px;
+    min-width:120px;
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    border:none;
+    border-bottom: solid 1px #C02A2D;
+}
+
+/* media query para los portrait de los jugadores */
+
+
+ /* media queries para seccion stats */
+
+
+}
+
+
+
+/* Media queries   !!!!!VERSION MOBILE!!!*/ 
+@media (max-width: 634px){
+
+
+    /*sección superior para shohoku intro*/
+    .logoshohoku {
+        
+        display: block;
+        margin: 10px 15px;
+    }
+
+    .text-block-shohoku{
+        background-color: white;
+        border: #C02A2D 4px, solid;
+        border-radius: 8px;
+        font-size: 12px;
+        margin-top: 8px;
+        width: 340px;
+        padding: 4px;
+    }
+    .text-block-shohoku:nth-child(2){
+        width:340px;
+    }
+    
+    .faja-superior{
+        background-color: #C02A2D;
+        position:absolute;
+        z-index: -1;
+        height: 96px;
+        width: 100%;
+    }
+    .shohoku-intro{
+        position:relative;
+        display:flex;
+        flex-wrap: wrap; 
+        justify-content:space-between;
+        
+        flex-direction:column;
+        align-content:center;
+        justify-content: center;
+        align-items:center;
+        
+    }
+    .sho-intro-1{
+        
+        display:flex;
+        flex-direction:column;
+       
+        max-width:180px;
+        align-items:center;
+        
+    
+    }
+    .sho-intro-2{
+        font-size: 12px;
+        display:flex;
+        flex-direction:column;
+        flex-wrap: wrap;
+        align-items: center;
+            
+    }
+    .text-block-shohoku:nth-child(2){
+        width:340px;
+        margin-top:0;
+    }
+    /* seccion filtros  */
+
+
+
+.filter-container {
+    position:relative;
+    flex-direction:column;
+    align-items:center;
+    display: flex;
+    border-top: #a02225 2px solid;
+    border-bottom: #a02225 2px solid;
+    padding: 8px;
+    gap: 10px;  
+    font-size:14px;
+
+  }
+ .filter-header{
+    width:auto;
+
+ }
+  .filter-container h3{
+    font-size: 14px;
+    font-weight: bold;
+  }
+  
+  .filter-button {
+    
+    position:relative; 
+    background-color: #C02A2D;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size:12px;
+  }
+  
+
+.filter-controls {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 8px;
+    align-items:center;
+   
+
+    flex-direction:column;
+   
+}
+
+.filter-controls select {
+    flex:1 1 40px;
+    padding: 5px;
+    min-width: 300px;
+    max-width: 100%;
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    border:none;
+    border-bottom: solid 1px #C02A2D;
+
+    
+}
+
+
+label{
+    font-size:12px;
+}
+
+
+/* media query para los portrait de los jugadores */
+
+
+    /* media queries para seccion stats */
+
+
+
+
+}
+
+
+
+
