@@ -16,13 +16,9 @@
 
 
 <div class="filter-container">
-  <button (click)="toggleFilterDropdown()" class="filter-button">
-    Filtrar ▼
-  </button>
-
-  <div *ngIf="showFilterDropdown" class="filter-dropdown">
-    <div class="cerrarModal X-lg"></div>
+    
     <div class="filter-header"><h3>Filtrar Jugadores</h3></div>
+    
 <div class="filter-controls">
     <label>Dorsal</label>
     <select [(ngModel)]="selectedFilters.shirtNumber">
@@ -61,12 +57,12 @@
            range === '200-300' ? 'Más de 2m' : 'Entre ' + range.replace('-', ' y ') }}
       </option>
     </select>
-  </div>
-    <div class="filter-buttons">
-      <button (click)="toggleFilterDropdown()">Aplicar</button>
-      <button (click)="clearFilters()">Limpiar filtros</button>
+  
+    <button (click)="clearFilters()" class="filter-button">Limpiar filtros</button>
+  
+            
     </div>
-  </div>
+  
 </div>
 
 <!-- Título -->
@@ -90,5 +86,5 @@
     </a>
   </div>
 </div>
-<button *ngIf="isFilterApplied()" (click)="clearFilters()">Limpiar filtros</button>
+
 </div>
