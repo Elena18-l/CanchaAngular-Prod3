@@ -88,20 +88,21 @@ export class PlayersComponent {
     return player.id;
   }
 
-  selectedPlayerId: number | null = null;
+  selectedPlayerId: number | null = 0;
 
   toggleSelected(index: number) {
-    // Solo selecciona el jugador si no está seleccionado
-  if (this.selectedPlayerId === null || this.selectedPlayerId !== index) {
-    this.selectedPlayerId = index;
+    if (this.selectedPlayerId === null || this.selectedPlayerId !== index) {
+      this.selectedPlayerId = index;
     }
   }
 
   isSelected(index: number): boolean {
+    console.log('selectedPlayerId: ', this.selectedPlayerId);
     return this.selectedPlayerId === index;
   }
 
-  anyPlayerSelected(): boolean {
-    return this.selectedPlayerId !== null;  // Devuelve true si hay algún jugador seleccionado
+  isSelectedPlayerZero(): boolean {
+    return this.selectedPlayerId === 0;
   }
+
 }

@@ -201,21 +201,13 @@
     transition: opacity 0.3s ease-in-out;
 }
 
-/* Cuando hay al menos un jugador seleccionado, muestra la capa roja solo en los jugadores no seleccionados */
-.playerCard.selected .player-img-container::after {
-    opacity: 0;  /* No muestra la capa en el jugador seleccionado */
-}
-
-/* La capa roja no debe ser visible cuando no haya selección */
-.playerCard.no-selection .player-img-container::after {
-    opacity: 0;  /* La capa roja no es visible */
-}
-
-/* Si hay al menos un jugador seleccionado, muestra la capa roja en los jugadores no seleccionados */
 .playerCard:not(.selected) .player-img-container::after {
-    opacity: 1;  /* Muestra la capa roja solo en los jugadores no seleccionados */
+    opacity: 1;  /* Muestra la capa roja en los jugadores no seleccionados */
 }
 
+.playerCard.selected-zero .player-img-container::after{
+    opacity: 0;
+  }
 
 /* La información del jugador siempre debe ser visible */
 .player-info {
