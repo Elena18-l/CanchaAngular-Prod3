@@ -14,7 +14,9 @@
   .stat-box {
     font-family: Inter;
     position: absolute;
-    background: black;
+    background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px); /* este es el de concepto-puntuacion  */
     color: white;    
     text-align: center;
     border: 1px solid black;
@@ -22,6 +24,8 @@
     font-weight: bold;
     max-width: 100px;
   }
+
+  
   
   .stat-box span {
     display: block;
@@ -30,9 +34,13 @@
     padding: 3px;
   }
   
+  
   .stat-box strong {
     display: block;
-    background: white;
+    background: rgba(255, 255, 255, 1
+    );
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px); /* este es el de puntuacion  */
     color: black;
     padding: 3px;
     font-size: 16px;

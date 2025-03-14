@@ -25,7 +25,7 @@
   }
   .cuerpo-web-hijo{
     max-width: 1200px;
-    background-color: #1e8c7453;
+    /* background-color: #1e8c7453; */
     align-self: center;
     justify-content: center;
     position:relative;
