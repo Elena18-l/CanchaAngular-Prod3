@@ -262,7 +262,9 @@
     width: 100%;
 }
 .shohoku-intro{
+    position:relative;
     display:flex;
+    flex-wrap: wrap;
     justify-content:space-between;
     margin:0;
     
