@@ -25,11 +25,13 @@
   }
   .cuerpo-web-hijo{
     max-width: 1200px;
-    /* background-color: #1e8c7453; */
+    /* background-color: white;  */
     align-self: center;
     justify-content: center;
     position:relative;
     align-items: center;
+    /* z-index: -2; 
+    position:absolute; */
 
   }
 

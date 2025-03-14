@@ -164,6 +164,7 @@ margin:0;
   display:flex;
   justify-content: space-between;
   margin-bottom:58px;
+  z-index:8;
 }
 
 .boton-cancha, .boton-canchaMas {
