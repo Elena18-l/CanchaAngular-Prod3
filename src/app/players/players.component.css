@@ -119,7 +119,15 @@
 }
 
 
-/* Modal */
+
+
+
+
+
+
+
+
+/* Modal fotos*/
 .modal-overlay {
     position: fixed;
     top: 0;
@@ -239,15 +247,31 @@
 }
 
 .player-img-container::after {
-    content: "";
+    /* content: "";
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(192, 42, 45, 0.5); /* Rojo #C02A2D con 50% de opacidad */
+    background: rgba(192, 42, 45, 0.5); 
     opacity: 0;
-    transition: opacity 0.3s ease-in-out;
+    transition: opacity 0.3s ease-in-out; */
+    
+    
+    content: "";
+    top: 0;
+    left: 0;
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+
+    background-color: #C02A2D;
+    mix-blend-mode: multiply; /* O prueba con overlay, difference, etc. */
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+
+
 }
 
 .player-img-container:hover::after {
