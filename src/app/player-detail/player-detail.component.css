@@ -163,7 +163,7 @@ margin:0;
 .botones{
   display:flex;
   justify-content: space-between;
-  margin-bottom:20px;
+  margin-bottom:58px;
 }
 
 .boton-cancha, .boton-canchaMas {
