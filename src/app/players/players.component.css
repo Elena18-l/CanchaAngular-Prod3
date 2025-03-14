@@ -64,13 +64,9 @@
     background: rgba(255, 255, 255, 0.2);
     backdrop-filter: blur(5px);
     -webkit-backdrop-filter: blur(5px);
+    border:none;
+    border-bottom: solid 1px #C02A2D;
 }
-.filter-controls ::after{
-    color:greenyellow;
-
-} 
-
-
 
 
 
