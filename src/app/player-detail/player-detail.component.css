@@ -319,3 +319,25 @@ backdrop-filter: blur(5px);
   justify-content: center;
   align-items: center;
 }
+
+
+@media (min-width:635px){
+
+/* media query para los portrait de los jugadores */
+
+
+ /* media queries para seccion stats */
+
+
+}
+
+
+@media (max-width:635px){
+
+  /* media query para los portrait de los jugadores */
+
+
+ /* media queries para seccion stats */
+
+ 
+}
