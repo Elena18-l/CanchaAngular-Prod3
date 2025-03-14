@@ -20,6 +20,8 @@
 
 /* filtros  */
 
+
+
 .filter-container {
     position:relative;
     display: flex;
@@ -27,11 +29,16 @@
     border-bottom: #a02225 2px solid;
     padding: 8px;
     gap: 10px;  
+    font-size:14px;
 
   }
+ .filter-header{
+    width:120px;
 
+ }
   .filter-container h3{
     font-size: 16px;
+    font-weight: bold;
   }
   
   .filter-button {
@@ -94,6 +101,8 @@
 .modal-content label {
     display: block;
     margin-top: 10px;
+   
+   
 }
 
 .modal-content select, 
