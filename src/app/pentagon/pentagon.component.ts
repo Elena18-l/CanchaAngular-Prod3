@@ -58,11 +58,10 @@ createRadarChart() {
         {
           label: 'Estadísticas',
           data: stats,  // Ahora stats está correctamente definido
-          backgroundColor: 'rgba(255, 255, 255, 0.2)',
+          backgroundColor: 'rgba(255, 165, 0, 0.4)',
           borderColor: '#FF9809',
           borderWidth: 3,
           pointBackgroundColor: 'orange',
-          
         },
       ],
     },
@@ -81,8 +80,9 @@ createRadarChart() {
            
           },
           grid: {
-            color: '#D38A03',
-          }
+            color: '#D38A03'
+          },
+          backgroundColor:'#FFE9BF'
         }
       },
       plugins: {
