@@ -2,6 +2,10 @@
 
 body{
   font-family: 'Inter', sans-serif !important;
+  background: url('./assets/bg_LR.jpg') no-repeat center;
+  background-size: cover;
+  position:relative;
+  z-index: 0;
 }
 
 
