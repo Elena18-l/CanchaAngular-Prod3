@@ -70,9 +70,8 @@
 
 <!-- Lista de jugadores -->
 <div class="players-grid">
-
   
-  <div class="playerCard" *ngFor="let player of filteredPlayers; trackBy: trackByPlayerId">   
+  <div class="playerCard col-12 col-md-6 col-lg-4" *ngFor="let player of filteredPlayers; trackBy: trackByPlayerId">   
 
     <a [routerLink]="['/player', player.id]" class="player-link">
       <div class="player-img-container">
