@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output, ElementRef, HostListener } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ElementRef, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Players } from '../services/mockup-players';
 import { FormsModule } from '@angular/forms';
@@ -16,13 +16,14 @@ import { Location } from '@angular/common';
   providers:[Location]
 })
 export class PlayersComponent {
+  @Input() selectedPlayerId: number | null = 0;
+  @Output() selectedPlayerIdChange = new EventEmitter<number | null>();
   @Output() playerSelected = new EventEmitter<Player>();
 
   players = Players;
   searchText: string = '';
   selectedFilters: Partial<Player & { stature?: string; average?: string }> = {};
   showFilterDropdown: boolean = false;
-  selectedPlayer: Player | null = null;
 
   constructor(private location: Location, private router: Router, private eRef:ElementRef) {} 
 
@@ -87,12 +88,11 @@ export class PlayersComponent {
     return player.id;
   }
 
-  selectedPlayerId: number | null = 0;
-
   toggleSelected(index: number) {
     if (this.selectedPlayerId === null || this.selectedPlayerId !== index) {
       this.selectedPlayerId = index;
     }
+    this.selectedPlayerIdChange.emit(this.selectedPlayerId); // Emitir cambio
   }
 
   isSelected(index: number): boolean {

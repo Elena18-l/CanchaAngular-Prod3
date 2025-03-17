@@ -34,6 +34,7 @@ export class AppComponent {
   searchText = ''; // Variable para almacenar el texto de búsqueda
   selectedPlayer: Player | null = null;
   activeComponent: string = 'players'; // Establecer componente inicial
+  selectedPlayerId: number | null = 0;
 
   constructor(private searchService: SearchService) {
     this.searchService.searchText$.subscribe(text => {
@@ -52,5 +53,9 @@ export class AppComponent {
 
   setComponent(component: string) {
     this.activeComponent = component;
+  }
+
+  resetSelection() {
+    this.selectedPlayerId = 0; // Resetear a 0 cuando se haga clic en el logo
   }
 }

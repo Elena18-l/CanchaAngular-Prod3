@@ -3,12 +3,12 @@
     <nav class="navbar" style="background-color: #FACD7A">
       <div class="container-fluid d-flex justify-content-between align-items-center">    
         <a class="navbar-brand" routerLink="/">
-          <img src="/assets/logo.svg" class="logo">
+          <img src="/assets/logo.svg" class="logo" (click)="resetSelection()">
         </a>     
         <img src="assets/logosho.png" class="logoshohoku">
 
         <div>
-         <!-- *div arquitectónico! lo he puesto yo(ferran), hasta que tenga el logo que poner en la linea 8! -->
+          <!-- *div arquitectónico! lo he puesto yo(ferran), hasta que tenga el logo que poner en la linea 8! -->
         </div>
       </div>
     </nav>
@@ -21,27 +21,35 @@
         placeholder="Buscar jugador..." 
         class="form-control">
     </div>
-<div class="cuerpo-web">
-  <div class="cuerpo-web-hijo">
-    <!-- Aquí mostramos los jugadores -->
-     <app-players (playerSelected)="onPlayerSelected($event)"></app-players> 
 
- <!-- Aqui salta el modal con los resultados de la busqueda -->
-<div *ngIf="searchText.length > 0" class="modal">
-  <div class="modal-content">
-    <app-player-results></app-player-results>
-  </div>
-</div>
+    <div class="cuerpo-web">
+      <div class="cuerpo-web-hijo">
+        <!-- Aquí mostramos los jugadores -->
+        <app-players 
+          [selectedPlayerId]="selectedPlayerId"
+          (selectedPlayerIdChange)="selectedPlayerId = $event"
+          (playerSelected)="onPlayerSelected($event)">
+        </app-players> 
 
-    <!-- Aquí Angular insertará las páginas dinámicamente -->
-    <router-outlet>
-      <div class="faja-central">
+        <!-- Aquí salta el modal con los resultados de la búsqueda -->
+        <div *ngIf="searchText.length > 0" class="modal">
+          <div class="modal-content">
+            <app-player-results></app-player-results>
+          </div>
+        </div>
+
+        <!-- Aquí Angular insertará las páginas dinámicamente -->
+        <router-outlet>
+          <div class="faja-central">
       
+          </div>
+        </router-outlet>
+      </div>
     </div>
-  </router-outlet>
-  </div>
-</div>
 
-<footer> Web desarrollada por el grupo Cancha Angular para la asignatura FP:0.67 - Desarrollo front-end con frameworks en entornos móviles - UOC - Jesuïtes. 2025. Derechos de propiedad intelectural de Takehiko Inoue y Sueisha </footer>
-</div>
+    <footer> 
+      Web desarrollada por el grupo Cancha Angular para la asignatura FP:0.67 - Desarrollo front-end con frameworks en entornos móviles - UOC - Jesuïtes. 2025. 
+      Derechos de propiedad intelectual de Takehiko Inoue y Sueisha.
+    </footer>
+  </div>
 </main>
