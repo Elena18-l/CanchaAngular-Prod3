@@ -132,8 +132,9 @@
   font-family: Inter;
   display: flex;
   flex-direction: row;
-  border-color: #C02A2D;
-  color: #C02A2D;
+  border-color: rgb(255, 165, 0);
+  background-color: rgb(255, 199, 94);;
+  color: black;
   gap: 5px;
   padding: 8px 10px ;
   margin: 5px;
@@ -150,4 +151,8 @@
   .btn-dark{
     background-color: transparent;
     border: none;
+    border-color: #C02A2D;
+    color: #C02A2D;
   }
+
+  
