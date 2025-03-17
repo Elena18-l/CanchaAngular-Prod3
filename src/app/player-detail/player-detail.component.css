@@ -104,11 +104,11 @@ border: 1px solid black;
 .container-playerData {
   display: flex;
   justify-content: center;
-  align-items: center; /* Mantiene el contenido centrado verticalmente */
+  align-items: top; /* Mantiene el contenido centrado verticalmente */
   width: 100%;
   height: auto; /* Ajusta la altura según el contenido */
   gap: 40px; /* Espaciado entre columnas */
-  padding: 20px, 20px, 0, 20px ; /* Reduce el espacio superior e inferior */
+  padding: 0px, 20px, 0, 20px ; /* Reduce el espacio superior e inferior */
 }
 
 .player-image-container {
@@ -147,6 +147,7 @@ margin:0;
   flex-direction: column;
   gap:10%;
   padding:0;
+  
 }
 
 .colIzq{
@@ -173,12 +174,14 @@ justify-content: flex-end;
 }
 
 .estadisticas-tabla{
-  gap:20%;
+  gap:5%;
 
 }
 
 .player-bio{
 padding:8px;
+width: 300px;
+max-height: 300px;
 background: rgba(255, 255, 255, 0.2);
 backdrop-filter: blur(5px);
 -webkit-backdrop-filter: blur(5px);

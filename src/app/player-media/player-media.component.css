@@ -1,117 +1,153 @@
-/* Ajustes globales para los modales */
-.modal-content {
-  background-color: #FFE9BF; /* Color de fondo */
-  padding: 0;
+/* Modal de imagen y video */
+
+
+/* Contenido del modal */
+.custom-modal-content {
+  background-color: rgb(255, 237, 171);
+  padding: 20px;
+  border-radius: 8px;
+  position: relative;
+  width: 80%;
+  max-width: 500px;
 }
 
-/* Ajustes para el Modal de Imágenes */
-.modal-dialog.modal-sm {
-  max-width: fit-content;
-  width: fit-content; /* El modal se ajusta al tamaño de la imagen */
-  margin: 0 auto; /* Centrado del modal */
-}
-
-.modal-dialog.modal-sm .modal-body {
-  padding: 0;
-}
-
-/* Carrusel de imágenes */
-.carousel-inner {
- 
-  justify-content: center;
-  align-items: center;
-}
-
-/* Para que las imágenes no se deformen */
-.carousel-inner img {
-  width: 100%; /* Asegura que las imágenes se ajusten al contenedor */
+/* Estilo para la imagen principal */
+.main-image {
+  min-width: 400px;  
   height: auto;
-  object-fit: contain; /* Mantiene las proporciones sin recortar */
-  object-position: center;
+  object-fit: contain;
 }
 
-/* Ajustes del carrusel de imágenes */
-.carousel-item {
-  transition: none; /* Eliminar animación */
+/* Estilo para el video */
+.video-frame {
+  width: 100%;
+  max-width: 1000px;
+  height: 600px;
+  object-fit: contain;
 }
 
-/* Contenedor de miniaturas */
+/* Controles de carrusel */
+.carousel {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.carousel-control {
+  background-color: transparent;
+  border: none;
+  font-size: 2rem;
+  color: #fff;
+  cursor: pointer;
+}
+
+.carousel-control:hover {
+  color: #ddd;
+}
+
+/* Miniaturas de imágenes */
 .thumb-container {
   display: flex;
   justify-content: center;
-  gap: 5px;
-  overflow-x: auto;
-  padding: 5px;
-  margin-top: 10px;
+  margin-top: 20px;
 }
 
-/* Miniaturas */
 .small-thumb {
   width: 50px;
   height: 50px;
-  object-fit: cover;
+  margin: 5px;
   cursor: pointer;
-  border: 2px solid transparent;
   border-radius: 5px;
-  transition: transform 0.2s, border 0.2s;
+  opacity: 0.7;
+  transition: transform 0.2s;
 }
 
-/* Efecto hover en miniaturas */
 .small-thumb:hover {
   transform: scale(1.1);
 }
 
-/* Borde y escala cuando la miniatura está activa */
-.active-thumb {
+.small-thumb.active-thumb {
   border: 2px solid #C02A2D;
-  transform: scale(1.15);
+  opacity: 1;
 }
 
-/* Ajustes para el Modal de Video */
-.modal-dialog.modal-lg {
-  max-width: 80%; /* Modal menos grande para videos */
-  width: 75%;
-}
-
-.video-container {
-  position: relative;
-  padding-bottom: 56.25%; /* Proporción 16:9 */
-  height: 0;
-  overflow: hidden;
-  background: black;
-}
-
-.video-container iframe {
+/* Cerrar modal */
+.close {
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  top: 10px;
+  right: 10px;
+  font-size: 2rem;
+  cursor: pointer;
 }
 
-/* Los controles del carrusel */
-.carousel-control-prev,
-.carousel-control-next {
-  max-width: 100px;
-  background-color: rgba(0, 0, 0, 0.5);
+/* Cursor de pointer */
+.cursor-pointer {
+  cursor: pointer;
 }
 
-/* Ajustes del botón "Volver" */
-.btn-outline-primary {
-  margin-top: 20px;
+/* Fondo de modal */
+.modal.fade.show {
+  background: rgba(255, 203, 203, 0.5);
+  
+  
+}
+.modal-lg {
+  max-width: fit-content;
+}
+.modal-body {
+  background: rgba(255, 237, 171);
+}
+.modal-header {
+  background: rgba(255, 237, 171);
+}
+.modal-footer {
+  background: rgba(255, 237, 171);
+}
+/* Estilos para la miniatura */
+.thumbnail {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  border-radius: 5px;
+  margin: 5px;
+  transition: transform 0.2s;
+}
+
+.thumbnail:hover {
+  transform: scale(1.1);
+}
+
+.active-thumbnail {
+  border: 3px solid #C02A2D;
+  opacity: 0.7;
+}
+.botones{
+  display:flex;
+  justify-content: space-between;
+  margin-bottom:58px;
+  z-index:8;
+}
+
+.btn {
+  font-family: Inter;
+  display: flex;
+  flex-direction: row;
   border-color: #C02A2D;
   color: #C02A2D;
+  gap: 5px;
+  padding: 8px 10px ;
+  margin: 5px;
 }
-
-/* Efecto hover en el botón "Volver" */
-.btn-outline-primary:hover {
-  background-color: #C02A2D;
-  color: white;
-}
-
-/* Ajustes generales del modal */
-.modal-dialog {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
+  .container{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    background-color: #ffffff;
+    position: relative;
+    padding: 0px 0px 0px 0px;
+    
+  }
+  .btn-dark{
+    background-color: transparent;
+    border: none;
+  }

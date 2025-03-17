@@ -16,4 +16,7 @@ private playersMock: Player[] = Players;
 getPlayers(): Player[]{
   return this.playersMock;
 }
+getPlayerById(id: number): Player | undefined {
+  return this.playersMock.find(player => player.id === id);
+}
 }

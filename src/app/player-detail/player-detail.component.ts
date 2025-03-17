@@ -10,7 +10,7 @@ import { PlayerMediaComponent } from '../player-media/player-media.component';
 @Component({
   selector: 'app-player-detail',
   standalone: true,  // Marcamos como standalone
-  imports: [CommonModule, PentagonComponent, PlayerDetailComponent ],  // Importamos CommonModule para usar directivas como *ngIf
+  imports: [CommonModule, PentagonComponent, PlayerDetailComponent, PlayerMediaComponent],  // Importamos CommonModule para usar directivas como *ngIf
   templateUrl: './player-detail.component.html',
   styleUrls: ['./player-detail.component.css'],
 })
@@ -19,6 +19,7 @@ export class PlayerDetailComponent implements OnInit, OnDestroy {
   private routeSub: Subscription = new Subscription(); // Para manejar la suscripción
   @Input() player?: Player; 
   activeIndex=0; // Asegúrate de que player tenga el tipo adecuado
+  selectedPlayerId = 1;
   constructor(
     private route: ActivatedRoute,
     private router: Router,

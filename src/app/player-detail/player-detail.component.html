@@ -37,24 +37,20 @@
           </div>
         </div>
 
-        <div class="player-bio col-md-4 w-100"> <!-- tiene que ser :nth-last-child(1)-->
+        <div class="player-bio col-md-4"> <!-- tiene que ser :nth-last-child(1)-->
           <h3>Biografía</h3>
           <p class="glass">{{ player?.bio }}</p>
 
-        </div>
+
+        <!-- BOTONES-->
+        
 
 
-        <!-- BOTONEEEEEES -->
-        <div class="botones">
 
-          <button class="boton-canchaMas" *ngIf="player" (click)="getMedia()">
-            Ver Fotos
-          </button>
-          <button class="boton-canchaMas" data-bs-toggle="modal" data-bs-target="#carouselVideoModal">
-            Ver Videos
-          </button>
+      </div>
 
-          <!-- Botón para volver al equipo // este tiene que ser el de-->
+        <app-player-media [playerId]="selectedPlayerId"></app-player-media>
+        
         
           
         </div>
@@ -71,7 +67,7 @@
       </div>
 
       <!-- Tabla de datos columna derecha (pentagono)-->
-      <div class="colDer col-md-5">
+      <div class="colDer col-md-4">
 
         <div class="stats-title">
           <h3 class="label-title">Estadísticas</h3>
@@ -92,4 +88,3 @@
 
   </div>
 
-</div>
