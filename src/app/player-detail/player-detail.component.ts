@@ -7,6 +7,9 @@ import { Subscription } from 'rxjs';
 import { CommonModule } from '@angular/common'; 
 import { PentagonComponent } from '../pentagon/pentagon.component';
 import { PlayerMediaComponent } from '../player-media/player-media.component';
+import { PlayerService } from '../services/playerService';
+
+
 @Component({
   selector: 'app-player-detail',
   standalone: true,  // Marcamos como standalone
@@ -15,32 +18,30 @@ import { PlayerMediaComponent } from '../player-media/player-media.component';
   styleUrls: ['./player-detail.component.css'],
 })
 export class PlayerDetailComponent implements OnInit, OnDestroy {
-
+  
+  
   private routeSub: Subscription = new Subscription(); // Para manejar la suscripción
   @Input() player?: Player; 
   activeIndex=0; // Asegúrate de que player tenga el tipo adecuado
-  selectedPlayerId = 1;
+  selectedPlayerId!:number;
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private location: Location
+    private location: Location,
+    private playerService: PlayerService 
   ) {}
 
   ngOnInit(): void {
-    // Nos suscribimos a los cambios de la URL y obtenemos el jugador con el ID actual
-    this.routeSub = this.route.paramMap.subscribe(params => {
-      const playerId = Number(params.get('id'));
-      if (playerId !== 0) {
-        this.getPlayerDetails(playerId); // Obtenemos los detalles del jugador con el ID de la URL
-      }
+    this.route.paramMap.subscribe(params => {
+      this.selectedPlayerId = Number(params.get('id'));
+      this.loadPlayer();
     });
-
-    // Si ya tenemos un jugador recibido desde el Input, lo mostramos
-    if (this.player) {
-      console.log('Jugador recibido desde Input:', this.player);
+  }
+  loadPlayer(): void {
+    if (this.selectedPlayerId) {
+      this.player = this.playerService.getPlayerDetails(this.selectedPlayerId);
     }
   }
-
   ngOnDestroy(): void {
     // Limpiar la suscripción cuando el componente se destruya
     if (this.routeSub) {

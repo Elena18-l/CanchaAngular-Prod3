@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, OnChanges,SimpleChanges } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { PlayerService } from '../services/playerService';
 import { Player } from '../services/player';
@@ -48,8 +48,27 @@ export class PlayerMediaComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.getPlayerDetails();
+    this.loadPlayer();
   }
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['playerId'] && !changes['playerId'].firstChange) {
+      this.loadPlayer(); // 🔹 Recargar datos cuando cambie el jugador
+      this.closeModal(); // 🔹 Cerrar el modal para evitar mostrar imágenes viejas
+    }
+  }
+
+  loadPlayer(): void {
+    if (this.playerId) {
+      this.player = this.playerService.getPlayerDetails(this.playerId) ?? { 
+        id: 0, name: '', age: 0, foto: '', portrait: '', team: '', position: '',
+        stature: 0, average: 0, shirtNumber: 0, 
+        skills: { fisico: 0, tecnica: 0, fuerzaMental: 0, habilidadEspecial: 0, resistencia: 0 },
+        bio: '', gallery: [], video: []
+      };
+    }
+}
+
+
 
   getPlayerDetails(): void {
     const playerId = Number(this.route.snapshot.paramMap.get('id'));
