@@ -221,7 +221,7 @@
       
       .right {
         top: 30%;
-        right: -18px;
+        right: -20px;
       }
       
       .bottom-right {
@@ -235,8 +235,9 @@
       }
       
       .left {
-        top: 30%;
-        left: -72px;
+        top: 16%;
+        left: -32px;
+        z-index:-1;
       }
    
     

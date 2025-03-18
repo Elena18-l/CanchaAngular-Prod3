@@ -668,6 +668,7 @@ backdrop-filter: blur(5px);
   display:flex;
   width: auto;
   justify-content: center;
+  padding-bottom:12px;
   
   
   
@@ -757,6 +758,7 @@ backdrop-filter: blur(5px);
     flex-direction: column;
     gap:10%;
     padding:0;
+    margin-bottom:12px;
     
   }
   
