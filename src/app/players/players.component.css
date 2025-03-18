@@ -146,12 +146,20 @@
 .player-img-container {
     position: relative;
     width: 100%;
+    border-radius: 4px;
+    overflow: hidden; /* Evita que la imagen salga del borde */
 }
 
 .player-img {
     width: 100%;
     display: block;
-    border-radius: 5px;
+    border-radius: 4px;
+    transition: transform 0.5s ease-in-out; 
+
+}
+
+.player-img-container:hover .player-img {
+    transform: scale(1.2); 
 }
 
 .playerNumber {
