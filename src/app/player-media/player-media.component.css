@@ -155,4 +155,7 @@
     color: #C02A2D;
   }
 
-  
+  .container{
+    display:flex;
+    justify-content: space-between;
+  }
