@@ -102,6 +102,9 @@
 }
 .modal-footer {
   background: rgba(255, 237, 171);
+  display: flex;
+  justify-content: space-between;
+ justify-content: center;
 }
 /* Estilos para la miniatura */
 .thumbnail {
