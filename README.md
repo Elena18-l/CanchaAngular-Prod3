@@ -1,4 +1,6 @@
-# ChanchaAngular
+# CanchaAngular
+
+This is the codesandbox to see the preview of the project without ruuning the server: https://codesandbox.io/p/github/Elena18-l/chancha-angular/mergeMaster
 
 This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.1.6.
 
