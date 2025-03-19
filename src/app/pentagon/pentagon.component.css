@@ -1,0 +1,246 @@
+/* .radar-container {
+    position: relative;
+    width: 450px;
+    height: 450px;
+    margin: auto;
+   
+  }
+  
+  canvas {
+    width: 100% !important;
+    height: 100% !important;
+    
+  }
+  
+  .stat-box {
+    font-family: Inter;
+    position: absolute;
+    background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px); 
+    color: white;    
+    text-align: center;
+    border: 1px solid black;
+    font-size: 14px;
+    font-weight: bold;
+    max-width: 100px;
+  }
+
+  
+  
+  .stat-box span {
+    display: block;
+    font-size: 12px;
+    color: white;
+    padding: 3px;
+  }
+  
+  
+  .stat-box strong {
+    display: block;
+    background: rgba(255, 255, 255, 1
+    );
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+    color: black;
+    padding: 3px;
+    font-size: 16px;
+  }
+  
+  .top {
+    top: -40px;
+    left: 50%;
+    transform: translateX(-50%);
+    
+  }
+  
+  .right {
+    top: 30%;
+    right: -30px;
+  }
+  
+  .bottom-right {
+    bottom: -20px;
+    right: 20px;
+  }
+  
+  .bottom-left {
+    bottom: -20px;
+    left: 20px;
+  }
+  
+  .left {
+    top: 30%;
+    left: -80px;
+  } */
+  
+  @media (min-width:635px){
+
+    /* media query para el pentagono*/
+    
+    .radar-container {
+      position: relative;
+      width: 400px;
+      height: 400px;
+      margin: auto;
+     
+    }
+    
+    canvas {
+      width: 100% !important;
+      height: 100% !important;
+      
+    }
+    
+    .stat-box {
+      font-family: Inter;
+      position: absolute;
+      background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px); /* este es el de concepto-puntuacion  */
+      color: white;    
+      text-align: center;
+      border: 1px solid black;
+      font-size: 14px;
+      font-weight: bold;
+      max-width: 100px;
+    }
+  
+    
+    
+    .stat-box span {
+      display: block;
+      font-size: 12px;
+      color: white;
+      padding: 3px;
+    }
+    
+    
+    .stat-box strong {
+      display: block;
+      background: rgba(255, 255, 255, 1
+      );
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px); /* este es el de puntuacion  */
+      color: black;
+      padding: 3px;
+      font-size: 16px;
+    }
+    
+    .top {
+      top: -40px;
+      left: 50%;
+      transform: translateX(-50%);
+      
+    }
+    
+    .right {
+      top: 30%;
+      right: -30px;
+    }
+    
+    .bottom-right {
+      bottom: -20px;
+      right: 20px;
+    }
+    
+    .bottom-left {
+      bottom: -20px;
+      left: 20px;
+    }
+    
+    .left {
+      top: 30%;
+      left: -80px;
+    }
+     
+    
+    
+    }
+    
+    
+    @media (max-width:635px){
+    
+      /* media query para el pentagono*/
+     
+      .radar-container {
+        position: relative;
+        width: 320px;
+        height: 320px;
+        margin: auto;
+       
+      }
+      
+      canvas {
+        width: 100% !important;
+        height: 100% !important;
+        
+      }
+      
+      .stat-box {
+        
+        position: absolute;
+        background: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(5px);
+      -webkit-backdrop-filter: blur(5px); /* este es el de concepto-puntuacion  */
+        color: white;    
+        text-align: center;
+        border: 1px solid black;
+        font-size: 10px;
+        font-weight: bold;
+        max-width: 100px;
+      }
+    
+      
+      
+      .stat-box span {
+        display: block;
+        font-size: 10px;
+        color: white;
+        padding: 3px;
+      }
+      
+      
+      .stat-box strong {
+        display: block;
+        background: rgba(255, 255, 255, 1
+        );
+      backdrop-filter: blur(5px);
+      -webkit-backdrop-filter: blur(5px); /* este es el de puntuacion  */
+        color: black;
+        padding: 3px;
+        font-size: 12px;
+      }
+      
+      .top {
+        top: -16px;
+        left: 50%;
+        transform: translateX(-50%);
+        
+      }
+      
+      .right {
+        top: 30%;
+        right: -20px;
+      }
+      
+      .bottom-right {
+        bottom: -8px;
+        right: 20px;
+      }
+      
+      .bottom-left {
+        bottom: -8px;
+        left: 24px;
+      }
+      
+      .left {
+        top: 16%;
+        left: -32px;
+        z-index:-1;
+      }
+   
+    
+
+     
+    }

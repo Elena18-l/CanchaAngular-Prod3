@@ -1,1 +1,92 @@
-<p>players works!</p>
+
+<div class="cuerpo-players">
+<div class="faja-superior"></div>
+<div class="shohoku-intro">
+
+<div class="sho-intro-1">
+<img src="assets/logosho.png" class="logoshohoku">
+</div>
+<div class="sho-intro-2">
+<p class="text-block-shohoku">Shohoku pasó de ser un equipo sin relevancia a convertirse en un rival temible gracias a la llegada de nuevos talentos. <strong> Su estilo de juego se basa en una ofensiva rápida</strong>, con <strong> gran capacidad de anotación en distintas áreas </strong> y un fuerte <strong> dominio en los rebotes ofensivos.</strong> </p>
+<p class="text-block-shohoku">Son un equipo <strong> intenso en defensa </strong>, aunque <strong> menos disciplinado que otros conjuntos </strong> de su liga. Sus principales debilidades incluyen una banca muy limitada, problemas de resistencia física y acumulación de faltas, lo que los hace <strong> vulnerables en partidos largos.</strong> Además, dependen en exceso de jugadas individuales y carecen de un entrenamiento tan riguroso como otros equipos fuertes.</p>
+</div>
+</div>
+
+<!-- Contenedor de filtros -->
+
+
+<div class="filter-container">
+    
+    <div class="filter-header"><h3>Filtrar Jugadores</h3></div>
+    
+<div class="filter-controls">
+    <label>Dorsal</label>
+    <select [(ngModel)]="selectedFilters.shirtNumber">
+      <option value="">Todos</option>
+      <option *ngFor="let num of [4,5,7,10,11,14]" [value]="num">{{ num }}</option>
+    </select>
+
+    <label>Posición:</label>
+    <select [(ngModel)]="selectedFilters.position">
+      <option value="">Todas</option>
+      <option *ngFor="let pos of ['Base', 'Alero', 'Pívot', 'Ala', 'Escolta']" [value]="pos">
+        {{ pos }}
+      </option>
+    </select>
+
+    <label>Media:</label>
+    <select [(ngModel)]="selectedFilters.average">
+      <option value="">Todos</option>
+      <option *ngFor="let avg of ['0-8', '8.1-9', '9.1-10']" [value]="avg">
+        {{ avg === '0-8' ? '8 o menos' : avg === '8.1-9' ? 'entre 8 y 9' : 'más de 9' }}
+      </option>
+    </select>
+
+    <label>Edad:</label>
+    <select [(ngModel)]="selectedFilters.age">
+      <option value="">Todas</option>
+      <option *ngFor="let age of [15, 16, 17, 18, 19]" [value]="age">{{ age }}</option>
+    </select>
+
+    <label>Altura:</label>
+    <select [(ngModel)]="selectedFilters.stature">
+      <option value="">Todas</option>
+      <option *ngFor="let range of ['0-175', '175-180', '180-185', '185-190', '190-195', '195-200', '200-300']" 
+              [value]="range">
+        {{ range === '0-175' ? '175 cm o menos' : 
+           range === '200-300' ? 'Más de 2m' : 'Entre ' + range.replace('-', ' y ') }}
+      </option>
+    </select>
+  
+    <button (click)="clearFilters()" class="filter-button">Limpiar filtros</button>
+  
+            
+    </div>
+  
+</div>
+
+<!-- Título -->
+<h2 class="team-title">El equipo Shohoku está formado por:</h2>
+
+<!-- Lista de jugadores -->
+  <div class="players-grid">
+    <div class="playerCard" *ngFor="let player of filteredPlayers; trackBy: trackByPlayerId" 
+     [ngClass]="{
+       'selected': isSelected(player.id),
+       'selected-zero': isSelectedPlayerZero()
+     }"
+     (click)="toggleSelected(player.id)">
+    <a [routerLink]="['/player', player.id]" class="player-link">
+        <div class="player-img-container">
+            <p class="playerNumber">{{ player.shirtNumber }}</p>
+            <img [src]="player.portrait" alt="foto de {{ player.name }}" class="player-img">
+            <div class="player-info">
+                <p class="font-player-sho">{{ player.name }}</p>
+                <p class="font-rol-sho">{{ player.position }}</p>
+            </div>
+        </div>
+    </a>
+</div>
+</div>
+
+</div>
