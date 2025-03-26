@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, OnChanges,SimpleChanges } from '@angular/core';
+import { Component, Input, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { PlayerService } from '../services/playerService';
 import { Player } from '../services/player';
@@ -19,7 +19,8 @@ import { SafeUrlPipe } from '../player-media/safe-url.pipe';
   ]
 })
 export class PlayerMediaComponent implements OnInit {
-  // 🔹 Se inicializan todas las propiedades requeridas en Player
+
+  // 🔹 Inicializar 'player' como un objeto vacío en lugar de undefined.
   player: Player = {
     id: 0,
     name: '',
@@ -35,11 +36,12 @@ export class PlayerMediaComponent implements OnInit {
     bio: '',
     gallery: [],
     video: []
-  };
-@Input() playerId!: number;
-
+  }; // El jugador será de tipo Player o undefined
+  @Input() playerId!: number;
   activeIndex = 0;
   modalType: 'image' | 'video' | null = null;
+gallery: any;
+ 
 
   constructor(
     private route: ActivatedRoute,
@@ -48,40 +50,45 @@ export class PlayerMediaComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.loadPlayer();
+    this.loadPlayerDetails();
   }
+
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['playerId'] && !changes['playerId'].firstChange) {
-      this.loadPlayer(); // 🔹 Recargar datos cuando cambie el jugador
-      this.closeModal(); // 🔹 Cerrar el modal para evitar mostrar imágenes viejas
+      this.loadPlayerDetails(); // Recargar datos cuando cambie el jugador
     }
   }
-
-  loadPlayer(): void {
+  loadPlayerDetails(): void {
     if (this.playerId) {
-      this.player = this.playerService.getPlayerDetails(this.playerId) ?? { 
-        id: 0, name: '', age: 0, foto: '', portrait: '', team: '', position: '',
-        stature: 0, average: 0, shirtNumber: 0, 
-        skills: { fisico: 0, tecnica: 0, fuerzaMental: 0, habilidadEspecial: 0, resistencia: 0 },
-        bio: '', gallery: [], video: []
-      };
+      this.playerService.getPlayerDetails(this.playerId.toString()).subscribe(player => {
+        if (player) {
+          this.player = player; // Aquí se asigna un valor correcto.
+        } else {
+          console.error('No se pudo obtener detalles del jugador');
+          this.player = { ...this.player }; // Mantener la estructura inicial.
+        }
+      });
+    }}
+    setActive(index: number) {
+      // implementation of the setActive function
     }
-}
-
-
-
-  getPlayerDetails(): void {
-    const playerId = Number(this.route.snapshot.paramMap.get('id'));
-    if (!isNaN(playerId)) {
-      const foundPlayer = this.playerService.getPlayerDetails(playerId);
-      if (foundPlayer) {
-        this.player = foundPlayer;
+    get maxLength(): number {
+      if (this.player && this.player.gallery) {
+        return this.modalType === 'image' ? this.player.gallery.length : 0;
+      } else if (this.player && this.player.video) {
+        return this.modalType === 'video' ? this.player.video.length : 0;
+      } else {
+        return 0;
       }
     }
-  }
+  
+  
+  
+
+  
 
   goBack(): void {
-    this.location.back();
+    this.location.back();  // Volver a la página anterior
   }
 
   openModal(type: 'image' | 'video', index: number = 0): void {
@@ -89,9 +96,6 @@ export class PlayerMediaComponent implements OnInit {
     this.activeIndex = index;
   }
 
-  setActive(index: number): void {
-    this.activeIndex = index;
-  }
 
   closeModal(): void {
     this.modalType = null;

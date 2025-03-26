@@ -21,12 +21,18 @@ export class PlayerCardComponent implements OnInit {
   constructor(private playerService: PlayerService, private router:Router) { }
 
   ngOnInit(): void {
-    this.getPlayers();
+    this.playerService.getPlayers().subscribe(players => {
+      // Ahora puedes aplicar slice() sobre el array de jugadores
+      this.players = players.slice(); 
+    });
   }
 
   getPlayers(): void {
-    this.players= this.playerService.getPlayers().slice(1, 6);;
-    }
+    this.playerService.getPlayers().subscribe(players => {
+      // Aplica slice solo cuando ya tienes los jugadores (es un array)
+      this.players = players.slice(); // Si no necesitas hacer un corte, también puedes omitir slice
+    });
+  }
   
   goToPlayer(id:number):void{
     

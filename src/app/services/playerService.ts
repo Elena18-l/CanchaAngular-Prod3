@@ -1,22 +1,24 @@
-import {Injectable} from '@angular/core';
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { Player } from './player';
+import { Firestore, collection, collectionData, doc, docData } from '@angular/fire/firestore';
 
-import {Player} from './player';
-import {Players} from './mockup-players';
-
-
-@Injectable({providedIn: 'root'})
+@Injectable({
+  providedIn: 'root',
+})
 export class PlayerService {
-getPlayerDetails(id: number): Player | undefined { //patata
-  return this.playersMock.find(player => player.id === id);
- 
-}
+  constructor(private firestore: Firestore) {}
 
-private playersMock: Player[] = Players;
+  // Obtener todos los jugadores desde Firebase
+  getPlayers(): Observable<Player[]> {
+    const playersRef = collection(this.firestore, 'players');
+    return collectionData(playersRef, { idField: 'id' }) as Observable<Player[]>;
+  }
 
-getPlayers(): Player[]{
-  return this.playersMock;
-}
-getPlayerById(id: number): Player | undefined {
-  return this.playersMock.find(player => player.id === id);
-}
+
+  // Obtener detalles de un jugador por ID
+  getPlayerDetails(playerId: string): Observable<Player | undefined> {
+    const playerDocRef = doc(this.firestore, `players/${playerId}`);
+    return docData(playerDocRef, { idField: 'id' }) as Observable<Player | undefined>;
+  }
 }

@@ -2,28 +2,26 @@ import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { Player } from '../services/player';
-import { Players } from '../services/mockup-players';
-import { Subscription } from 'rxjs';
+import { Subscription, Observable } from 'rxjs';
 import { CommonModule } from '@angular/common'; 
 import { PentagonComponent } from '../pentagon/pentagon.component';
 import { PlayerMediaComponent } from '../player-media/player-media.component';
 import { PlayerService } from '../services/playerService';
 
-
 @Component({
   selector: 'app-player-detail',
-  standalone: true,  // Marcamos como standalone
-  imports: [CommonModule, PentagonComponent, PlayerDetailComponent, PlayerMediaComponent],  // Importamos CommonModule para usar directivas como *ngIf
+  standalone: true,
+  imports: [CommonModule, PentagonComponent, PlayerMediaComponent],
   templateUrl: './player-detail.component.html',
   styleUrls: ['./player-detail.component.css'],
 })
 export class PlayerDetailComponent implements OnInit, OnDestroy {
-  
-  
-  private routeSub: Subscription = new Subscription(); // Para manejar la suscripción
+
   @Input() player?: Player; 
-  activeIndex=0; // Asegúrate de que player tenga el tipo adecuado
-  selectedPlayerId!:number;
+  player$?: Observable<Player | undefined>; // Usamos un Observable
+  activeIndex = 0; 
+  selectedPlayerId: number = 0; // Cambiado a string porque Firebase usa strings
+
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -32,44 +30,26 @@ export class PlayerDetailComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.route.paramMap.subscribe(params => {
-      this.selectedPlayerId = Number(params.get('id'));
-      this.loadPlayer();
-    });
-  }
-  loadPlayer(): void {
-    if (this.selectedPlayerId) {
-      this.player = this.playerService.getPlayerDetails(this.selectedPlayerId);
+    const playerId = this.route.snapshot.paramMap.get('id');
+    if (playerId) {
+      this.selectedPlayerId = Number(playerId); // ✅ Convertir a número correctamente
     }
   }
+
   ngOnDestroy(): void {
-    // Limpiar la suscripción cuando el componente se destruya
-    if (this.routeSub) {
-      this.routeSub.unsubscribe();
-    }
-  }
-
-  getPlayerDetails(playerId: number): void {
-    if (playerId === 0) return;
-
-    // Buscamos al jugador en el mockup usando el ID
-    this.player = Players.find(player => player.id === playerId);
-    if (this.player) {
-      console.log('Jugador encontrado:', this.player);
-    } else {
-      console.log('Jugador no encontrado');
-    }
+    // No necesitamos manejar suscripciones manualmente si usamos `async` en el HTML
   }
 
   goBack(): void {
-    this.location.back();  // Volver a la página anterior
+    this.location.back();
   }
 
   getMedia(): void {
-    if (this.player) {
-      this.router.navigate(['/player', this.player.id, 'media']); // Navegar a los detalles del jugador
+    if (this.selectedPlayerId) {
+      this.router.navigate(['/player', this.selectedPlayerId, 'media']);
     }
   }
+
   setActiveImage(index: number): void {
     this.activeIndex = index;
   }

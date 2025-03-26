@@ -30,11 +30,11 @@ import { Player } from './services/player';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
-  title = 'chancha-angular';
+  title = 'chancha-angular'; 
   searchText = ''; // Variable para almacenar el texto de búsqueda
   selectedPlayer: Player | null = null;
   activeComponent: string = 'players'; // Establecer componente inicial
-  selectedPlayerId: number | null = 0;
+  selectedPlayerId: number | null = null;
 
   constructor(private searchService: SearchService) {
     this.searchService.searchText$.subscribe(text => {

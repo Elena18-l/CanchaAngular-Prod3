@@ -25,11 +25,9 @@
     <div class="cuerpo-web">
       <div class="cuerpo-web-hijo">
         <!-- Aquí mostramos los jugadores -->
-        <app-players 
-          [selectedPlayerId]="selectedPlayerId"
-          (selectedPlayerIdChange)="selectedPlayerId = $event"
-          (playerSelected)="onPlayerSelected($event)">
-        </app-players> 
+        <app-players [selectedPlayerId]="selectedPlayerId" 
+             (selectedPlayerIdChange)="selectedPlayerId = $event">
+        </app-players>
 
         <!-- Aquí salta el modal con los resultados de la búsqueda -->
         <div *ngIf="searchText.length > 0" class="modal">

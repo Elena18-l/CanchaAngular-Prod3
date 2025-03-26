@@ -1,107 +1,103 @@
-import { Component, EventEmitter, Input, Output, ElementRef, HostListener } from '@angular/core';
+import { Component, EventEmitter, Output, ElementRef, OnInit, HostListener, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Players } from '../services/mockup-players';
 import { FormsModule } from '@angular/forms';
 import { Player } from '../services/player';
-import { PlayerSearchPipe } from '../player-search/player-search.pipe';
-import { PlayerCardComponent } from '../player-card/player-card.component';
+import { PlayerService } from '../services/playerService';
 import { RouterModule, Router } from '@angular/router';
-import { Location } from '@angular/common'; 
+import { Location } from '@angular/common';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+
 @Component({
   selector: 'app-players',
   standalone: true,
-  imports: [CommonModule, FormsModule,RouterModule, PlayerSearchPipe, PlayerCardComponent],
+  imports: [CommonModule, FormsModule, RouterModule],
   templateUrl: './players.component.html',
-  styleUrl: './players.component.css',
-  providers:[Location]
+  styleUrls: ['./players.component.css'],
+  providers: [PlayerService]
 })
-export class PlayersComponent {
-  @Input() selectedPlayerId: number | null = 0;
-  @Output() selectedPlayerIdChange = new EventEmitter<number | null>();
-  @Output() playerSelected = new EventEmitter<Player>();
-
-  players = Players;
+export class PlayersComponent implements OnInit {
+  players$!: Observable<Player[]>; // Lista de jugadores de Firebase
   searchText: string = '';
   selectedFilters: Partial<Player & { stature?: string; average?: string }> = {};
-  showFilterDropdown: boolean = false;
+  showFilterDropdown: boolean = false; 
+  @Input() selectedPlayerId: number | null = null;
+  @Output() selectedPlayerIdChange = new EventEmitter<number | null>();
 
-  constructor(private location: Location, private router: Router, private eRef:ElementRef) {} 
+  constructor(
+    private location: Location,
+    private router: Router,
+    private eRef: ElementRef,
+    private playerService: PlayerService
+  ) {}
 
-  get filteredPlayers() {
-    return this.players.filter(player => {
-      const matchesSearch = this.searchText
-        ? (Object.keys(player) as (keyof Player)[]).some(key => {
-            const value = player[key];
-            return typeof value === 'string' || typeof value === 'number'
-              ? value.toString().toLowerCase().includes(this.searchText.toLowerCase())
-              : false;
-          })
-        : true;
-
-      const matchesFilters = Object.entries(this.selectedFilters).every(([key, value]) => {
-        if (key === 'stature' && value) {
-          return this.isWithinRange(player.stature, value);
-        }
-        if (key === 'average' && value) {
-          return this.isWithinRange(player.average, value);
-        }
-        return value !== undefined && value !== '' ? (player as any)[key] == value : true;
-      });
-
-      return matchesSearch && matchesFilters;
-    });
+  ngOnInit(): void{
+    this.loadPlayers();
   }
 
-  isWithinRange(playerValue: number, selectedRange: string): boolean {
-    if (!selectedRange) return true;
-    const [min, max] = this.parseRange(selectedRange);
-    return playerValue >= min && playerValue <= max;
+  loadPlayers() {
+    this.players$ = this.playerService.getPlayers();
   }
 
-  parseRange(range: string): [number, number] {
-    return range.split('-').map(Number) as [number, number];
+  // Filtra a los jugadores según los filtros activos (buscador y filtros)
+  get filteredPlayers$(): Observable<Player[]> {
+    return this.players$.pipe(
+      map(players => players.filter(player => 
+        this.applyFilters(player) // Aplica todos los filtros
+      ))
+    );
   }
 
-  toggleFilterDropdown() {
-    this.showFilterDropdown = !this.showFilterDropdown;
+  // Función que aplica los filtros de búsqueda y otros filtros
+  applyFilters(player: Player): boolean {
+    // Filtro por nombre
+    const matchesSearchText = player.name.toLowerCase().includes(this.searchText.toLowerCase());
+
+    // Filtros adicionales (Dorsal, Posición, Media, Edad, Altura)
+    const matchesShirtNumber = !this.selectedFilters.shirtNumber || player.shirtNumber === this.selectedFilters.shirtNumber;
+    const matchesPosition = !this.selectedFilters.position || player.position === this.selectedFilters.position;
+    const matchesAverage = !this.selectedFilters.average || player.average === this.selectedFilters.average;
+    const matchesAge = !this.selectedFilters.age || player.age === this.selectedFilters.age;
+    const matchesStature = !this.selectedFilters.stature || player.stature === this.selectedFilters.stature;
+
+    return matchesSearchText && matchesShirtNumber && matchesPosition && matchesAverage && matchesAge && matchesStature;
   }
 
-  clearFilters() {
-    this.selectedFilters = {};
-    this.searchText = '';
+  // Método para limpiar los filtros
+  clearFilters(): void {
+    this.selectedFilters = {}; // Restablece todos los filtros
+    this.loadPlayers(); // Vuelve a cargar la lista de jugadores sin filtros
   }
 
-  selectPlayer(player: Player) {
-    this.playerSelected.emit(player); // ✅ Ahora emite correctamente el jugador seleccionado
+  // Método para verificar si el jugador está seleccionado
+  isSelected(playerId: number): boolean {
+    return this.selectedPlayerId === playerId;
   }
 
+  // Método para manejar la selección de un jugador
+  toggleSelected(playerId: number): void {
+    this.selectedPlayerId = this.selectedPlayerId === playerId ? null : playerId;
+    this.selectedPlayerIdChange.emit(this.selectedPlayerId);
+  }
+
+
+  // TrackBy para optimizar la renderización de los jugadores
+  trackByPlayerId(index: number, player: Player): number {
+    return player.id; // Utiliza el id del jugador para hacer el seguimiento
+  }
+
+  // Maneja clics fuera del filtro para cerrar el dropdown
   @HostListener('document:click', ['$event'])
-  onClickOutside(event: Event) {
-    if (this.showFilterDropdown && !this.eRef.nativeElement.contains(event.target)) {
+  handleClickOutside(event: Event) {
+    if (!this.eRef.nativeElement.contains(event.target)) {
       this.showFilterDropdown = false;
     }
   }
-
-  
-
-  trackByPlayerId(index: number, player: any): number {
-    return player.id;
-  }
-
-  toggleSelected(index: number) {
-    if (this.selectedPlayerId === null || this.selectedPlayerId !== index) {
-      this.selectedPlayerId = index;
-    }
-    this.selectedPlayerIdChange.emit(this.selectedPlayerId); // Emitir cambio
-  }
-
-  isSelected(index: number): boolean {
-    console.log('selectedPlayerId: ', this.selectedPlayerId);
-    return this.selectedPlayerId === index;
-  }
-
   isSelectedPlayerZero(): boolean {
     return this.selectedPlayerId === 0;
   }
-
+  // Navega a los detalles del jugador
+  goToPlayerDetails(player: Player) {
+    this.router.navigate(['/player', player.id]);
+  }
 }
