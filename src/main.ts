@@ -1,7 +1,7 @@
 /// <reference types="@angular/localize" />
 import { bootstrapApplication } from '@angular/platform-browser';
 import { AppComponent } from './app/app.component';
-import { firebaseConfig } from './app/firebase.config';
+import { firebaseConfig } from './app/config/firebase-setup';
 import { appRoutes } from './app/app.routes';  // Asegúrate de que este archivo contiene tus rutas
 import { provideRouter } from '@angular/router';
 

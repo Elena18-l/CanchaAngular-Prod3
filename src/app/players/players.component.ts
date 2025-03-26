@@ -1,103 +1,65 @@
-import { Component, EventEmitter, Output, ElementRef, OnInit, HostListener, Input } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-import { Player } from '../services/player';
-import { PlayerService } from '../services/playerService';
-import { RouterModule, Router } from '@angular/router';
-import { Location } from '@angular/common';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { PlayerService } from '../services/playerService';  // Asegúrate de que el servicio esté bien importado
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { Player } from '../services/player';  // Asegúrate de que tu modelo Player esté bien importado
+import { FormsModule } from '@angular/forms'; // Para usar ngModel
+import { CommonModule } from '@angular/common'; // Para usar ngClass
 
 @Component({
   selector: 'app-players',
-  standalone: true,
-  imports: [CommonModule, FormsModule, RouterModule],
+  standalone: true, // Este es un componente standalone
+  imports: [FormsModule, CommonModule], // Necesario para ngModel y ngClass
   templateUrl: './players.component.html',
-  styleUrls: ['./players.component.css'],
-  providers: [PlayerService]
+  styleUrls: ['./players.component.css']
 })
 export class PlayersComponent implements OnInit {
-  players$!: Observable<Player[]>; // Lista de jugadores de Firebase
-  searchText: string = '';
-  selectedFilters: Partial<Player & { stature?: string; average?: string }> = {};
-  showFilterDropdown: boolean = false; 
-  @Input() selectedPlayerId: number | null = null;
-  @Output() selectedPlayerIdChange = new EventEmitter<number | null>();
+  @Output() selectedPlayerIdChange = new EventEmitter<string>();
+  @Input() selectedPlayerId: string | null = null; // ID del jugador seleccionado
+  players$: Observable<Player[]> | undefined;  // Observable de jugadores
+  selectedPlayer: Player | null = null;  // Para almacenar el jugador seleccionado
 
-  constructor(
-    private location: Location,
-    private router: Router,
-    private eRef: ElementRef,
-    private playerService: PlayerService
-  ) {}
+  // Filtros de selección
+  selectedFilters: any = {
+    shirtNumber: '',
+    position: '',
+    average: '',
+    age: '',
+    stature: ''
+  };
 
-  ngOnInit(): void{
-    this.loadPlayers();
+  constructor(private playerService: PlayerService) {}
+
+  ngOnInit() {
+    this.players$ = this.playerService.getPlayers();  // Obtén la lista de jugadores del servicio
   }
 
-  loadPlayers() {
-    this.players$ = this.playerService.getPlayers();
+  // Función para seleccionar un jugador y mostrar sus detalles
+  selectPlayer(player: Player) {
+    this.selectedPlayerIdChange.emit(player.id);  // Emitir el ID del jugador seleccionado
+  }
+  // Función para deseleccionar el jugador
+  deselectPlayer() {
+    this.selectedPlayer = null;
   }
 
-  // Filtra a los jugadores según los filtros activos (buscador y filtros)
+  // Función para limpiar filtros
+  clearFilters() {
+    this.selectedFilters = {
+      shirtNumber: '',
+      position: '',
+      average: '',
+      age: '',
+      stature: ''
+    };
+  }
+
+  // Filtro de jugadores
   get filteredPlayers$(): Observable<Player[]> {
-    return this.players$.pipe(
-      map(players => players.filter(player => 
-        this.applyFilters(player) // Aplica todos los filtros
-      ))
-    );
+    return this.playerService.getFilteredPlayers(this.selectedFilters);  // Usamos un servicio que filtra jugadores
   }
 
-  // Función que aplica los filtros de búsqueda y otros filtros
-  applyFilters(player: Player): boolean {
-    // Filtro por nombre
-    const matchesSearchText = player.name.toLowerCase().includes(this.searchText.toLowerCase());
-
-    // Filtros adicionales (Dorsal, Posición, Media, Edad, Altura)
-    const matchesShirtNumber = !this.selectedFilters.shirtNumber || player.shirtNumber === this.selectedFilters.shirtNumber;
-    const matchesPosition = !this.selectedFilters.position || player.position === this.selectedFilters.position;
-    const matchesAverage = !this.selectedFilters.average || player.average === this.selectedFilters.average;
-    const matchesAge = !this.selectedFilters.age || player.age === this.selectedFilters.age;
-    const matchesStature = !this.selectedFilters.stature || player.stature === this.selectedFilters.stature;
-
-    return matchesSearchText && matchesShirtNumber && matchesPosition && matchesAverage && matchesAge && matchesStature;
+  trackByPlayerId(index: number, player: Player): string {
+    return player.id;  // Retornamos el ID como string
   }
-
-  // Método para limpiar los filtros
-  clearFilters(): void {
-    this.selectedFilters = {}; // Restablece todos los filtros
-    this.loadPlayers(); // Vuelve a cargar la lista de jugadores sin filtros
-  }
-
-  // Método para verificar si el jugador está seleccionado
-  isSelected(playerId: number): boolean {
-    return this.selectedPlayerId === playerId;
-  }
-
-  // Método para manejar la selección de un jugador
-  toggleSelected(playerId: number): void {
-    this.selectedPlayerId = this.selectedPlayerId === playerId ? null : playerId;
-    this.selectedPlayerIdChange.emit(this.selectedPlayerId);
-  }
-
-
-  // TrackBy para optimizar la renderización de los jugadores
-  trackByPlayerId(index: number, player: Player): number {
-    return player.id; // Utiliza el id del jugador para hacer el seguimiento
-  }
-
-  // Maneja clics fuera del filtro para cerrar el dropdown
-  @HostListener('document:click', ['$event'])
-  handleClickOutside(event: Event) {
-    if (!this.eRef.nativeElement.contains(event.target)) {
-      this.showFilterDropdown = false;
-    }
-  }
-  isSelectedPlayerZero(): boolean {
-    return this.selectedPlayerId === 0;
-  }
-  // Navega a los detalles del jugador
-  goToPlayerDetails(player: Player) {
-    this.router.navigate(['/player', player.id]);
-  }
+  
 }

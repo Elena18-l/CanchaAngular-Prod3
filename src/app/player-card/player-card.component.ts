@@ -34,10 +34,9 @@ export class PlayerCardComponent implements OnInit {
     });
   }
   
-  goToPlayer(id:number):void{
-    
-    this.router.navigate(['/player', id]);
+  goToPlayer(id: string | number): void {
+    const playerId = id.toString(); // Asegurarse de que 'id' sea un string
+    this.router.navigate(['/player', playerId]);
   }
 }
-
 

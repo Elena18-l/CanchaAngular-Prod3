@@ -1,30 +1,32 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { PlayerSearchPipe } from '../player-search/player-search.pipe';
 import { SearchService } from '../services/searchService';
-import { Players } from '../services/mockup-players'; // Simulación de los jugadores
 import { Player } from '../services/player';
+import { Observable } from 'rxjs';
+import { PlayerService } from '../services/playerService';  // Importar correctamente PlayerService
 
 
 @Component({
   selector: 'app-player-results',
   imports: [CommonModule, PlayerSearchPipe],
   templateUrl: './player-results.component.html',
-  styleUrl: './player-results.component.css',
-  
+  styleUrls: ['./player-results.component.css'],
 })
 export class PlayerResultsComponent {
-  searchText = ''; // Variable para almacenar el texto de búsqueda
-  players: Player[] = Players; // Jugadores de ejemplo
+  searchText: string = '';  // Definir correctamente searchText
+  players: Player[] = [];  // Definir correctamente players
 
-  constructor(private searchService: SearchService) {
-    console.log('PlayerResultsComponent cargado');
-    // Suscribirse a los cambios del texto de búsqueda
+  constructor(private searchService: SearchService, private playerService: PlayerService) {
+    // Aquí podrías suscribirte a un observable de búsqueda
     this.searchService.searchText$.subscribe((text) => {
-      this.searchText = text; // Actualiza el texto de búsqueda
-      console.log('Texto recibo en player-resultados:',this.searchText);
-      
+      this.searchText = text;  // Actualiza searchText desde el servicio
+      console.log('Texto recibido en player-results:', this.searchText);
+    });
+
+    // Obtener jugadores si es necesario
+    this.playerService.getPlayers().subscribe((players) => {
+      this.players = players;  // Actualiza los jugadores
     });
   }
 }
-

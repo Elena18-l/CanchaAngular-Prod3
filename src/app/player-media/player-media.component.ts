@@ -22,7 +22,7 @@ export class PlayerMediaComponent implements OnInit {
 
   // 🔹 Inicializar 'player' como un objeto vacío en lugar de undefined.
   player: Player = {
-    id: 0,
+    id: '',
     name: '',
     age: 0,
     foto: '',

@@ -7,7 +7,7 @@ export interface Skills{
 }
 
 export interface Player {
-    id:number;
+    id:string;
     name:string;
     age:number;
     foto:string; // esta es la de cuerpo entero
