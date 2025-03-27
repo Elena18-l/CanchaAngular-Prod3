@@ -30,7 +30,7 @@ export class PlayerCardComponent implements OnInit {
   getPlayers(): void {
     this.playerService.getPlayers().subscribe(players => {
       // Aplica slice solo cuando ya tienes los jugadores (es un array)
-      this.players = players.slice(); // Si no necesitas hacer un corte, también puedes omitir slice
+      this.players = players.slice(); 
     });
   }
   

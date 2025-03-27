@@ -2,13 +2,11 @@ import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router'; 
 import { SearchService } from './services/searchService';
 import { PlayerResultsComponent } from './player-results/player-results.component';
-import { NgIf, NgSwitch, NgSwitchCase } from '@angular/common'; // Importar NgSwitch, NgSwitchCase
-import { PlayerDetailComponent } from './player-detail/player-detail.component';
+import { NgIf } from '@angular/common'; // Importar NgSwitch, NgSwitchCase
 import { PlayersComponent } from './players/players.component';
-import { PlayerCardComponent } from './player-card/player-card.component';	
-import { PlayerMediaComponent } from './player-media/player-media.component';
-import { PentagonComponent } from './pentagon/pentagon.component';
 import { Player } from './services/player'; 
+import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 
 
 @Component({
@@ -18,13 +16,10 @@ import { Player } from './services/player';
     RouterModule, 
     PlayerResultsComponent, 
     NgIf, 
-    NgSwitch, 
-    NgSwitchCase, // Importa también NgSwitchCase
-    PentagonComponent, 
-    PlayerDetailComponent, 
     PlayersComponent, 
-    PlayerCardComponent, 
-    PlayerMediaComponent
+    FormsModule,
+    CommonModule,
+   
   ],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],

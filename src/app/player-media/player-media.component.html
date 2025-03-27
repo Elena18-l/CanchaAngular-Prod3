@@ -39,7 +39,7 @@
           <!-- Video principal sin miniaturas -->
           <div *ngIf="modalType === 'video' && player!.video!.length > 0">
             <iframe 
-            [src]="player?.video ? player.video[activeIndex] : '' | safeUrl" 
+            [src]="player.video ? player.video[activeIndex] : '' | safeUrl"
             class="video-frame shadow"
             frameborder="0" 
             allowfullscreen>
