@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router'; 
 import { SearchService } from './services/searchService';
 import { PlayerResultsComponent } from './player-results/player-results.component';

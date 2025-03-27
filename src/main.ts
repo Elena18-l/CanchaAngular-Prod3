@@ -12,6 +12,7 @@ import { provideFirestore, getFirestore } from '@angular/fire/firestore';
 import { provideDatabase, getDatabase } from '@angular/fire/database';
 import { importProvidersFrom } from '@angular/core';
 
+
 bootstrapApplication(AppComponent, {
   providers: [
     provideRouter(appRoutes),
