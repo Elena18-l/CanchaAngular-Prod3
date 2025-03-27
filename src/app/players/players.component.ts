@@ -30,7 +30,9 @@ export class PlayersComponent implements OnInit {
   constructor(private playerService: PlayerService) {}
 
   ngOnInit() {
+    console.log('antes')
     this.players$ = this.playerService.getPlayers();  // Obtén la lista de jugadores del servicio
+  console.log('despues')
   }
 
   // Función para seleccionar un jugador y mostrar sus detalles
