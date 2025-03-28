@@ -46,3 +46,8 @@ Thumbs.db
 
 apphosting.local.yaml
  
+
+# Firebase
+.firebase
+*-debug.log
+.runtimeconfig.json

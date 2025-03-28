@@ -15,8 +15,8 @@ import { CommonModule } from '@angular/common'; // Para usar ngClass
 export class PlayersComponent implements OnInit {
   @Output() selectedPlayerIdChange = new EventEmitter<string>();
   @Input() selectedPlayerId: string | null = null; // ID del jugador seleccionado
-  players$: Observable<Player[]> | undefined;  // Observable de jugadores
   selectedPlayer: Player | null = null;  // Para almacenar el jugador seleccionado
+  filteredPlayersList$: Observable<Player[]> | undefined;  // Observable de jugadores
 
   // Filtros de selección
   selectedFilters: any = {
@@ -30,9 +30,7 @@ export class PlayersComponent implements OnInit {
   constructor(private playerService: PlayerService) {}
 
   ngOnInit() {
-    console.log('antes')
-    this.players$ = this.playerService.getPlayers();  // Obtén la lista de jugadores del servicio
-  console.log('despues')
+    this.filteredPlayersList$ =this.playerService.getFilteredPlayers(this.selectedFilters);
   }
 
   // Función para seleccionar un jugador y mostrar sus detalles
@@ -55,9 +53,10 @@ export class PlayersComponent implements OnInit {
     };
   }
 
+
   // Filtro de jugadores
-  get filteredPlayers$(): Observable<Player[]> {
-    return this.playerService.getFilteredPlayers(this.selectedFilters);  // Usamos un servicio que filtra jugadores
+  filteredPlayers$() {
+    this.filteredPlayersList$ =this.playerService.getFilteredPlayers(this.selectedFilters);
   }
 
   trackByPlayerId(index: number, player: Player): string {
