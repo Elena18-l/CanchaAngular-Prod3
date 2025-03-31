@@ -16,7 +16,7 @@ import { PlayerService } from '../services/playerService';
   styleUrls: ['./player-detail.component.css'],
 })
 export class PlayerDetailComponent implements OnInit, OnDestroy {
-
+  playerId: string | null =null;
   @Input() player?: Player; 
   player$?: Observable<Player | undefined>; // Usamos un Observable
   activeIndex = 0; 
@@ -30,14 +30,28 @@ export class PlayerDetailComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.route.paramMap.subscribe(params => {
-      const playerId = params.get('id');
-      if (playerId) {
-        this.player$ = this.playerService.getPlayerDetails(playerId);
+    this.playerService.playerId$.subscribe(playerId => {
+      console.log('ID del jugador recibido en detalles:', this.player);
+      
+      this.playerId = playerId;
+      this.loadPlayerDetails(playerId ?? '');
+    });
+  }
+  
+  loadPlayerDetails(playerId: string) {
+    this.playerService.getPlayerDetails(playerId).subscribe(playerData => {
+      if (playerData) {
+        this.player = playerData;
+        console.log('Detalles del jugador cargados:', this.player);
+      } else {
+        console.log('Jugador no encontrado');
       }
     });
   }
-
+  
+  
+  
+  
   ngOnDestroy(): void {
     // No necesitamos manejar suscripciones manualmente si usamos `async` en el HTML
   }
@@ -54,6 +68,7 @@ export class PlayerDetailComponent implements OnInit, OnDestroy {
 
   setActiveImage(index: number): void {
     this.activeIndex = index;
+    console.log('Imagen activa:', this.activeIndex,this.playerId);
   }
 
   setActiveVideo(index: number): void {

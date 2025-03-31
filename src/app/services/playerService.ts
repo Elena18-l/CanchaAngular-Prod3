@@ -1,12 +1,11 @@
-import { Injectable } from '@angular/core';
-import { collection, query, where, getDocs, Firestore, QueryConstraint, doc, getDoc } from 'firebase/firestore';
+import { inject, Injectable } from '@angular/core';
+import { query, where, getDocs, QueryConstraint, getDoc } from 'firebase/firestore';
 import { Player } from './player';  // Asegúrate de tener correctamente el modelo Player
 import { getFirestore } from 'firebase/firestore';
 import { firebaseConfig } from '../config/firebase-setup';
 import { initializeApp } from 'firebase/app';
-import { from, map, Observable, of } from 'rxjs';
-import { collectionData } from '@angular/fire/firestore';
-
+import { BehaviorSubject, from, map, Observable, of } from 'rxjs';
+import { Firestore, collection, addDoc, doc, updateDoc, deleteDoc, collectionData } from '@angular/fire/firestore';
 
 // Inicialización de Firebase
 initializeApp(firebaseConfig);
@@ -16,12 +15,39 @@ initializeApp(firebaseConfig);
 })
 export class PlayerService {
   private firestore: Firestore;
-
+  private playerIdSubject: BehaviorSubject<string | null> = new BehaviorSubject<string | null>(null);
+  playerId$: Observable<string | null> = this.playerIdSubject.asObservable();
+  
   constructor() {
     // Inicializamos Firestore dentro del servicio
     this.firestore = getFirestore();
   }
 
+  setPlayerId(playerId: string): void {
+    if (!playerId) {
+      console.error('El playerId que se intenta establecer es inválido');
+      return;
+    }
+    console.log('Estableciendo playerId:', playerId); 
+    this.playerIdSubject.next(playerId);
+  }
+  
+  
+  getPlayerId(): Observable<string | null> {
+    const playersRef = collection(this.firestore, 'players'); 
+    return from(getDocs(playersRef)).pipe(
+      map(querySnapshot => {
+        if (!querySnapshot.empty) {
+          const firstPlayer = querySnapshot.docs[0]; // Obtenemos el primer jugador
+          return firstPlayer.id; // Retornamos el ID del documento
+        } else {
+          return null; // No hay jugadores en la base de datos
+        }
+      })
+    );
+  }
+
+  // Obtener lista de jugadores
   getPlayers(): Observable<Player[]> {
     const playersRef = collection(this.firestore, 'players');
     return collectionData(playersRef, { idField: 'id' }) as Observable<Player[]>;
@@ -29,32 +55,61 @@ export class PlayerService {
 
   // Obtener detalles de un jugador por ID
   getPlayerDetails(playerId: string): Observable<Player | undefined> {
-    const playerDocRef = doc(this.firestore, `players/${playerId}`);
+    if (!playerId) {
+      console.error('El playerId es indefinido o nulo');
+      return of(undefined); // Retorna un observable vacío si el ID es incorrecto
+    }
+  
+    const playerDocRef = doc(this.firestore, `players/${playerId}`); // Ruta correcta al documento
+    console.log('Obteniendo detalles para el playerId:', playerId);
+    
     return new Observable<Player | undefined>((observer) => {
       getDoc(playerDocRef).then((docSnap) => {
         if (docSnap.exists()) {
-          observer.next(docSnap.data() as Player); // Retorna los datos del jugador
+          const playerData = docSnap.data() as Player;
+          // Incluimos el id del documento en los datos del jugador
+          const player: Player = {
+            ...playerData,
+            id: docSnap.id,  // Incluimos el id aquí
+            gallery: playerData.gallery || [],  // Aseguramos que gallery no esté vacío
+            video: playerData.video || []       // Aseguramos que video no esté vacío
+          };
+          observer.next(player);
         } else {
-          observer.next(undefined); // Si el documento no existe
+          console.log('Jugador no encontrado');
+          observer.next(undefined); // Si el jugador no existe
         }
         observer.complete();
       }).catch((error) => {
+        console.error('Error al recuperar los detalles del jugador:', error);
         observer.error(error);
       });
     });
   }
-
-
+  
+  
+  loadPlayerId(): void {
+    // Primero, suscribimos al observable de playerId
+    this.getPlayerId().subscribe(playerId => {
+      if (playerId) {
+        console.log('Cargando playerId desde Firestore:', playerId);
+        this.setPlayerId(playerId);  // Si encontramos un playerId, lo configuramos
+      } else {
+        console.log('No se encontró un playerId en Firestore');
+      }
+    });
+  }
+  
+  
+  // Obtener jugadores filtrados
   getFilteredPlayers(filters: any): Observable<Player[]> {
     const playersRef = collection(this.firestore, 'players');
-
     console.log("***********************************************************************");
 
-    // Creamos un array para almacenar los filtros de la consulta
     let queryConstraints: QueryConstraint[] = [];
 
     if (filters.shirtNumber) {
-      queryConstraints.push(where('shirtNumber', '==', Number (filters.shirtNumber)));
+      queryConstraints.push(where('shirtNumber', '==', Number(filters.shirtNumber)));
     }
 
     if (filters.position) {
@@ -72,7 +127,7 @@ export class PlayerService {
     }
 
     if (filters.age) {
-      queryConstraints.push(where('age', '==', Number (filters.age)));
+      queryConstraints.push(where('age', '==', Number(filters.age)));
     }
 
     if (filters.stature && filters.stature.includes('-')) {
@@ -80,10 +135,8 @@ export class PlayerService {
       queryConstraints.push(where('stature', '>=', min), where('stature', '<=', max));
     }
 
-    // Construimos la consulta solo si hay filtros
     const playersQuery = query(playersRef, ...queryConstraints);
 
-    // Usamos `from()` para convertir la promesa en un Observable
     return from(
       getDocs(playersQuery).then((querySnapshot) => {
         return querySnapshot.docs.map((doc) => doc.data() as Player);

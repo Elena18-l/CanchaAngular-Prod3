@@ -36,6 +36,10 @@
             <div class="label">Media</div>
             <div class="fw-bold">{{ player?.average }}</div>
           </div>
+          <div class="fila">
+            <div class="label">Id</div>
+            <div class="fw-bold">{{ player?.id }}</div>
+          </div>
         </div>
 
         <div class="player-bio "> <!-- tiene que ser :nth-last-child(1)-->
@@ -48,7 +52,10 @@
       
       </div>
 
-      <app-player-media [playerId]="selectedPlayerId"></app-player-media>
+      <app-player-media [playerId]="playerId ?? ''"></app-player-media>
+
+
+
 
         <div class="botoncito"></div>
          

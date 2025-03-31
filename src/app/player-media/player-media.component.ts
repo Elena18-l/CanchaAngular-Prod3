@@ -1,103 +1,77 @@
-import { Component, Input, OnInit, OnChanges, SimpleChanges } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component, OnInit, Input } from '@angular/core';
 import { PlayerService } from '../services/playerService';
 import { Player } from '../services/player';
-import { Location } from '@angular/common';
+import { Observable } from 'rxjs';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
-import { SafeUrlPipe } from '../player-media/safe-url.pipe';
+import { SafeUrlPipe } from './safe-url.pipe';
 
 @Component({
   selector: 'app-player-media',
   templateUrl: './player-media.component.html',
   styleUrls: ['./player-media.component.css'],
-  standalone: true,
-  imports: [
-    CommonModule,
-    RouterModule,
-    SafeUrlPipe
-  ]
+  imports: [CommonModule, SafeUrlPipe]
 })
 export class PlayerMediaComponent implements OnInit {
 
-  // 🔹 Inicializar 'player' como un objeto vacío en lugar de undefined.
-  player: Player = {
-    id: '',
-    name: '',
-    age: 0,
-    foto: '',
-    portrait: '',
-    team: '',
-    position: '',
-    stature: 0,
-    average: 0,
-    shirtNumber: 0,
-    skills: { fisico: 0, tecnica: 0, fuerzaMental: 0, habilidadEspecial: 0, resistencia: 0 },
-    bio: '',
-    gallery: [],
-    video: []
-  }; // El jugador será de tipo Player o undefined
-  @Input() playerId!: string;
-  activeIndex = 0;
+  @Input() playerId?: string;
+  player$?: Observable<Player | undefined>;
+  player?: Player; 
+  gallery: string[] = [];
   modalType: 'image' | 'video' | null = null;
-gallery: any;
- 
+  activeIndex = 0;
 
-  constructor(
-    private route: ActivatedRoute,
-    private playerService: PlayerService,
-    private location: Location
-  ) {}
+  constructor(private playerService: PlayerService) {}
 
   ngOnInit(): void {
-    this.loadPlayerDetails();
-  }
-
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes['playerId'] && !changes['playerId'].firstChange) {
-      this.loadPlayerDetails(); // Recargar datos cuando cambie el jugador
-    }
-  }
-  loadPlayerDetails(): void {
-    if (this.playerId) {
-      this.playerService.getPlayerDetails(this.playerId.toString()).subscribe(player => {
-        if (player) {
-          this.player = player; // Aquí se asigna un valor correcto.
+    this.playerService.playerId$.subscribe(playerId => {
+      console.log('📌 PlayerId recibido en MediaComponent:', playerId);
+      
+      // Verifica que el playerId no sea undefined ni vacío
+      if (!playerId || playerId.trim() === '') {
+        console.log("⚠️ playerId es null o vacío, evitando llamada a Firebase");
+        return;
+      }
+  
+      // Realizamos la llamada solo si tenemos un playerId válido
+      this.playerService.getPlayerDetails(playerId).subscribe(playerData => {
+        if (playerData) {
+          this.player = playerData;
+          this.gallery = playerData.gallery || [];
+          console.log('📸 Galería cargada:', this.gallery);
         } else {
-          console.error('No se pudo obtener detalles del jugador');
-          this.player = { ...this.player }; // Mantener la estructura inicial.
+          console.log('⚠️ Jugador no encontrado');
         }
       });
-    }}
-    setActive(index: number) {
-      // implementation of the setActive function
-    }
-    get maxLength(): number {
-      if (this.player && this.player.gallery) {
-        return this.modalType === 'image' ? this.player.gallery.length : 0;
-      } else if (this.player && this.player.video) {
-        return this.modalType === 'video' ? this.player.video.length : 0;
-      } else {
-        return 0;
-      }
-    }
-  
-  
-  
-
-  
-
-  goBack(): void {
-    this.location.back();  // Volver a la página anterior
+    });
   }
+  
+        
 
   openModal(type: 'image' | 'video', index: number = 0): void {
     this.modalType = type;
     this.activeIndex = index;
+    console.log(`Abriendo modal con tipo: ${type} e índice: ${index}`);
   }
-
 
   closeModal(): void {
     this.modalType = null;
+    console.log('Cerrando modal');
+  }
+
+  setActive(index: number): void {
+    this.activeIndex = index;
+    console.log('Imagen/Video activo:', this.activeIndex);
+  }
+
+  next(): void {
+    if (this.activeIndex < (this.gallery.length - 1)) {
+      this.activeIndex++;
+    }
+  }
+
+  prev(): void {
+    if (this.activeIndex > 0) {
+      this.activeIndex--;
+    }
   }
 }

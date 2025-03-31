@@ -1,8 +1,6 @@
-<div class="container">
-  <!-- Botones para abrir el modal -->
-  <button class="btn btn-custom.images" (click)="openModal('image')">Imágenes <i class="bi bi-images"></i></button>
-  <button class="btn btn-custom.videos" (click)="openModal('video')">Videos<i class="bi bi-film"></i></button>
-</div>
+<!-- Botones para abrir el modal -->
+<button class="btn btn-custom.images" (click)="openModal('image')">Imágenes <i class="bi bi-images"></i></button>
+<button class="btn btn-custom.videos" (click)="openModal('video')">Videos <i class="bi bi-film"></i></button>
 
 <!-- MODAL -->
 <div class="modal fade show d-block" *ngIf="modalType && player" (click)="closeModal()">
@@ -39,11 +37,11 @@
           <!-- Video principal sin miniaturas -->
           <div *ngIf="modalType === 'video' && player!.video!.length > 0">
             <iframe 
-            [src]="player.video ? player.video[activeIndex] : '' | safeUrl"
-            class="video-frame shadow"
-            frameborder="0" 
-            allowfullscreen>
-          </iframe>
+              [src]="player.video ? player.video[activeIndex] : '' | safeUrl"
+              class="video-frame shadow"
+              frameborder="0" 
+              allowfullscreen>
+            </iframe>
           </div>
         </div>
       </div>
@@ -59,7 +57,7 @@
       
         <!-- Contenedor derecho -->
         <div class="controlDer">
-          <button *ngIf="activeIndex < maxLength - 1"
+          <button *ngIf="activeIndex < gallery.length - 1"
             class="btn btn-dark"
             (click)="setActive(activeIndex + 1)">
             <i class="bi bi-caret-right-fill"></i>
