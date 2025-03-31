@@ -20,7 +20,7 @@ export class PlayerDetailComponent implements OnInit, OnDestroy {
   @Input() player?: Player; 
   player$?: Observable<Player | undefined>; // Usamos un Observable
   activeIndex = 0; 
-  selectedPlayerId: number = 0; // Cambiado a string porque Firebase usa strings
+  selectedPlayerId!: string;
 
   constructor(
     private route: ActivatedRoute,
@@ -30,10 +30,12 @@ export class PlayerDetailComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    const playerId = this.route.snapshot.paramMap.get('id');
-    if (playerId) {
-      this.selectedPlayerId = Number(playerId); // ✅ Convertir a número correctamente
-    }
+    this.route.paramMap.subscribe(params => {
+      const playerId = params.get('id');
+      if (playerId) {
+        this.player$ = this.playerService.getPlayerDetails(playerId);
+      }
+    });
   }
 
   ngOnDestroy(): void {

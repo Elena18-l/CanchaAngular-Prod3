@@ -37,7 +37,7 @@ export class PlayerMediaComponent implements OnInit {
     gallery: [],
     video: []
   }; // El jugador será de tipo Player o undefined
-  @Input() playerId!: number;
+  @Input() playerId!: string;
   activeIndex = 0;
   modalType: 'image' | 'video' | null = null;
 gallery: any;

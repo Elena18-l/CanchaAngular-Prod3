@@ -35,6 +35,7 @@ export class PlayersComponent implements OnInit {
 
   // Función para seleccionar un jugador y mostrar sus detalles
   selectPlayer(player: Player) {
+    const playerId = player.id;
     this.selectedPlayerIdChange.emit(player.id);  // Emitir el ID del jugador seleccionado
   }
   // Función para deseleccionar el jugador
@@ -51,6 +52,7 @@ export class PlayersComponent implements OnInit {
       age: '',
       stature: ''
     };
+    this.filteredPlayers$();  // Recargar la lista con todos los jugadores
   }
 
 

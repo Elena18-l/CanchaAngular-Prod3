@@ -21,13 +21,14 @@
     <div class="filter-header"><h3>Filtrar Jugadores</h3></div>
     <div class="filter-controls">
       <label>Dorsal</label>
-      <select [(ngModel)]="selectedFilters.shirtNumber">
+      <select [(ngModel)]="selectedFilters.shirtNumber" (change)="filteredPlayers$()">
+
         <option value="">Todos</option>
         <option *ngFor="let num of [4,5,7,10,11,14]" [value]="num">{{ num }}</option>
       </select>
 
       <label>Posición:</label>
-      <select [(ngModel)]="selectedFilters.position">
+      <select [(ngModel)]="selectedFilters.position"(change)="filteredPlayers$()">
         <option value="">Todas</option>
         <option *ngFor="let pos of ['Base', 'Alero', 'Pívot', 'Ala', 'Escolta']" [value]="pos">
           {{ pos }}
@@ -35,7 +36,7 @@
       </select>
 
       <label>Media:</label>
-      <select [(ngModel)]="selectedFilters.average">
+      <select [(ngModel)]="selectedFilters.average"(change)="filteredPlayers$()">
         <option value="">Todos</option>
         <option *ngFor="let avg of ['0-8', '8.1-9', '9.1-10']" [value]="avg">
           {{ avg === '0-8' ? '8 o menos' : avg === '8.1-9' ? 'entre 8 y 9' : 'más de 9' }}
@@ -43,13 +44,13 @@
       </select>
 
       <label>Edad:</label>
-      <select [(ngModel)]="selectedFilters.age">
+      <select [(ngModel)]="selectedFilters.age"(change)="filteredPlayers$()">
         <option value="">Todas</option>
         <option *ngFor="let age of [15, 16, 17, 18, 19]" [value]="age">{{ age }}</option>
       </select>
 
       <label>Altura:</label>
-      <select [(ngModel)]="selectedFilters.stature">
+      <select [(ngModel)]="selectedFilters.stature"(change)="filteredPlayers$()">
         <option value="">Todas</option>
         <option *ngFor="let range of ['0-175', '175-180', '180-185', '185-190', '190-195', '195-200', '200-300']" [value]="range">
           {{ range === '0-175' ? '175 cm o menos' : range === '200-300' ? 'Más de 2m' : 'Entre ' + range.replace('-', ' y ') }}

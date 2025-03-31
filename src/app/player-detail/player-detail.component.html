@@ -1,8 +1,8 @@
 <div class="containerDetail">
 
 
-  <div *ngIf="player">
-    <h2 class="player-name-title">{{ player.name }}</h2>
+  <div> <h2 *ngIf="player$ | async as player" class="player-name-title">{{ player.name }}</h2>
+
   </div>
 
 
