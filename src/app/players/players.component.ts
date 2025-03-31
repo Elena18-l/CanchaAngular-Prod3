@@ -4,11 +4,11 @@ import { Observable } from 'rxjs';
 import { Player } from '../services/player';  // Asegúrate de que tu modelo Player esté bien importado
 import { FormsModule } from '@angular/forms'; // Para usar ngModel
 import { CommonModule } from '@angular/common'; // Para usar ngClass
-
+import { PlayerDetailComponent } from '../player-detail/player-detail.component';
 @Component({
   selector: 'app-players',
   standalone: true, // Este es un componente standalone
-  imports: [FormsModule, CommonModule], // Necesario para ngModel y ngClass
+  imports: [FormsModule, CommonModule, PlayerDetailComponent], // Necesario para ngModel y ngClass
   templateUrl: './players.component.html',
   styleUrls: ['./players.component.css']
 })
@@ -35,9 +35,10 @@ export class PlayersComponent implements OnInit {
 
   // Función para seleccionar un jugador y mostrar sus detalles
   selectPlayer(player: Player) {
-    const playerId = player.id;
-    this.selectedPlayerIdChange.emit(player.id);  // Emitir el ID del jugador seleccionado
+    this.selectedPlayer = player;  // 🔹 Ahora asignamos el jugador seleccionado
+    this.selectedPlayerIdChange.emit(player.id);  // 🔹 Emitimos el ID (si es necesario en otro componente)
   }
+  
   // Función para deseleccionar el jugador
   deselectPlayer() {
     this.selectedPlayer = null;

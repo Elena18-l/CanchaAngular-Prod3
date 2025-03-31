@@ -83,14 +83,7 @@
   </div>
 
   <!-- Detalles del jugador seleccionado -->
-  <div *ngIf="selectedPlayer" class="player-details">
-    <h3>{{ selectedPlayer.name }} - Detalles</h3>
-    <p>Posición: {{ selectedPlayer.position }}</p>
-    <p>Dorsal: {{ selectedPlayer.shirtNumber }}</p>
-    <p>Edad: {{ selectedPlayer.age }} años</p>
-    <p>Altura: {{ selectedPlayer.stature }} cm</p>
-    <p>Media: {{ selectedPlayer.average }}</p>
-    <button (click)="deselectPlayer()">Volver</button>
-  </div>
+  <app-player-detail *ngIf="selectedPlayer" [player]="selectedPlayer" (close)="deselectPlayer()"></app-player-detail>
+
 
 </div>
