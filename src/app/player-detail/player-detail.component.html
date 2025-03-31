@@ -2,11 +2,12 @@
 
 
   <div> <h2 *ngIf="player$ | async as player" class="player-name-title">{{ player.name }}</h2>
-
+ 
   </div>
 
-
+ 
   <div class="container-playerData">
+    
     <div class="row px-2 d-flex justify-content-between">
 
 
@@ -52,15 +53,14 @@
         <div class="botoncito"></div>
          
       </div>
-      
+     
       <!-- Foto jugador central -->
       <div class="col-md-1 text-center player-image-container">
         <img [src]="player?.foto" alt="Player Image" class="player-image">
       </div>
 
       <!-- Tabla de datos columna derecha (pentagono)-->
-      <div class="colDer col-md-5">
-
+      <div class="colDer col-md-5">        
         <div class="stats-title">
           <h3 class="label-title">Estadísticas</h3>
           <h3 class="fw-bold-title">de Jugador</h3>
@@ -75,9 +75,9 @@
 
     </div>
     </div>
-
-    <div class="faja-duotono">
-      
+   
+    <div class="faja-duotono" >
+      <button (click)="closeDetails()" class="btn">Cerrar</button>
     </div>
 
   </div>

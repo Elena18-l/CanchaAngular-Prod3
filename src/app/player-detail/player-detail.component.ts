@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, Input } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input, EventEmitter, Output } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { Player } from '../services/player';
@@ -21,7 +21,7 @@ export class PlayerDetailComponent implements OnInit, OnDestroy {
   player$?: Observable<Player | undefined>; // Usamos un Observable
   activeIndex = 0; 
   selectedPlayerId!: string;
-
+  @Output() close = new EventEmitter<void>();
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -58,5 +58,8 @@ export class PlayerDetailComponent implements OnInit, OnDestroy {
 
   setActiveVideo(index: number): void {
     this.activeIndex = index;
+  }
+  closeDetails() {
+    this.close.emit(); // Emite el evento para cerrar el detalle
   }
 }
