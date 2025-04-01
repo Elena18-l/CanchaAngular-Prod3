@@ -31,7 +31,7 @@ export class PlayerDetailComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.playerService.playerId$.subscribe(playerId => {
-      console.log('ID del jugador recibido en detalles:', this.player);
+      console.log('ID del jugador recibido en detalles:', this.player, playerId);
       
       this.playerId = playerId;
       this.loadPlayerDetails(playerId ?? '');
