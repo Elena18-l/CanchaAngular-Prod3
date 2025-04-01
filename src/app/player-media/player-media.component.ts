@@ -4,6 +4,7 @@ import { Player } from '../services/player';
 import { Observable } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { SafeUrlPipe } from './safe-url.pipe';
+import { ChangeDetectorRef } from '@angular/core';
 
 @Component({
   selector: 'app-player-media',
@@ -13,14 +14,14 @@ import { SafeUrlPipe } from './safe-url.pipe';
 })
 export class PlayerMediaComponent implements OnInit {
 
-  @Input() playerId?: string;
+  @Input() player?: Player; 
   player$?: Observable<Player | undefined>;
-  player?: Player; 
+ 
   gallery: string[] = [];
   modalType: 'image' | 'video' | null = null;
   activeIndex = 0;
 
-  constructor(private playerService: PlayerService) {}
+  constructor(private playerService: PlayerService,private cdr: ChangeDetectorRef) {}
 
   ngOnInit(): void {
     this.playerService.playerId$.subscribe(playerId => {
@@ -47,11 +48,23 @@ export class PlayerMediaComponent implements OnInit {
   
         
 
-  openModal(type: 'image' | 'video', index: number = 0): void {
-    this.modalType = type;
-    this.activeIndex = index;
-    console.log(`Abriendo modal con tipo: ${type} e índice: ${index}`);
+  
+openModal(type: 'image' | 'video', index: number = 0, event?: Event): void {
+  if (event) event.stopPropagation(); // 🔥 Evita que se cierre instantáneamente
+  
+  if (!this.player) {
+    console.warn('⚠️ No hay player definido, el modal no se mostrará.');
+    return;
   }
+
+  this.modalType = type;
+  this.activeIndex = index;
+  
+  console.log(`📌 Abriendo modal: ${type}, índice: ${index}`);
+  
+  this.cdr.detectChanges(); // 🔥 Fuerza la actualización del DOM
+}
+  
 
   closeModal(): void {
     this.modalType = null;

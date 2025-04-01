@@ -17,6 +17,7 @@ export class PlayerService {
   /** ✅ Guarda el ID del jugador seleccionado */
   setPlayerId(playerId: string): void {
     if (!playerId) {
+      console.log('HOPLAAAAASKLAJKLSA', playerId);
       console.error('El playerId que se intenta establecer es inválido');
       return;
     }
@@ -27,12 +28,14 @@ export class PlayerService {
   /** ✅ Obtiene todos los jugadores con su ID incluido */
   getPlayersWithIds(): Observable<Player[]> {
     const playersRef = collection(this.firestore, 'players');
+   
     return collectionData(playersRef, { idField: 'id' }) as Observable<Player[]>;
   }
 
   /** ✅ Obtiene un solo jugador por ID */
   getPlayerById(playerId: string): Observable<Player | undefined> {
     if (!playerId) {
+      console.log('HOPLAAAAAA', playerId);
       console.error('El playerId es indefinido o nulo');
       return of(undefined);
     }
@@ -57,8 +60,10 @@ export class PlayerService {
     );
   }
   getPlayers(): Observable<Player[]> {
+    
     const playersRef = collection(this.firestore, 'players');
     return collectionData(playersRef, { idField: 'id' }).pipe(
+      
       map((data) => 
         data.map((player) => ({
           ...player as Player,  // 👈 Aseguramos que TypeScript entienda que es un Player
@@ -67,6 +72,7 @@ export class PlayerService {
         }))
       )
     );
+    
   }
   
 

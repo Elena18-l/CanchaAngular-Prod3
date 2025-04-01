@@ -21,7 +21,9 @@ export class PlayerDetailComponent implements OnInit, OnDestroy {
   player$?: Observable<Player | undefined>; // Usamos un Observable
   activeIndex = 0; 
   selectedPlayerId!: string;
+  selectedPlayer: Player | null = null;
   @Output() close = new EventEmitter<void>();
+  @Output() selectedPlayerIdChange = new EventEmitter<string>();
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -31,7 +33,7 @@ export class PlayerDetailComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.playerService.playerId$.subscribe(playerId => {
-      console.log('ID del jugador recibido en detalles:', this.player, playerId);
+      console.log('ID del jugador recibido en detalles:', this.player, this.player?.id);
       
       this.playerId = playerId;
       this.loadPlayerDetails(playerId ?? '');
@@ -42,13 +44,17 @@ export class PlayerDetailComponent implements OnInit, OnDestroy {
     this.playerService.getPlayerDetails(playerId).subscribe(playerData => {
       if (playerData) {
         this.player = playerData;
-        console.log('Detalles del jugador cargados:', this.player);
+        console.log('Detalles del jugador cargados:', this.player,playerId);
       } else {
         console.log('Jugador no encontrado');
       }
     });
   }
-  
+  selectPlayer(player: Player) {
+    console.log("a",player)
+    this.selectedPlayer = player;  // 🔹 Ahora asignamos el jugador seleccionado
+    this.selectedPlayerIdChange.emit(player.id);  // 🔹 Emitimos el ID (si es necesario en otro componente)
+  }
   
   
   
@@ -77,4 +83,5 @@ export class PlayerDetailComponent implements OnInit, OnDestroy {
   closeDetails() {
     this.close.emit(); // Emite el evento para cerrar el detalle
   }
+
 }
