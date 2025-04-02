@@ -5,11 +5,12 @@ import { Player } from '../services/player';  // Asegúrate de que tu modelo Pla
 import { FormsModule } from '@angular/forms'; // Para usar ngModel
 import { CommonModule } from '@angular/common'; // Para usar ngClass
 import { PlayerDetailComponent } from '../player-detail/player-detail.component';
+import {FormCrudComponent} from '../form-crud/form-crud.component';
 import {InMemoryDataService} from '../services/in-memory-data-service';
 @Component({
   selector: 'app-players',
   standalone: true, // Este es un componente standalone
-  imports: [FormsModule, CommonModule, PlayerDetailComponent], // Necesario para ngModel y ngClass
+  imports: [FormsModule, CommonModule, PlayerDetailComponent, FormCrudComponent], // Necesario para ngModel y ngClass
   templateUrl: './players.component.html',
   styleUrls: ['./players.component.css']
 })
@@ -28,10 +29,20 @@ export class PlayersComponent implements OnInit {
     stature: ''
   };
 
+  isFormOpen = false;
+
   constructor(private playerService: PlayerService) {}
 
   ngOnInit() {
     this.filteredPlayersList$ =this.playerService.getFilteredPlayers(this.selectedFilters);
+  }
+
+  openForm() {
+    this.isFormOpen = true;
+  }
+
+  closeForm() {
+    this.isFormOpen = false;
   }
 
   // Función para seleccionar un jugador y mostrar sus detalles
@@ -70,4 +81,14 @@ export class PlayersComponent implements OnInit {
   // resetDatabase() {
   //   this.playerService.resetDatabase(InMemoryDataService);
   // }
+
+  onPlayerAdded() {
+    console.log('Jugador añadido. Recargando lista...');
+    this.filteredPlayersList$ = this.playerService.getFilteredPlayers(this.selectedFilters); // 🔹 Recargar lista de jugadores
+    this.closeForm();
+  }
+
+
+
+
 }

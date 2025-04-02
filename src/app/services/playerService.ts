@@ -106,6 +106,8 @@ export class PlayerService {
     );
   }
 
+
+  //cruuuuud me ninha
   /** ✅ Obtiene detalles de un jugador */
   getPlayerDetails(playerId: string): Observable<Player | undefined> {
     return this.getPlayerById(playerId);

@@ -57,11 +57,17 @@
         </option>
       </select>
   
-      <button (click)="clearFilters()" class="filter-button">Limpiar filtros</button>
+      
+      <button (click)="openForm()" class="btn-add-player">Añadir Jugador</button>
+      <app-form-crud *ngIf="isFormOpen"(playerAdded)="onPlayerAdded()" (close)="closeForm()"></app-form-crud>
+
+
     </div>
   </div>
 
   <!-- Título -->
+  <!-- <button (click)="addPlayer()" class="btn-add-player">Añadir Jugador</button> -->
+
   <h2 class="team-title">El equipo Shohoku está formado por:</h2>
 
   <!-- Lista de jugadores -->
