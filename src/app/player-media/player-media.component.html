@@ -22,7 +22,7 @@
       <div *ngIf="modalType && player && (this.player?.gallery || this.player?.video)">
         <div class="modal-body text-center">
           <!-- Carrusel de imágenes -->
-          <div *ngIf="modalType && player && player?.gallery && player.gallery.length > 0">
+          <div *ngIf="modalType==='image' && player && player?.gallery && player.gallery.length > 0">
             <img [src]="player.gallery[activeIndex]" class="main-image rounded shadow">
 
             <!-- Miniaturas -->
