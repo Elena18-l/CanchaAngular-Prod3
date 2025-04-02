@@ -110,4 +110,32 @@ export class PlayerService {
   getPlayerDetails(playerId: string): Observable<Player | undefined> {
     return this.getPlayerById(playerId);
   }
+  addPlayer(player: Player) {
+    const playersRef = collection(this.firestore, 'players');
+    return from(addDoc(playersRef, player)).pipe(
+      catchError((error) => {
+        console.error('Error al agregar el jugador:', error);
+        return of(undefined);
+      })
+    );
+  }
+  deletePlayer(playerId: string) {
+    const playerRef = doc(this.firestore, `players/${playerId}`);
+    return from(deleteDoc(playerRef)).pipe(
+      catchError((error) => {
+        console.error('Error al eliminar el jugador:', error);
+        return of(undefined);
+      })
+    );
+  }
+  updatePlayer(playerId: string, player: Player) {
+    const playerRef = doc(this.firestore, `players/${playerId}`);
+    const updateData: { [key: string]: any } = { ...player };
+    return from(updateDoc(playerRef, updateData)).pipe(
+      catchError((error) => {
+        console.error('Error al actualizar el jugador:', error);
+        return of(undefined);
+      })
+    );
+  }
 }
