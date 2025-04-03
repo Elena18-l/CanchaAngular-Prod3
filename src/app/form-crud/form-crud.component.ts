@@ -72,7 +72,8 @@ filteredPlayersList$: Observable<Player[]> | undefined;
   
         // 🔹 Se elimina la segunda inserción innecesaria en Firestore
   
-        this.closeModal(); // Cierra el modal después de guardar
+        this.closeModal();
+        this.closeForm(); // Cierra el modal después de guardar
       } catch (error) {
         console.error('Error al añadir jugador:', error);
       }

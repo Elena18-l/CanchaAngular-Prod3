@@ -1,6 +1,14 @@
 <button (click)="openForm()" class="btn-add-player">Añadir Jugador</button>
 <div class="modal-overlay" *ngIf="isFormOpen"(playerAdded)="onPlayerAdded()" (close)="closeForm()">
     <div class="modal-content">
+
+    
+      
+      <button type="button" class="close" aria-label="Close" (click)="closeForm()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+
+
       <h2>Crear Nuevo Jugador</h2>
       <form [formGroup]="playerForm" (ngSubmit)="addPlayer()">
         <label>Nombre:
