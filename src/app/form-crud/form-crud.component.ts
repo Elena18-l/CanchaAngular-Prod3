@@ -29,7 +29,6 @@ filteredPlayersList$: Observable<Player[]> | undefined;
     stature: new FormControl(null, Validators.required),
     average: new FormControl(null, Validators.required),
     bio: new FormControl('', Validators.required),
-    team: new FormControl('', Validators.required),
     portrait: new FormControl(''),
     foto: new FormControl(''),
     video: new FormArray([]), // Array dinámico de videos
