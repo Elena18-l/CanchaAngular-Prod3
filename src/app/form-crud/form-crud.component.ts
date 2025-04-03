@@ -106,6 +106,8 @@ filteredPlayersList$: Observable<Player[]> | undefined;
   }
   closeForm() {
     this.isFormOpen = false;
+    document.body.classList.remove('modal-open');
+    this.playerForm.reset();
   }
   onPlayerAdded() {
     console.log('Jugador añadido. Recargando lista...');
