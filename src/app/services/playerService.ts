@@ -1,8 +1,9 @@
-import { Injectable } from '@angular/core';
-import { Firestore, collection, addDoc, doc, updateDoc, deleteDoc, collectionData, docData } from '@angular/fire/firestore';
+import { Injectable, NgZone } from '@angular/core';
+import { Firestore, collection, addDoc, doc, updateDoc, deleteDoc, collectionData, docData,query, where, QueryConstraint } from '@angular/fire/firestore';
 import { BehaviorSubject, Observable, from, of } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
-import { query, where, getDocs, QueryConstraint } from 'firebase/firestore';
+
+
 import { Player } from './player';  // Modelo de jugador
 
 @Injectable({
@@ -12,7 +13,7 @@ export class PlayerService {
   private playerIdSubject: BehaviorSubject<string | null> = new BehaviorSubject<string | null>(null);
   playerId$: Observable<string | null> = this.playerIdSubject.asObservable();
 
-  constructor(private firestore: Firestore) {}  // Firestore se inyecta automáticamente
+  constructor(private firestore: Firestore, private ngZone: NgZone) {}  // Firestore se inyecta automáticamente
 
   /** ✅ Guarda el ID del jugador seleccionado */
   setPlayerId(playerId: string): void {
@@ -28,8 +29,16 @@ export class PlayerService {
   /** ✅ Obtiene todos los jugadores con su ID incluido */
   getPlayersWithIds(): Observable<Player[]> {
     const playersRef = collection(this.firestore, 'players');
-   
-    return collectionData(playersRef, { idField: 'id' }) as Observable<Player[]>;
+    
+    return new Observable((observer) => {
+      this.ngZone.run(() => {  // Envuelve la llamada a Firebase en NgZone.run()
+        collectionData(playersRef, { idField: 'id' }).subscribe({
+          next: (data) => observer.next(data as Player[]),
+          error: (err) => observer.error(err),
+          complete: () => observer.complete(),
+        });
+      });
+    });
   }
 
   /** ✅ Obtiene un solo jugador por ID */
@@ -76,7 +85,6 @@ export class PlayerService {
   }
   
 
-  /** ✅ Obtiene jugadores filtrados */
   getFilteredPlayers(filters: any): Observable<Player[]> {
     const playersRef = collection(this.firestore, 'players');
     let queryConstraints: QueryConstraint[] = [];
@@ -97,13 +105,16 @@ export class PlayerService {
     }
 
     const playersQuery = query(playersRef, ...queryConstraints);
-    return from(getDocs(playersQuery)).pipe(
-      map((querySnapshot) => querySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() } as Player))),
-      catchError((error) => {
-        console.error('Error al obtener jugadores filtrados:', error);
-        return of([]);
-      })
-    );
+
+    return new Observable((observer) => {
+      this.ngZone.run(() => {  // Envuelve la llamada a Firebase en NgZone.run()
+        collectionData(playersQuery, { idField: 'id' }).subscribe({
+          next: (data) => observer.next(data as Player[]),
+          error: (err) => observer.error(err),
+          complete: () => observer.complete(),
+        });
+      });
+    });
   }
 
 

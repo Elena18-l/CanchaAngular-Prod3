@@ -1,4 +1,5 @@
-<div class="modal-overlay">
+<button (click)="openForm()" class="btn-add-player">Añadir Jugador</button>
+<div class="modal-overlay" *ngIf="isFormOpen"(playerAdded)="onPlayerAdded()" (close)="closeForm()">
     <div class="modal-content">
       <h2>Crear Nuevo Jugador</h2>
       <form [formGroup]="playerForm" (ngSubmit)="addPlayer()">
@@ -28,21 +29,24 @@
         </label>
   
         <h3>Habilidades</h3>
-        <label>Físico:
-          <input type="number" formControlName="fisico" required />
-        </label>
-        <label>Fuerza Mental:
-          <input type="number" formControlName="fuerzaMental" required />
-        </label>
-        <label>Habilidad Especial:
-          <input type="number" formControlName="habilidadEspecial" required />
-        </label>
-        <label>Resistencia:
-          <input type="number" formControlName="resistencia" required />
-        </label>
-        <label>Técnica:
-          <input type="number" formControlName="tecnica" required />
-        </label>
+          <div formGroupName="skills">
+            <label>Físico:
+              <input type="number" formControlName="fisico" required />
+            </label>
+            <label>Fuerza Mental:
+              <input type="number" formControlName="fuerzaMental" required />
+            </label>
+            <label>Habilidad Especial:
+              <input type="number" formControlName="habilidadEspecial" required />
+            </label>
+            <label>Resistencia:
+              <input type="number" formControlName="resistencia" required />
+            </label>
+            <label>Técnica:
+              <input type="number" formControlName="tecnica" required />
+            </label>
+          </div>
+
   
         <h3>Imágenes</h3>
         <label>Retrato:
@@ -51,8 +55,9 @@
         <label>Foto:
           <input type="text" formControlName="foto" />
         </label>
-  
+        <button type="submit" [disabled]="playerForm.invalid">Guardar</button>
       </form>
+      
     </div>
   </div>
   

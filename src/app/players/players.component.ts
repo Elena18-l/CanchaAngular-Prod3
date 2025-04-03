@@ -29,7 +29,7 @@ export class PlayersComponent implements OnInit {
     stature: ''
   };
 
-  isFormOpen = false;
+
 
   constructor(private playerService: PlayerService) {}
 
@@ -37,13 +37,8 @@ export class PlayersComponent implements OnInit {
     this.filteredPlayersList$ =this.playerService.getFilteredPlayers(this.selectedFilters);
   }
 
-  openForm() {
-    this.isFormOpen = true;
-  }
 
-  closeForm() {
-    this.isFormOpen = false;
-  }
+  
 
   // Función para seleccionar un jugador y mostrar sus detalles
   selectPlayer(player: Player) {
@@ -82,11 +77,6 @@ export class PlayersComponent implements OnInit {
   //   this.playerService.resetDatabase(InMemoryDataService);
   // }
 
-  onPlayerAdded() {
-    console.log('Jugador añadido. Recargando lista...');
-    this.filteredPlayersList$ = this.playerService.getFilteredPlayers(this.selectedFilters); // 🔹 Recargar lista de jugadores
-    this.closeForm();
-  }
 
 
 

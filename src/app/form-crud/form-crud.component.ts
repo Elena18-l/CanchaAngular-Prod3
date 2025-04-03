@@ -1,13 +1,17 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Output } from '@angular/core';
 import { FormArray, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { addDoc, collection, doc, Firestore } from 'firebase/firestore';
+import { addDoc, collection, doc } from 'firebase/firestore';
 import { PlayerService } from '../services/playerService';
 import { Player } from '../services/player';
-
+import { Observable } from 'rxjs';
+import { Firestore, FirestoreModule } from '@angular/fire/firestore';
+import { provideFirestore, getFirestore } from '@angular/fire/firestore';
+import { importProvidersFrom } from '@angular/core'
 @Component({
   selector: 'app-form-crud',
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, FirestoreModule],
+  standalone: true,
   templateUrl: './form-crud.component.html',
   styleUrl: './form-crud.component.css'
 })
@@ -15,7 +19,7 @@ import { Player } from '../services/player';
 export class FormCrudComponent {
   @Output() close = new EventEmitter<void>();
   @Output() playerAdded = new EventEmitter<Player>(); // Emitir el jugador añadido
-
+filteredPlayersList$: Observable<Player[]> | undefined; 
   playerForm = new FormGroup({
     id: new FormControl(''), //valor inicial vacío poma.
     name: new FormControl('', Validators.required),
@@ -38,7 +42,14 @@ export class FormCrudComponent {
       tecnica: new FormControl(null, Validators.required),
     }),
   });
-
+  isFormOpen = false;
+  selectedFilters: any = {
+    shirtNumber: '',
+    position: '',
+    average: '',
+    age: '',
+    stature: ''
+  };
   constructor(private firestore: Firestore, private playerService: PlayerService) {}
 
   openForm() {
@@ -47,6 +58,7 @@ export class FormCrudComponent {
     const tempDocRef = doc(playersRef); // Genera un ID sin crear documento
     console.log('ID generado:', tempDocRef.id);
     this.playerForm.patchValue({ id: tempDocRef.id });
+    this.isFormOpen = true; 
   }
 
 
@@ -55,13 +67,12 @@ export class FormCrudComponent {
     if (this.playerForm.valid) {
       try {
         const playersRef = collection(this.firestore, 'players');
-        const docRef = await addDoc(playersRef, this.playerForm.value);
+        const docRef = await addDoc(playersRef, { ...this.playerForm.value });
         console.log('Jugador añadido con éxito, ID:', docRef.id);
-        
-        // Opcional: actualizar el documento para incluir su propio ID
-        await addDoc(playersRef, { ...this.playerForm.value, id: docRef.id });
-
-        this.closeModal();
+  
+        // 🔹 Se elimina la segunda inserción innecesaria en Firestore
+  
+        this.closeModal(); // Cierra el modal después de guardar
       } catch (error) {
         console.error('Error al añadir jugador:', error);
       }
@@ -70,7 +81,7 @@ export class FormCrudComponent {
       this.playerForm.markAllAsTouched();
     }
   }
-
+  
   onSubmit() {
     console.log('Formulario enviado:', this.playerForm.value);
   
@@ -92,5 +103,13 @@ export class FormCrudComponent {
 
   closeModal() {
     this.close.emit();
+  }
+  closeForm() {
+    this.isFormOpen = false;
+  }
+  onPlayerAdded() {
+    console.log('Jugador añadido. Recargando lista...');
+    this.filteredPlayersList$ = this.playerService.getFilteredPlayers(this.selectedFilters); // 🔹 Recargar lista de jugadores
+    this.closeForm();
   }
 }
