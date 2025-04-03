@@ -56,7 +56,7 @@
           {{ range === '0-175' ? '175 cm o menos' : range === '200-300' ? 'Más de 2m' : 'Entre ' + range.replace('-', ' y ') }}
         </option>
       </select>
-  
+      <button (click)="clearFilters()" class="filter-button">Limpiar filtros</button>
       
       <button (click)="openForm()" class="btn-add-player">Añadir Jugador</button>
       <app-form-crud *ngIf="isFormOpen"(playerAdded)="onPlayerAdded()" (close)="closeForm()"></app-form-crud>
