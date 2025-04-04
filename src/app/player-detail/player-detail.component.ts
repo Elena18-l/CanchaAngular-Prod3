@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, Input, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input, EventEmitter, Output, ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { Player } from '../services/player';
@@ -29,7 +29,8 @@ export class PlayerDetailComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private router: Router,
     private location: Location,
-    private playerService: PlayerService 
+    private playerService: PlayerService,
+    private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
@@ -42,9 +43,13 @@ export class PlayerDetailComponent implements OnInit, OnDestroy {
   }
   onPlayerUpdated(player: any) {
     // Handle the updated player data here
-    console.log(player);
+    console.log("Ferranaaaaaaaaaan aqui1!!!!", player);
+    this.loadPlayerDetails(this.playerId ?? '');
+    this.player = { ...player };
+    this.cdr.detectChanges();
   }
   loadPlayerDetails(playerId: string) {
+    console.log('Cargando detalles del jugador:', playerId);
     this.playerService.getPlayerDetails(playerId).subscribe(playerData => {
       if (playerData) {
         this.player = playerData;
