@@ -183,6 +183,19 @@ backdrop-filter: blur(5px);
 
 
 
+.nombreEdit{
+  display:flex;
+  background-color: #C02A2D;
+}
+app-form-crud-edit{
+  display: flex;
+  align-items: center;
+   background-color: #C02A2D;
+   padding-right:10px;
+}
+
+
+
 
 /* --- recupero el botón de ver videos del compoente player-media*/
 
