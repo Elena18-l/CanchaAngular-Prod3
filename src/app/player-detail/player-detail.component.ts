@@ -7,11 +7,12 @@ import { CommonModule } from '@angular/common';
 import { PentagonComponent } from '../pentagon/pentagon.component';
 import { PlayerMediaComponent } from '../player-media/player-media.component';
 import { PlayerService } from '../services/playerService';
+import { FormCrudEditComponent } from "../form-crud-edit/form-crud-edit.component";
 
 @Component({
   selector: 'app-player-detail',
   standalone: true,
-  imports: [CommonModule, PentagonComponent, PlayerMediaComponent],
+  imports: [CommonModule, PentagonComponent, PlayerMediaComponent, FormCrudEditComponent],
   templateUrl: './player-detail.component.html',
   styleUrls: ['./player-detail.component.css'],
 })
@@ -39,7 +40,10 @@ export class PlayerDetailComponent implements OnInit, OnDestroy {
       this.loadPlayerDetails(playerId ?? '');
     });
   }
-  
+  onPlayerUpdated(player: any) {
+    // Handle the updated player data here
+    console.log(player);
+  }
   loadPlayerDetails(playerId: string) {
     this.playerService.getPlayerDetails(playerId).subscribe(playerData => {
       if (playerData) {

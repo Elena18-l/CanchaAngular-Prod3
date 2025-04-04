@@ -5,6 +5,13 @@
   </div>
 
   <div class="container-playerData">
+    <app-form-crud-edit
+  *ngIf="player?.id"
+  [playerId]="player!.id"
+  (playerUpdated)="onPlayerUpdated($event)"
+  (close)="closeDetails()"
+></app-form-crud-edit>
+
     <div class="row px-2 d-flex justify-content-between">
       <!-- Tabla de datos columna izquierda -->
       <div class="colIzq col-md-4">

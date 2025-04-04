@@ -2,7 +2,7 @@
 <button (click)="openForm()"><i class="bi bi-pencil-square"></i></button>
 
 
-<div class="modal-overlay" *ngIf="isFormOpen"(playerAdded)="onPlayerUpdated()" (close)="closeForm()">
+<div class="modal-overlay" *ngIf="isFormOpen"(playerAdded)="onPlayerUpdated($event)" (close)="closeForm()">
     <div class="modal-content">
 
     

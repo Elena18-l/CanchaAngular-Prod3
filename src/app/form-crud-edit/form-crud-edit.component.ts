@@ -5,17 +5,20 @@ import { doc, collection, getDoc, updateDoc } from '@angular/fire/firestore';
 import { Player } from '../services/player';
 import { Observable } from 'rxjs';
 import { Firestore, FirestoreModule } from '@angular/fire/firestore';
-
+import { OnInit, OnChanges, SimpleChanges } from '@angular/core';
 @Component({
   selector: 'app-form-crud-edit',
   imports: [CommonModule, ReactiveFormsModule, FirestoreModule],
   templateUrl: './form-crud-edit.component.html',
-  styleUrl: './form-crud-edit.component.css'
+  styleUrl: './form-crud-edit.component.css',
+  standalone: true
+  
 })
-export class FormCrudEditComponent {
+export class FormCrudEditComponent implements OnInit, OnChanges {
   @Input() playerId: string = ''; // ID del jugador a editar
   @Output() close = new EventEmitter<void>();
   @Output() playerUpdated = new EventEmitter<Player>();
+  currentPlayerId: string = '';
 
   playerForm = new FormGroup({
     id: new FormControl(''),
@@ -46,16 +49,29 @@ export class FormCrudEditComponent {
       tecnica: new FormControl(0, Validators.required),
     }),
   });
-
-  isFormOpen = false;
-
-  constructor(private firestore: Firestore) {}
-
+  editPlayer(id: string) {
+    this.playerId = id;
+    this.loadPlayer(id);
+    this.openForm();
+  }
+  
   ngOnInit() {
     if (this.playerId) {
       this.loadPlayer(this.playerId);
     }
   }
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['playerId'] && changes['playerId'].currentValue) {
+      this.loadPlayer(changes['playerId'].currentValue);
+    }
+  }
+
+  isFormOpen = false;
+
+  constructor(private firestore: Firestore) {}
+
+
 
   async loadPlayer(playerId: string) {
     if (!playerId) {
@@ -95,7 +111,12 @@ export class FormCrudEditComponent {
       console.warn('⚠️ No se encontró el jugador con ID:', playerId);
     }
   }
-
+ openForm() {
+  this.isFormOpen = true;
+ } 
+onPlayerUpdated(player: any) {
+  this.playerUpdated.emit(player);
+}
   async updatePlayer() {
     if (this.playerForm.valid) {
       try {
