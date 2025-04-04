@@ -13,9 +13,9 @@ export interface Player {
     foto:string; // esta es la de cuerpo entero
     portrait:string;  //a ver si lo vamos solucionando. esta es la card
     team:string;
-    stature: number;
-    average: number;
-    shirtNumber: number;
+    stature?: number;
+    average?: number;
+    shirtNumber?: number;
     position: string;
     gallery: string[]; // las fotos de la galeria
     bio: string;
