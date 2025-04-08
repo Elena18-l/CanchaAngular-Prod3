@@ -11,6 +11,13 @@
           <!-- *div arquitectónico! lo he puesto yo(ferran), hasta que tenga el logo que poner en la linea 8! -->
         </div>
       </div>
+      <div *ngIf="user$ | async as user; else notLoggedIn" class="auth-info">
+        <span>👤 Sesión activa (UID: {{ user.uid }})</span>
+      </div>
+      <ng-template #notLoggedIn>
+        <span>⚠️ Usuario no autenticado</span>
+      </ng-template>
+      
     </nav>
 
     <!-- Barra de búsqueda -->

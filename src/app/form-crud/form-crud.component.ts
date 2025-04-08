@@ -1,27 +1,34 @@
-import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Output } from '@angular/core';
 import { FormArray, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { addDoc, collection, doc } from 'firebase/firestore';
+import { addDoc, collection, doc, Firestore, FirestoreModule } from '@angular/fire/firestore';
+import { Storage, ref, uploadBytesResumable, getDownloadURL } from '@angular/fire/storage';  // Importación de Storage
+import { Observable } from 'rxjs';
 import { PlayerService } from '../services/playerService';
 import { Player } from '../services/player';
-import { Observable } from 'rxjs';
-import { Firestore, FirestoreModule } from '@angular/fire/firestore';
-import { provideFirestore, getFirestore } from '@angular/fire/firestore';
-import { importProvidersFrom } from '@angular/core'
+import { CommonModule } from '@angular/common';
+import { provideStorage, getStorage, StorageModule } from '@angular/fire/storage';
+
 @Component({
   selector: 'app-form-crud',
-  imports: [CommonModule, ReactiveFormsModule, FirestoreModule],
-  standalone: true,
+  imports: [ReactiveFormsModule, CommonModule,FirestoreModule, provideStorage(() => getStorage())],
   templateUrl: './form-crud.component.html',
-  styleUrl: './form-crud.component.css'
+  styleUrls: ['./form-crud.component.css'],
 })
-
 export class FormCrudComponent {
+  isFormOpen: boolean = false;
   @Output() close = new EventEmitter<void>();
-  @Output() playerAdded = new EventEmitter<Player>(); // Emitir el jugador añadido
-filteredPlayersList$: Observable<Player[]> | undefined; 
+  @Output() playerAdded = new EventEmitter<Player>();
+  filteredPlayersList$: Observable<Player[]> | undefined;
+  selectedFilters: any = {
+    shirtNumber: '',
+    position: '',
+    average: '',
+    age: '',
+    stature: ''
+  };
+  
   playerForm = new FormGroup({
-    id: new FormControl(''), //valor inicial vacío poma.
+    id: new FormControl(''),
     name: new FormControl('', Validators.required),
     position: new FormControl('', Validators.required),
     shirtNumber: new FormControl(null, Validators.required),
@@ -31,8 +38,8 @@ filteredPlayersList$: Observable<Player[]> | undefined;
     bio: new FormControl('', Validators.required),
     portrait: new FormControl(''),
     foto: new FormControl(''),
-    video: new FormArray([]), // Array dinámico de videos
-    gallery: new FormArray([]), // Array dinámico de imágenes en la galería
+    video: new FormArray([]),
+    gallery: new FormArray([]),
     skills: new FormGroup({
       fisico: new FormControl(null, Validators.required),
       fuerzaMental: new FormControl(null, Validators.required),
@@ -41,38 +48,55 @@ filteredPlayersList$: Observable<Player[]> | undefined;
       tecnica: new FormControl(null, Validators.required),
     }),
   });
-  isFormOpen = false;
-  selectedFilters: any = {
-    shirtNumber: '',
-    position: '',
-    average: '',
-    age: '',
-    stature: ''
-  };
-  constructor(private firestore: Firestore, private playerService: PlayerService) {}
+
+  constructor(private firestore: Firestore, private playerService: PlayerService, private storage: Storage) {}
 
   openForm() {
-   
     const playersRef = collection(this.firestore, 'players');
-    const tempDocRef = doc(playersRef); // Genera un ID sin crear documento
-    console.log('ID generado:', tempDocRef.id);
+    const tempDocRef = doc(playersRef); 
     this.playerForm.patchValue({ id: tempDocRef.id });
-    this.isFormOpen = true; 
   }
 
+  // Manejar la selección de archivos
+  onFileSelected(event: Event, fieldName: string) {
+    const input = event.target as HTMLInputElement;
+    if (input && input.files && input.files[0]) {
+      const file = input.files[0];
+      this.uploadFile(file, fieldName);
+    }
+  }
 
+  // Subir el archivo a Firebase Storage y obtener la URL
+  private uploadFile(file: File, fieldName: string) {
+    const fileRef = ref(this.storage, `players/${file.name}`);
+    const uploadTask = uploadBytesResumable(fileRef, file);
 
+    uploadTask.on(
+      'state_changed',
+      (snapshot) => {},
+      (error) => {
+        console.error('Error al subir archivo', error);
+      },
+      async () => {
+        const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
+        this.playerForm.patchValue({ [fieldName]: downloadURL }); // Almacenar URL en el formulario
+      }
+    );
+  }
+
+  // Agregar jugador a Firestore
   async addPlayer() {
     if (this.playerForm.valid) {
       try {
         const playersRef = collection(this.firestore, 'players');
-        const docRef = await addDoc(playersRef, { ...this.playerForm.value });
+        const docRef = await addDoc(playersRef, this.playerForm.value);
         console.log('Jugador añadido con éxito, ID:', docRef.id);
-  
-        // 🔹 Se elimina la segunda inserción innecesaria en Firestore
-  
+
+        // Emitir el evento playerAdded para notificar el éxito
+        this.onPlayerAdded(); // Llamar al método onPlayerAdded
+
         this.closeModal();
-        this.closeForm(); // Cierra el modal después de guardar
+        this.closeForm();
       } catch (error) {
         console.error('Error al añadir jugador:', error);
       }
@@ -81,37 +105,16 @@ filteredPlayersList$: Observable<Player[]> | undefined;
       this.playerForm.markAllAsTouched();
     }
   }
-  
-  onSubmit() {
-    console.log('Formulario enviado:', this.playerForm.value);
-  
-    if (this.playerForm.invalid) {
-      console.log('Formulario inválido');
-      this.playerForm.markAllAsTouched();
-      return;
-    }
-  
-    const playerData = { ...this.playerForm.value, id: this.playerForm.value.id || '' } as unknown as Player;
-    this.playerService.addPlayer(playerData).subscribe({
-      next: () => {
-        console.log('Jugador añadido con éxito');
-        this.closeModal();
-      },
-      error: (err) => console.error('Error al añadir jugador:', err),
-    });
+  onPlayerAdded() {
+    console.log('Jugador añadido. Recargando lista...');
+    // Recargar la lista de jugadores filtrados
+    this.filteredPlayersList$ = this.playerService.getFilteredPlayers(this.selectedFilters);
   }
-
   closeModal() {
     this.close.emit();
   }
+
   closeForm() {
-    this.isFormOpen = false;
-    document.body.classList.remove('modal-open');
     this.playerForm.reset();
-  }
-  onPlayerAdded() {
-    console.log('Jugador añadido. Recargando lista...');
-    this.filteredPlayersList$ = this.playerService.getFilteredPlayers(this.selectedFilters); // 🔹 Recargar lista de jugadores
-    this.closeForm();
   }
 }
