@@ -52,10 +52,12 @@ export class FormCrudComponent {
   constructor(private firestore: Firestore, private playerService: PlayerService, private storage: Storage) {}
 
   openForm() {
+    this.isFormOpen = true;  // Cambia esto para abrir el formulario
     const playersRef = collection(this.firestore, 'players');
     const tempDocRef = doc(playersRef); 
     this.playerForm.patchValue({ id: tempDocRef.id });
   }
+  
 
   // Manejar la selección de archivos
   onFileSelected(event: Event, fieldName: string) {
@@ -115,6 +117,8 @@ export class FormCrudComponent {
   }
 
   closeForm() {
+    this.isFormOpen = false;  // Cambia esto para cerrar el formulario
     this.playerForm.reset();
   }
+  
 }
