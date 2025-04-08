@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { FormArray, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { addDoc, collection, doc, Firestore, FirestoreModule } from '@angular/fire/firestore';  // Firestore
+import { addDoc, collection, doc, Firestore } from '@angular/fire/firestore';  // Firestore
 import { getDatabase, ref as dbRef, set } from 'firebase/database';  // Realtime Database
 import { Storage, ref, uploadBytesResumable, getDownloadURL, getStorage } from '@angular/fire/storage';  // Storage
 import { Observable } from 'rxjs';
@@ -10,7 +10,7 @@ import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-form-crud',
-  imports: [ReactiveFormsModule, CommonModule, FirestoreModule],
+  imports: [ReactiveFormsModule, CommonModule],
   templateUrl: './form-crud.component.html',
   styleUrls: ['./form-crud.component.css'],
 })
@@ -68,7 +68,7 @@ export class FormCrudComponent {
   }
 
   private uploadFile(file: File, fieldName: string) {
-    const storage = getStorage();  // Asegúrate de que esto es Storage
+    const storage = getStorage();  // Obtener el almacenamiento de Firebase
     const storageRef = ref(storage, `uploads/${file.name}`);
 
     const uploadTask = uploadBytesResumable(storageRef, file);
@@ -76,6 +76,8 @@ export class FormCrudComponent {
     uploadTask.on('state_changed',
       (snapshot) => {
         // Aquí puedes observar el progreso de la carga si lo necesitas
+        const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        console.log('Progreso: ', progress, '%');
       },
       (error) => {
         console.error('Error al subir archivo a Firebase Storage:', error);
