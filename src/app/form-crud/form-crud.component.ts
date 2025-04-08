@@ -10,7 +10,7 @@ import { provideStorage, getStorage, StorageModule } from '@angular/fire/storage
 
 @Component({
   selector: 'app-form-crud',
-  imports: [ReactiveFormsModule, CommonModule,FirestoreModule, provideStorage(() => getStorage())],
+  imports: [ReactiveFormsModule, CommonModule,FirestoreModule,],
   templateUrl: './form-crud.component.html',
   styleUrls: ['./form-crud.component.css'],
 })
