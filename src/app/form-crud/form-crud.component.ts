@@ -1,16 +1,16 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { FormArray, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { addDoc, collection, doc, Firestore, FirestoreModule } from '@angular/fire/firestore';
-import { Storage, ref, uploadBytesResumable, getDownloadURL } from '@angular/fire/storage';  // Importación de Storage
+import { addDoc, collection, doc, Firestore, FirestoreModule } from '@angular/fire/firestore';  // Firestore
+import { getDatabase, ref as dbRef, set } from 'firebase/database';  // Realtime Database
+import { Storage, ref, uploadBytesResumable, getDownloadURL, getStorage } from '@angular/fire/storage';  // Storage
 import { Observable } from 'rxjs';
 import { PlayerService } from '../services/playerService';
 import { Player } from '../services/player';
 import { CommonModule } from '@angular/common';
-import { provideStorage, getStorage, StorageModule } from '@angular/fire/storage';
 
 @Component({
   selector: 'app-form-crud',
-  imports: [ReactiveFormsModule, CommonModule,FirestoreModule,],
+  imports: [ReactiveFormsModule, CommonModule, FirestoreModule],
   templateUrl: './form-crud.component.html',
   styleUrls: ['./form-crud.component.css'],
 })
@@ -36,7 +36,7 @@ export class FormCrudComponent {
     stature: new FormControl(null, Validators.required),
     average: new FormControl(null, Validators.required),
     bio: new FormControl('', Validators.required),
-    portrait: new FormControl(''),
+    portrait: new FormControl(''),  // Puede ser una URL a la imagen
     foto: new FormControl(''),
     video: new FormArray([]),
     gallery: new FormArray([]),
@@ -49,17 +49,16 @@ export class FormCrudComponent {
     }),
   });
 
-  constructor(private firestore: Firestore, private playerService: PlayerService, private storage: Storage) {}
+  constructor(private firestore: Firestore, private playerService: PlayerService) {}
 
   openForm() {
-    this.isFormOpen = true;  // Cambia esto para abrir el formulario
+    this.isFormOpen = true;
     const playersRef = collection(this.firestore, 'players');
     const tempDocRef = doc(playersRef); 
     this.playerForm.patchValue({ id: tempDocRef.id });
   }
-  
 
-  // Manejar la selección de archivos
+  // Subir archivo a Firebase Storage
   onFileSelected(event: Event, fieldName: string) {
     const input = event.target as HTMLInputElement;
     if (input && input.files && input.files[0]) {
@@ -68,25 +67,28 @@ export class FormCrudComponent {
     }
   }
 
-  // Subir el archivo a Firebase Storage y obtener la URL
   private uploadFile(file: File, fieldName: string) {
-    const fileRef = ref(this.storage, `players/${file.name}`);
-    const uploadTask = uploadBytesResumable(fileRef, file);
+    const storage = getStorage();  // Asegúrate de que esto es Storage
+    const storageRef = ref(storage, `uploads/${file.name}`);
 
-    uploadTask.on(
-      'state_changed',
-      (snapshot) => {},
-      (error) => {
-        console.error('Error al subir archivo', error);
+    const uploadTask = uploadBytesResumable(storageRef, file);
+
+    uploadTask.on('state_changed',
+      (snapshot) => {
+        // Aquí puedes observar el progreso de la carga si lo necesitas
       },
-      async () => {
-        const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
-        this.playerForm.patchValue({ [fieldName]: downloadURL }); // Almacenar URL en el formulario
+      (error) => {
+        console.error('Error al subir archivo a Firebase Storage:', error);
+      },
+      () => {
+        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+          console.log('Archivo subido con éxito. URL:', downloadURL);
+          this.playerForm.patchValue({ [fieldName]: downloadURL });
+        });
       }
     );
   }
 
-  // Agregar jugador a Firestore
   async addPlayer() {
     if (this.playerForm.valid) {
       try {
@@ -94,9 +96,11 @@ export class FormCrudComponent {
         const docRef = await addDoc(playersRef, this.playerForm.value);
         console.log('Jugador añadido con éxito, ID:', docRef.id);
 
-        // Emitir el evento playerAdded para notificar el éxito
-        this.onPlayerAdded(); // Llamar al método onPlayerAdded
+        const db = getDatabase();
+        const playersRefRealtime = dbRef(db, 'players/' + docRef.id);
+        await set(playersRefRealtime, this.playerForm.value);
 
+        this.onPlayerAdded();
         this.closeModal();
         this.closeForm();
       } catch (error) {
@@ -107,18 +111,18 @@ export class FormCrudComponent {
       this.playerForm.markAllAsTouched();
     }
   }
+
   onPlayerAdded() {
     console.log('Jugador añadido. Recargando lista...');
-    // Recargar la lista de jugadores filtrados
     this.filteredPlayersList$ = this.playerService.getFilteredPlayers(this.selectedFilters);
   }
+
   closeModal() {
     this.close.emit();
   }
 
   closeForm() {
-    this.isFormOpen = false;  // Cambia esto para cerrar el formulario
+    this.isFormOpen = false;
     this.playerForm.reset();
   }
-  
 }
