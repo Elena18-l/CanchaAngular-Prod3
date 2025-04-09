@@ -72,7 +72,7 @@
       <button type="button" (click)="openVideoSourceSelector()">Agregar Video</button>
 
       <div *ngIf="playerForm.get('video')?.value?.length">
-        <div *ngFor="let videoUrl of playerForm.get('video')?.value">
+        <div *ngFor="let videoUrl of playerForm.get('video')?.value; let i = index">
 
           <ng-container *ngIf="isYouTubeLink(videoUrl); else localVideo">
             <!-- Video desde YouTube -->
@@ -90,6 +90,10 @@
             </video>
 
           </ng-template>
+
+          <button type="button" (click)="removeVideo(i)">
+            <i class="bi bi-eraser-fill"></i>
+          </button>
 
         </div>
       </div>

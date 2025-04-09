@@ -75,7 +75,7 @@
 
       <button type="button" (click)="openVideoSourceSelector()">Agregar Video</button>
       <!-- 🎥 Video -->
-      <div *ngFor="let videoCtrl of videoArray.controls">
+      <div *ngFor="let videoCtrl of videoArray.controls; let i = index">
         <ng-container *ngIf="videoCtrl.value as videoUrl">
           <ng-container *ngIf="isYouTubeLink(videoUrl); else localVideo">
             <iframe width="300" height="150"
@@ -87,6 +87,12 @@
             <video width="300" height="150" controls [src]="videoUrl" type="video/mp4">
             </video>
           </ng-template>
+          <!-- Botón para eliminar el video -->
+          <button type="button" (click)="removeVideo(i)">
+            <i class="bi bi-eraser-fill"></i>
+          </button>
+
+
         </ng-container>
       </div>
 

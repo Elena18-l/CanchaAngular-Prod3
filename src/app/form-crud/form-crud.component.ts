@@ -28,7 +28,7 @@ export class FormCrudComponent {
     age: '',
     stature: ''
   };
-  
+
   playerForm = new FormGroup({
     id: new FormControl(''),
     name: new FormControl('', Validators.required),
@@ -51,10 +51,10 @@ export class FormCrudComponent {
     }),
   });
 
-  constructor(private firestore: Firestore, private playerService: PlayerService,  private snackBar: MatSnackBar) {}
+  constructor(private firestore: Firestore, private playerService: PlayerService, private snackBar: MatSnackBar) { }
   openVideoSourceSelector() {
     const userChoice = prompt("¿Quieres subir un video desde tu dispositivo? Escribe 'archivo' o 'link'");
-  
+
     if (userChoice === 'archivo') {
       this.openCloudinaryWidget('video'); // sube video
     } else if (userChoice === 'link') {
@@ -76,22 +76,22 @@ export class FormCrudComponent {
   isYouTubeLink(url: string): boolean {
     return /youtube\.com|youtu\.be/.test(url);
   }
-  
+
   extractYouTubeId(url: string): string {
     const match = url.match(/(?:\?v=|\/embed\/|\.be\/)([a-zA-Z0-9_-]{11})/);
     return match ? match[1] : '';
   }
-  
+
   openForm() {
     this.isFormOpen = true;
     const playersRef = collection(this.firestore, 'players');
-    const tempDocRef = doc(playersRef); 
+    const tempDocRef = doc(playersRef);
     this.playerForm.patchValue({ id: tempDocRef.id });
   }
   openCloudinaryWidget(fieldName: 'portrait' | 'foto' | 'video' | 'gallery') {
     const cloudName = 'dxcwcmfhv';  // tu cloudName
     const uploadPreset = 'player_uploads'; // tu uploadPreset
-  
+
     let resourceType: 'image' | 'video' = 'image';
     let multiple = false;
     let folder = 'player_media';
@@ -123,7 +123,7 @@ export class FormCrudComponent {
         multiple: false,
         cropping: false,
         folder: 'jugadores',  // carpeta opcional
-        resourceType: fieldName === 'video' ? 'video' : 'auto', 
+        resourceType: fieldName === 'video' ? 'video' : 'auto',
         theme: 'white'
       },
       (error: any, result: any) => {
@@ -147,15 +147,15 @@ export class FormCrudComponent {
         }
       }
     );
-}
+  }
 
-  
-  
+
+
   // Subir archivo a Firebase Storage
 
 
-  
-  
+
+
 
   async addPlayer() {
     if (this.playerForm.valid) {
@@ -197,13 +197,16 @@ export class FormCrudComponent {
     this.isFormOpen = false;
     this.playerForm.reset();
   }
-  
+
   removeGalleryImage(index: number): void {
     const galleryArray = this.playerForm.get('gallery') as FormArray;
     if (galleryArray.length > index) {
       galleryArray.removeAt(index);  // Elimina el control en la posición 'index'
     }
   }
+  removeVideo(index: number) {
+    const videoArray = this.playerForm.get('video') as FormArray;
+    videoArray.removeAt(index);
+  }
 
-  
 }

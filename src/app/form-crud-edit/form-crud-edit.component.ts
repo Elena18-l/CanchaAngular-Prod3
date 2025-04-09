@@ -287,6 +287,11 @@ removeGalleryImage(index: number): void {
   }
 }
 
+removeVideo(index: number) {
+  const videoArray = this.playerForm.get('video') as FormArray;
+  videoArray.removeAt(index);
+}
+
 get videoArray() {
   return this.playerForm.get('video') as FormArray;
 }
