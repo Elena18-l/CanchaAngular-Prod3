@@ -60,44 +60,41 @@
       <div *ngIf="playerForm.get('portrait')?.value">
         <img [src]="playerForm.get('portrait')?.value" width="100" alt="Retrato" />
       </div>
-      
+
       <!-- 🖼️ Foto Principal -->
       <button type="button" (click)="openCloudinaryWidget('foto')">Subir Foto Principal</button>
       <div *ngIf="playerForm.get('foto')?.value">
         <img [src]="playerForm.get('foto')?.value" width="100" alt="Foto principal" />
       </div>
-      
+
       <!-- 🎥 Video (pueden ser múltiples ahora) -->
       <!-- 🎥 Video -->
-<button type="button" (click)="openVideoSourceSelector()">Agregar Video</button>
+      <button type="button" (click)="openVideoSourceSelector()">Agregar Video</button>
 
-<div *ngIf="playerForm.get('video')?.value?.length">
-  <div *ngFor="let videoUrl of playerForm.get('video')?.value">
-    
-    <ng-container *ngIf="isYouTubeLink(videoUrl); else localVideo">
-      <!-- Video desde YouTube -->
-      <iframe
-        width="200"
-        height="113"
-        [src]="'https://www.youtube.com/embed/' + extractYouTubeId(videoUrl) | safeUrl"
-        frameborder="0"
-        allowfullscreen>
-      </iframe>
+      <div *ngIf="playerForm.get('video')?.value?.length">
+        <div *ngFor="let videoUrl of playerForm.get('video')?.value">
 
-    </ng-container>
+          <ng-container *ngIf="isYouTubeLink(videoUrl); else localVideo">
+            <!-- Video desde YouTube -->
+            <iframe width="200" height="113"
+              [src]="'https://www.youtube.com/embed/' + extractYouTubeId(videoUrl) | safeUrl" frameborder="0"
+              allowfullscreen>
+            </iframe>
 
-    <ng-template #localVideo>
-      <!-- Video subido desde dispositivo -->
-      <video width="200" controls>
-        <source [src]="videoUrl | safeUrl" type="video/mp4" />
-      </video>
-      
-    </ng-template>
+          </ng-container>
 
-  </div>
-</div>
+          <ng-template #localVideo>
+            <!-- Video subido desde dispositivo -->
+            <video width="200" controls>
+              <source [src]="videoUrl | safeUrl" type="video/mp4" />
+            </video>
 
-      
+          </ng-template>
+
+        </div>
+      </div>
+
+
       <!-- 🗂️ Galería de imágenes -->
       <button type="button" (click)="openCloudinaryWidget('gallery')">Subir Galería</button>
       <div *ngIf="playerForm.get('gallery')?.value?.length">
@@ -106,10 +103,10 @@
           <img [src]="imgUrl" width="100" alt="Imagen de galería" />
         </div>
       </div>
-      
+
       <!-- Guardar -->
       <button type="submit" [disabled]="playerForm.invalid">Guardar</button>
-      
+
     </form>
   </div>
 </div>

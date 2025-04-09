@@ -1,72 +1,113 @@
-
 <button (click)="openForm()"><i class="bi bi-pencil-square"></i></button>
 
 
-<div class="modal-overlay" *ngIf="isFormOpen"(playerAdded)="onPlayerUpdated($event)" (close)="closeForm()">
-    <div class="modal-content">
-
-    
-      
-      <button type="button" class="close" aria-label="Close" (click)="closeForm()">
-        <span aria-hidden="true">&times;</span>
-      </button>
+<div class="modal-overlay" *ngIf="isFormOpen" (playerAdded)="onPlayerUpdated($event)" (close)="closeForm()">
+  <div class="modal-content">
 
 
-      <h2>Editar Jugador</h2>
-      <form [formGroup]="playerForm" (ngSubmit)="updatePlayer()">
-        <label>Nombre:
-          <input type="text" formControlName="name" required />
-        </label>
-        <label>Posición:
-          <input type="text" formControlName="position" required />
-        </label>
-        <label>Camiseta:
-          <input type="number" formControlName="shirtNumber" required />
-        </label>
-        <label>Edad:
-          <input type="number" formControlName="age" required />
-        </label>
-        <label>Altura:
-          <input type="number" formControlName="stature" required />
-        </label>
-        <label>Media:
-          <input type="number" step="0.1" formControlName="average" required />
-        </label>
 
-        <label>Biografía:
-          <textarea formControlName="bio"></textarea>
-        </label>
-  
-        <h3>Habilidades</h3>
-          <div formGroupName="skills">
-            <label>Físico:
-              <input type="number" formControlName="fisico" required />
-            </label>
-            <label>Fuerza Mental:
-              <input type="number" formControlName="fuerzaMental" required />
-            </label>
-            <label>Habilidad Especial:
-              <input type="number" formControlName="habilidadEspecial" required />
-            </label>
-            <label>Resistencia:
-              <input type="number" formControlName="resistencia" required />
-            </label>
-            <label>Técnica:
-              <input type="number" formControlName="tecnica" required />
-            </label>
-          </div>
+    <button type="button" class="close" aria-label="Close" (click)="closeForm()">
+      <span aria-hidden="true">&times;</span>
+    </button>
 
-  
-        <h3>Imágenes</h3>
-        <label>Retrato:
-          <input type="text" formControlName="portrait" />
+
+    <h2>Editar Jugador</h2>
+    <form [formGroup]="playerForm" (ngSubmit)="updatePlayer()">
+      <label>Nombre:
+        <input type="text" formControlName="name" required />
+      </label>
+      <label>Posición:
+        <input type="text" formControlName="position" required />
+      </label>
+      <label>Camiseta:
+        <input type="number" formControlName="shirtNumber" required />
+      </label>
+      <label>Edad:
+        <input type="number" formControlName="age" required />
+      </label>
+      <label>Altura:
+        <input type="number" formControlName="stature" required />
+      </label>
+      <label>Media:
+        <input type="number" step="0.1" formControlName="average" required />
+      </label>
+
+      <label>Biografía:
+        <textarea formControlName="bio"></textarea>
+      </label>
+
+      <h3>Habilidades</h3>
+      <div formGroupName="skills">
+        <label>Físico:
+          <input type="number" formControlName="fisico" required />
         </label>
-        <label>Foto:
-          <input type="text" formControlName="foto" />
+        <label>Fuerza Mental:
+          <input type="number" formControlName="fuerzaMental" required />
         </label>
-        <button type="submit" [disabled]="playerForm.invalid">Guardar</button>
-      </form>
-      
-    </div>
+        <label>Habilidad Especial:
+          <input type="number" formControlName="habilidadEspecial" required />
+        </label>
+        <label>Resistencia:
+          <input type="number" formControlName="resistencia" required />
+        </label>
+        <label>Técnica:
+          <input type="number" formControlName="tecnica" required />
+        </label>
+      </div>
+
+
+      <!-- Cloudinary Widget Buttons -->
+      <h3>Imágenes y Videos</h3>
+
+      <!-- 📸 Retrato -->
+      <button type="button" (click)="openCloudinaryWidget('portrait')">Subir Retrato</button>
+      <div *ngIf="playerForm.get('portrait')?.value">
+        <img [src]="playerForm.get('portrait')?.value" width="100" alt="Retrato" />
+      </div>
+
+      <!-- 🖼️ Foto Principal -->
+      <button type="button" (click)="openCloudinaryWidget('foto')">Subir Foto Principal</button>
+      <div *ngIf="playerForm.get('foto')?.value">
+        <img [src]="playerForm.get('foto')?.value" width="100" alt="Foto principal" />
+      </div>
+
+      <!-- 🎥 Video (pueden ser múltiples ahora) -->
+      <!-- 🎥 Video -->
+      <div *ngFor="let videoCtrl of videoArray.controls">
+        <ng-container *ngIf="videoCtrl.value as videoUrl">
+          <ng-container *ngIf="isYouTubeLink(videoUrl); else localVideo">
+            <iframe
+              width="300"
+              height="150"
+              [src]="'https://www.youtube.com/embed/' + extractYouTubeId(videoUrl) | safeUrl"
+              frameborder="0"
+              allowfullscreen>
+            </iframe>
+          </ng-container>
+          <ng-template #localVideo>
+            <video
+              width="300"
+              height="150"
+              controls
+              [src]="videoUrl"
+              type="video/mp4">
+            </video>
+          </ng-template>
+        </ng-container>
+      </div>
+
+
+      <!-- 🗂️ Galería de imágenes -->
+      <button type="button" (click)="openCloudinaryWidget('gallery')">Subir Galería</button>
+      <div *ngIf="playerForm.get('gallery')?.value?.length">
+
+        <div *ngFor="let imgUrl of playerForm.get('gallery')?.value">
+          <img [src]="imgUrl" width="100" alt="Imagen de galería" />
+        </div>
+      </div>
+
+      <button type="submit" [disabled]="playerForm.invalid">Guardar</button>
+    </form>
+
   </div>
-  
+</div>

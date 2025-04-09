@@ -6,9 +6,11 @@ import { Player } from '../services/player';
 import { Observable } from 'rxjs';
 import { Firestore, FirestoreModule } from '@angular/fire/firestore';
 import { OnInit, OnChanges, SimpleChanges } from '@angular/core';
+import { PlayerService } from '../services/playerService';
+import { SafeUrlPipe } from '../player-media/safe-url.pipe';
 @Component({
   selector: 'app-form-crud-edit',
-  imports: [CommonModule, ReactiveFormsModule, FirestoreModule],
+  imports: [CommonModule, ReactiveFormsModule, FirestoreModule, SafeUrlPipe],
   templateUrl: './form-crud-edit.component.html',
   styleUrl: './form-crud-edit.component.css',
   standalone: true
@@ -69,7 +71,7 @@ export class FormCrudEditComponent implements OnInit, OnChanges {
 
   isFormOpen = false;
 
-  constructor(private firestore: Firestore) {}
+  constructor(private firestore: Firestore, private playerService: PlayerService) {}
 
 
 
@@ -111,10 +113,8 @@ export class FormCrudEditComponent implements OnInit, OnChanges {
       console.warn('⚠️ No se encontró el jugador con ID:', playerId);
     }
   }
- openForm() {
-  this.isFormOpen = true;
- } 
 onPlayerUpdated(player: any) {
+
   this.playerUpdated.emit(player);
 }
   async updatePlayer() {
@@ -152,9 +152,114 @@ onPlayerUpdated(player: any) {
       this.playerForm.markAllAsTouched();
     }
   }
-
   closeForm() {
     this.isFormOpen = false;
     this.close.emit();
   }
+
+  openVideoSourceSelector() {
+    const userChoice = prompt("¿Quieres subir un video desde tu dispositivo? Escribe 'archivo' o 'link'");
+  
+    if (userChoice === 'archivo') {
+      this.openCloudinaryWidget('video'); // sube video
+    } else if (userChoice === 'link') {
+      const link = prompt("Pega el enlace del video (por ejemplo, de YouTube):");
+      if (link && this.isValidVideoUrl(link)) {
+        const control = this.playerForm.get('video') as FormArray;
+        control.push(new FormControl(link));
+      } else {
+        alert('El enlace no es válido');
+      }
+    } else {
+      alert("Opción no válida");
+    }
+  }
+  isValidVideoUrl(url: string): boolean {
+    const pattern = /^(https?:\/\/)?(www\.)?(youtube\.com|youtu\.be|vimeo\.com|drive\.google\.com|.*\.mp4)(\/[\w-]+)*(\?[\w=&-]+)?$/;
+    return pattern.test(url);
+  }
+  isYouTubeLink(url: string): boolean {
+    return /youtube\.com|youtu\.be/.test(url);
+  }
+  
+  extractYouTubeId(url: string): string {
+    const match = url.match(/(?:\?v=|\/embed\/|\.be\/)([a-zA-Z0-9_-]{11})/);
+    return match ? match[1] : '';
+  }
+  
+  openForm() {
+    this.isFormOpen = true;
+    const playersRef = collection(this.firestore, 'players');
+    const tempDocRef = doc(playersRef); 
+    this.playerForm.patchValue({ id: tempDocRef.id });
+  }
+  openCloudinaryWidget(fieldName: 'portrait' | 'foto' | 'video' | 'gallery') {
+    const cloudName = 'dxcwcmfhv';  // tu cloudName
+    const uploadPreset = 'player_uploads'; // tu uploadPreset
+  
+    let resourceType: 'image' | 'video' = 'image';
+    let multiple = false;
+    let folder = 'player_media';
+
+    // Configurar según el campo
+    switch (fieldName) {
+      case 'video':
+        resourceType = 'video';
+        folder += `/video/${this.playerForm.value.id}`;
+        break;
+      case 'gallery':
+        multiple = true;
+        folder += `/gallery/${this.playerForm.value.id}`;
+        break;
+      case 'portrait':
+        folder += '/portrait';
+        break;
+      case 'foto':
+        folder += '/principal';
+        break;
+    }
+
+    // @ts-ignore
+    window.cloudinary.openUploadWidget(
+      {
+        cloudName: cloudName,
+        uploadPreset: uploadPreset,
+        sources: ['local', 'url', 'camera'],
+        multiple: false,
+        cropping: false,
+        folder: 'jugadores',  // carpeta opcional
+        resourceType: fieldName === 'video' ? 'video' : 'auto', 
+        theme: 'white'
+      },
+      (error: any, result: any) => {
+        if (error) {
+          console.error('❌ Error en Cloudinary Widget:', error);
+          return;
+        }
+
+        // Asegúrate de que result es un objeto y tiene el evento 'success'
+        console.log(result);
+        if (result && result.event === 'success') {
+          const fileUrl = result.info.secure_url; // Extract the file URL
+          if (fieldName === 'gallery' || fieldName === 'video') {
+            // Es un array
+            const control = this.playerForm.get(fieldName) as FormArray;
+            control.push(new FormControl(fileUrl));
+          } else {
+            // Es campo individual
+            this.playerForm.patchValue({ [fieldName]: fileUrl });
+          }
+        }
+      }
+    );
+}
+
+get videoArray() {
+  return this.playerForm.get('video') as FormArray;
+}
+
+  
+
+
+
 }
