@@ -14,6 +14,10 @@ import { importProvidersFrom } from '@angular/core';
 import { provideHttpClient } from '@angular/common/http';
 import { provideStorage, getStorage } from '@angular/fire/storage';
 
+
+
+
+
 bootstrapApplication(AppComponent, {
   providers: [
     provideRouter(appRoutes),
@@ -21,6 +25,7 @@ bootstrapApplication(AppComponent, {
     provideAuth(() => getAuth()),
     provideFirestore(() => getFirestore()),
     provideDatabase(() => getDatabase()),
-    provideStorage(() => getStorage()), // Aquí se maneja Firebase Storage
+    provideStorage(() => getStorage()),
   ],
 }).catch((err) => console.error(err));
+

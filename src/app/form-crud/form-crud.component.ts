@@ -57,10 +57,32 @@ export class FormCrudComponent {
     const tempDocRef = doc(playersRef); 
     this.playerForm.patchValue({ id: tempDocRef.id });
   }
-  openCloudinaryWidget(fieldName: string) {
+  openCloudinaryWidget(fieldName: 'portrait' | 'foto' | 'video' | 'gallery') {
     const cloudName = 'dxcwcmfhv';  // tu cloudName
     const uploadPreset = 'player_uploads'; // tu uploadPreset
   
+    let resourceType: 'image' | 'video' = 'image';
+    let multiple = false;
+    let folder = 'player_media';
+
+    // Configurar según el campo
+    switch (fieldName) {
+      case 'video':
+        resourceType = 'video';
+        folder += `/video/${this.playerForm.value.id}`;
+        break;
+      case 'gallery':
+        multiple = true;
+        folder += `/gallery/${this.playerForm.value.id}`;
+        break;
+      case 'portrait':
+        folder += '/portrait';
+        break;
+      case 'foto':
+        folder += '/principal';
+        break;
+    }
+
     // @ts-ignore
     window.cloudinary.openUploadWidget(
       {
@@ -70,7 +92,7 @@ export class FormCrudComponent {
         multiple: false,
         cropping: false,
         folder: 'jugadores',  // carpeta opcional
-        resourceType: fieldName === 'video' ? 'video' : 'auto',  // Permite imágenes, videos, audios, etc.
+        resourceType: fieldName === 'video' ? 'video' : 'auto', 
         theme: 'white'
       },
       (error: any, result: any) => {
@@ -82,11 +104,15 @@ export class FormCrudComponent {
         // Asegúrate de que result es un objeto y tiene el evento 'success'
         console.log(result);
         if (result && result.event === 'success') {
-          const fileUrl = result.info.secure_url;
-          console.log('✅ Archivo subido a Cloudinary:', fileUrl);
-          this.playerForm.patchValue({ [fieldName]: fileUrl });
-        } else {
-          console.error('❌ Error en la carga:', result);
+          const fileUrl = result.info.secure_url; // Extract the file URL
+          if (fieldName === 'gallery' || fieldName === 'video') {
+            // Es un array
+            const control = this.playerForm.get(fieldName) as FormArray;
+            control.push(new FormControl(fileUrl));
+          } else {
+            // Es campo individual
+            this.playerForm.patchValue({ [fieldName]: fileUrl });
+          }
         }
       }
     );

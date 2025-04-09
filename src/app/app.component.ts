@@ -7,7 +7,6 @@ import { PlayersComponent } from './players/players.component';
 import { Player } from './services/player'; 
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { AuthService } from './auth/auth.service';
 import { Observable } from 'rxjs';
 import { User } from '@angular/fire/auth';
 
@@ -33,16 +32,14 @@ export class AppComponent implements OnInit {
   activeComponent: string = 'players';  
   selectedPlayerId: string | null = null; 
 
-  constructor(private searchService: SearchService, private authService: AuthService) {
+  constructor(private searchService: SearchService ) {
   
     
   }
 
-  ngOnInit(): void {
-    this.user$ = this.authService.user$; // 👈 asignar user observable
-  
-    this.user$.subscribe(user => {
-      console.log(user ? `✅ Usuario autenticado: ${user.uid}` : '⚠️ No hay usuario autenticado');
+  ngOnInit() {
+    this.searchService.searchText$.subscribe((text) => {
+      this.searchText = text; 
     });
   }
 

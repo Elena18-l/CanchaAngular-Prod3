@@ -54,24 +54,42 @@
 
       <!-- Cloudinary Widget Buttons -->
       <h3>Imágenes y Videos</h3>
+
+      <!-- 📸 Retrato -->
       <button type="button" (click)="openCloudinaryWidget('portrait')">Subir Retrato</button>
       <div *ngIf="playerForm.get('portrait')?.value">
         <img [src]="playerForm.get('portrait')?.value" width="100" alt="Retrato" />
       </div>
-
-      <button type="button" (click)="openCloudinaryWidget('foto')">Subir Foto</button>
+      
+      <!-- 🖼️ Foto Principal -->
+      <button type="button" (click)="openCloudinaryWidget('foto')">Subir Foto Principal</button>
       <div *ngIf="playerForm.get('foto')?.value">
-        <img [src]="playerForm.get('foto')?.value" width="100" alt="Foto" />
+        <img [src]="playerForm.get('foto')?.value" width="100" alt="Foto principal" />
       </div>
-
+      
+      <!-- 🎥 Video (pueden ser múltiples ahora) -->
       <button type="button" (click)="openCloudinaryWidget('video')">Subir Video</button>
-      <div *ngIf="playerForm.get('video')?.value">
-        <video width="200" controls>
-          <source [src]="playerForm.get('video')?.value" type="video/mp4" />
-        </video>
-      </div>
+      <div *ngIf="playerForm.get('video')?.value?.length">
 
+        <div *ngFor="let videoUrl of playerForm.get('video')?.value">
+          <video width="200" controls>
+            <source [src]="videoUrl" type="video/mp4" />
+          </video>
+        </div>
+      </div>
+      
+      <!-- 🗂️ Galería de imágenes -->
+      <button type="button" (click)="openCloudinaryWidget('gallery')">Subir Galería</button>
+      <div *ngIf="playerForm.get('gallery')?.value?.length">
+
+        <div *ngFor="let imgUrl of playerForm.get('gallery')?.value">
+          <img [src]="imgUrl" width="100" alt="Imagen de galería" />
+        </div>
+      </div>
+      
+      <!-- Guardar -->
       <button type="submit" [disabled]="playerForm.invalid">Guardar</button>
+      
     </form>
   </div>
 </div>
