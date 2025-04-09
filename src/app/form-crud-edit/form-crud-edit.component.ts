@@ -280,6 +280,13 @@ onPlayerUpdated(player: any) {
     );
 }
 
+removeGalleryImage(index: number): void {
+  const galleryArray = this.playerForm.get('gallery') as FormArray;
+  if (galleryArray.length > index) {
+    galleryArray.removeAt(index);  // Elimina el control en la posición 'index'
+  }
+}
+
 get videoArray() {
   return this.playerForm.get('video') as FormArray;
 }

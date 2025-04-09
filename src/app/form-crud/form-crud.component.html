@@ -99,10 +99,15 @@
       <button type="button" (click)="openCloudinaryWidget('gallery')">Subir Galería</button>
       <div *ngIf="playerForm.get('gallery')?.value?.length">
 
-        <div *ngFor="let imgUrl of playerForm.get('gallery')?.value">
+        <div *ngFor="let imgUrl of playerForm.get('gallery')?.value; let i = index">
           <img [src]="imgUrl" width="100" alt="Imagen de galería" />
+          <button type="button" (click)="removeGalleryImage(i)">
+            <i class="bi bi-eraser-fill"></i> 
+          </button>
         </div>
       </div>
+
+
 
       <!-- Guardar -->
       <button type="submit" [disabled]="playerForm.invalid">Guardar</button>
