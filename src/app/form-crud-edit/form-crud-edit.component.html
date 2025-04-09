@@ -72,6 +72,8 @@
       </div>
 
       <!-- 🎥 Video (pueden ser múltiples ahora) -->
+
+      <button type="button" (click)="openVideoSourceSelector()">Agregar Video</button>
       <!-- 🎥 Video -->
       <div *ngFor="let videoCtrl of videoArray.controls"> 
         <ng-container *ngIf="videoCtrl.value as videoUrl">
