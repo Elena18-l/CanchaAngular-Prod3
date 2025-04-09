@@ -8,6 +8,10 @@ import { Firestore, FirestoreModule } from '@angular/fire/firestore';
 import { OnInit, OnChanges, SimpleChanges } from '@angular/core';
 import { PlayerService } from '../services/playerService';
 import { SafeUrlPipe } from '../player-media/safe-url.pipe';
+import { MatSnackBar } from '@angular/material/snack-bar';
+
+
+
 @Component({
   selector: 'app-form-crud-edit',
   imports: [CommonModule, ReactiveFormsModule, FirestoreModule, SafeUrlPipe],
@@ -71,7 +75,7 @@ export class FormCrudEditComponent implements OnInit, OnChanges {
 
   isFormOpen = false;
 
-  constructor(private firestore: Firestore, private playerService: PlayerService) {}
+  constructor(private firestore: Firestore, private playerService: PlayerService,  private snackBar: MatSnackBar) {}
 
 
 
@@ -154,6 +158,10 @@ onPlayerUpdated(player: any) {
         };
         await updateDoc(playerDocRef, updateData);
         console.log('✅ Jugador actualizado con éxito:', playerId);
+        this.snackBar.open('¡Jugador actualizado correctamente!', 'Cerrar', {
+          duration: 3000,  // Duración en milisegundos
+        });
+  
   
         this.playerUpdated.emit(this.playerForm.getRawValue() as Player);
         this.closeForm();

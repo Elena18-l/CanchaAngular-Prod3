@@ -8,6 +8,7 @@ import { PlayerService } from '../services/playerService';
 import { Player } from '../services/player';
 import { CommonModule } from '@angular/common';
 import { SafeUrlPipe } from '../player-media/safe-url.pipe';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-form-crud',
@@ -50,7 +51,7 @@ export class FormCrudComponent {
     }),
   });
 
-  constructor(private firestore: Firestore, private playerService: PlayerService) {}
+  constructor(private firestore: Firestore, private playerService: PlayerService,  private snackBar: MatSnackBar) {}
   openVideoSourceSelector() {
     const userChoice = prompt("¿Quieres subir un video desde tu dispositivo? Escribe 'archivo' o 'link'");
   
@@ -166,6 +167,10 @@ export class FormCrudComponent {
         const db = getDatabase();
         const playersRefRealtime = dbRef(db, 'players/' + docRef.id);
         await set(playersRefRealtime, this.playerForm.value);
+
+        this.snackBar.open('¡Jugador creado y archivo subido correctamente!', 'Cerrar', {
+          duration: 3000,  // Duración en milisegundos
+        });
 
         this.onPlayerAdded();
         this.closeModal();
