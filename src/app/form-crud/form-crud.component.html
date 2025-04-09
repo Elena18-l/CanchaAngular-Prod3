@@ -1,5 +1,6 @@
 <button (click)="openForm()" class="btn-add-player">Añadir Jugador</button>
-<div class="modal-overlay" *ngIf="isFormOpen" (playerAdded)="onPlayerAdded()" (close)="closeForm()">
+
+<div class="modal-overlay" *ngIf="isFormOpen">
   <div class="modal-content">
     <button type="button" class="close" aria-label="Close" (click)="closeForm()">
       <span aria-hidden="true">&times;</span>
@@ -7,6 +8,7 @@
 
     <h2>Crear Nuevo Jugador</h2>
     <form [formGroup]="playerForm" (ngSubmit)="addPlayer()">
+      <!-- Campos normales -->
       <label>Nombre:
         <input type="text" formControlName="name" required />
       </label>
@@ -30,6 +32,7 @@
         <textarea formControlName="bio"></textarea>
       </label>
 
+      <!-- Habilidades -->
       <h3>Habilidades</h3>
       <div formGroupName="skills">
         <label>Físico:
@@ -49,16 +52,25 @@
         </label>
       </div>
 
+      <!-- Cloudinary Widget Buttons -->
       <h3>Imágenes y Videos</h3>
-      <label>Retrato (Imagen):
-        <input type="file" (change)="onFileSelected($event, 'portrait')" />
-      </label>
-      <label>Foto (Imagen):
-        <input type="file" (change)="onFileSelected($event, 'foto')" />
-      </label>
-      <label>Video:
-        <input type="file" (change)="onFileSelected($event, 'video')" />
-      </label>
+      <button type="button" (click)="openCloudinaryWidget('portrait')">Subir Retrato</button>
+      <div *ngIf="playerForm.get('portrait')?.value">
+        <img [src]="playerForm.get('portrait')?.value" width="100" alt="Retrato" />
+      </div>
+
+      <button type="button" (click)="openCloudinaryWidget('foto')">Subir Foto</button>
+      <div *ngIf="playerForm.get('foto')?.value">
+        <img [src]="playerForm.get('foto')?.value" width="100" alt="Foto" />
+      </div>
+
+      <button type="button" (click)="openCloudinaryWidget('video')">Subir Video</button>
+      <div *ngIf="playerForm.get('video')?.value">
+        <video width="200" controls>
+          <source [src]="playerForm.get('video')?.value" type="video/mp4" />
+        </video>
+      </div>
+
       <button type="submit" [disabled]="playerForm.invalid">Guardar</button>
     </form>
   </div>

@@ -57,39 +57,48 @@ export class FormCrudComponent {
     const tempDocRef = doc(playersRef); 
     this.playerForm.patchValue({ id: tempDocRef.id });
   }
-
-  // Subir archivo a Firebase Storage
-  onFileSelected(event: Event, fieldName: string) {
-    const input = event.target as HTMLInputElement;
-    if (input && input.files && input.files[0]) {
-      const file = input.files[0];
-      this.uploadFile(file, fieldName);
-    }
-  }
-
-  private uploadFile(file: File, fieldName: string) {
-    const storage = getStorage();  // Obtener el almacenamiento de Firebase
-    const storageRef = ref(storage, `uploads/${file.name}`);
-
-    const uploadTask = uploadBytesResumable(storageRef, file);
-
-    uploadTask.on('state_changed',
-      (snapshot) => {
-        // Aquí puedes observar el progreso de la carga si lo necesitas
-        const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-        console.log('Progreso: ', progress, '%');
+  openCloudinaryWidget(fieldName: string) {
+    const cloudName = 'dxcwcmfhv';  // tu cloudName
+    const uploadPreset = 'player_uploads'; // tu uploadPreset
+  
+    // @ts-ignore
+    window.cloudinary.openUploadWidget(
+      {
+        cloudName: cloudName,
+        uploadPreset: uploadPreset,
+        sources: ['local', 'url', 'camera'],
+        multiple: false,
+        cropping: false,
+        folder: 'jugadores',  // carpeta opcional
+        resourceType: fieldName === 'video' ? 'video' : 'auto',  // Permite imágenes, videos, audios, etc.
+        theme: 'white'
       },
-      (error) => {
-        console.error('Error al subir archivo a Firebase Storage:', error);
-      },
-      () => {
-        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-          console.log('Archivo subido con éxito. URL:', downloadURL);
-          this.playerForm.patchValue({ [fieldName]: downloadURL });
-        });
+      (error: any, result: any) => {
+        if (error) {
+          console.error('❌ Error en Cloudinary Widget:', error);
+          return;
+        }
+
+        // Asegúrate de que result es un objeto y tiene el evento 'success'
+        console.log(result);
+        if (result && result.event === 'success') {
+          const fileUrl = result.info.secure_url;
+          console.log('✅ Archivo subido a Cloudinary:', fileUrl);
+          this.playerForm.patchValue({ [fieldName]: fileUrl });
+        } else {
+          console.error('❌ Error en la carga:', result);
+        }
       }
     );
-  }
+}
+
+  
+  
+  // Subir archivo a Firebase Storage
+
+
+  
+  
 
   async addPlayer() {
     if (this.playerForm.valid) {
