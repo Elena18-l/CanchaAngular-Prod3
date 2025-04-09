@@ -88,6 +88,19 @@ export class FormCrudEditComponent implements OnInit, OnChanges {
       const playerData = docSnap.data() as Player;
       console.log('✅ Jugador encontrado:', playerData);
 
+
+      const videoArray = new FormArray(
+        (playerData.video || []).map(url => new FormControl(url))
+      );
+      this.playerForm.setControl('video', videoArray);
+    
+      const galleryArray = new FormArray(
+        (playerData.gallery || []).map(url => new FormControl(url))
+      );
+      this.playerForm.setControl('gallery', galleryArray);
+
+
+
       this.playerForm.patchValue({
         id: playerId,
         name: playerData.name || '',
@@ -99,8 +112,8 @@ export class FormCrudEditComponent implements OnInit, OnChanges {
         bio: playerData.bio || '',
         portrait: playerData.portrait || '',
         foto: playerData.foto || '',
-        video: playerData.video || [''],
-        gallery: playerData.gallery || [''],
+        // video: playerData.video || [''], por alguna razón estos dos se tienen qeu cargar antes del patchvalue
+        // gallery: playerData.gallery || [''], por alguna razón estos dos se tienen qeu cargar antes del patchvalue
         skills: {
           fisico: playerData.skills?.fisico || null,
           fuerzaMental: playerData.skills?.fuerzaMental || null,
