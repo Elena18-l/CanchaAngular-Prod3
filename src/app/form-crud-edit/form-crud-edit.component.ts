@@ -202,10 +202,15 @@ onPlayerUpdated(player: any) {
   
   openForm() {
     this.isFormOpen = true;
-    const playersRef = collection(this.firestore, 'players');
-    const tempDocRef = doc(playersRef); 
-    this.playerForm.patchValue({ id: tempDocRef.id });
+  
+    // Solo generamos un nuevo ID si estamos creando un jugador, no si estamos editando
+    if (!this.playerId) {
+      const playersRef = collection(this.firestore, 'players');
+      const tempDocRef = doc(playersRef); 
+      this.playerForm.patchValue({ id: tempDocRef.id });
+    }
   }
+  
   openCloudinaryWidget(fieldName: 'portrait' | 'foto' | 'video' | 'gallery') {
     const cloudName = 'dxcwcmfhv';  // tu cloudName
     const uploadPreset = 'player_uploads'; // tu uploadPreset
