@@ -7,10 +7,11 @@ import { Observable } from 'rxjs';
 import { PlayerService } from '../services/playerService';
 import { Player } from '../services/player';
 import { CommonModule } from '@angular/common';
+import { SafeUrlPipe } from '../player-media/safe-url.pipe';
 
 @Component({
   selector: 'app-form-crud',
-  imports: [ReactiveFormsModule, CommonModule],
+  imports: [ReactiveFormsModule, CommonModule, SafeUrlPipe],
   templateUrl: './form-crud.component.html',
   styleUrls: ['./form-crud.component.css'],
 })
@@ -50,7 +51,36 @@ export class FormCrudComponent {
   });
 
   constructor(private firestore: Firestore, private playerService: PlayerService) {}
-
+  openVideoSourceSelector() {
+    const userChoice = prompt("¿Quieres subir un video desde tu dispositivo? Escribe 'archivo' o 'link'");
+  
+    if (userChoice === 'archivo') {
+      this.openCloudinaryWidget('video'); // sube video
+    } else if (userChoice === 'link') {
+      const link = prompt("Pega el enlace del video (por ejemplo, de YouTube):");
+      if (link && this.isValidVideoUrl(link)) {
+        const control = this.playerForm.get('video') as FormArray;
+        control.push(new FormControl(link));
+      } else {
+        alert('El enlace no es válido');
+      }
+    } else {
+      alert("Opción no válida");
+    }
+  }
+  isValidVideoUrl(url: string): boolean {
+    const pattern = /^(https?:\/\/)?(www\.)?(youtube\.com|youtu\.be|vimeo\.com|drive\.google\.com|.*\.mp4)(\/[\w-]+)*(\?[\w=&-]+)?$/;
+    return pattern.test(url);
+  }
+  isYouTubeLink(url: string): boolean {
+    return /youtube\.com|youtu\.be/.test(url);
+  }
+  
+  extractYouTubeId(url: string): string {
+    const match = url.match(/(?:\?v=|\/embed\/|\.be\/)([a-zA-Z0-9_-]{11})/);
+    return match ? match[1] : '';
+  }
+  
   openForm() {
     this.isFormOpen = true;
     const playersRef = collection(this.firestore, 'players');

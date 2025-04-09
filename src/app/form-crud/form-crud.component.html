@@ -68,15 +68,35 @@
       </div>
       
       <!-- 🎥 Video (pueden ser múltiples ahora) -->
-      <button type="button" (click)="openCloudinaryWidget('video')">Subir Video</button>
-      <div *ngIf="playerForm.get('video')?.value?.length">
+      <!-- 🎥 Video -->
+<button type="button" (click)="openVideoSourceSelector()">Agregar Video</button>
 
-        <div *ngFor="let videoUrl of playerForm.get('video')?.value">
-          <video width="200" controls>
-            <source [src]="videoUrl" type="video/mp4" />
-          </video>
-        </div>
-      </div>
+<div *ngIf="playerForm.get('video')?.value?.length">
+  <div *ngFor="let videoUrl of playerForm.get('video')?.value">
+    
+    <ng-container *ngIf="isYouTubeLink(videoUrl); else localVideo">
+      <!-- Video desde YouTube -->
+      <iframe
+        width="200"
+        height="113"
+        [src]="'https://www.youtube.com/embed/' + extractYouTubeId(videoUrl) | safeUrl"
+        frameborder="0"
+        allowfullscreen>
+      </iframe>
+
+    </ng-container>
+
+    <ng-template #localVideo>
+      <!-- Video subido desde dispositivo -->
+      <video width="200" controls>
+        <source [src]="videoUrl | safeUrl" type="video/mp4" />
+      </video>
+      
+    </ng-template>
+
+  </div>
+</div>
+
       
       <!-- 🗂️ Galería de imágenes -->
       <button type="button" (click)="openCloudinaryWidget('gallery')">Subir Galería</button>
