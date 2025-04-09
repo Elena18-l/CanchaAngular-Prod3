@@ -1,12 +1,9 @@
-
-
 <!-- <a [routerLink]="['/player-detail', player.id]"></a> -->
-<div class="playerCard" *ngFor="let player of players"  (click)="goToPlayer(player.id)">
+<div class="playerCard" *ngFor="let player of players" (click)="goToPlayer(player.id)">
     <div class="players-container">
         <div class="player">
             <p class="playerNumber">
-               {{player.shirtNumber}}
-            
+                {{player.shirtNumber}}
             </p>
             <p class="playerName">
                 {{player.name}}
@@ -17,11 +14,8 @@
             <p class="playerportrait">
                 {{player.portrait}}
             </p>
-           
-            
+        </div>
     </div>
-  
 
-</div>
 
 </div>
