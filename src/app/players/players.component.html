@@ -85,7 +85,7 @@
           <p class="font-rol-sho">{{ player.position }}</p>
         </div>
       </div>
-      <div><i class="bi bi-trash-fill"></i></div>
+      <div><i class="bi bi-trash-fill" (click)="onDeletePlayer(player.id); $event.stopPropagation()"></i></div>
      
     </div>
   </div>

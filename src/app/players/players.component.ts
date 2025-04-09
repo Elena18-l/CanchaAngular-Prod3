@@ -76,7 +76,17 @@ export class PlayersComponent implements OnInit {
   // resetDatabase() {
   //   this.playerService.resetDatabase(InMemoryDataService);
   // }
-
+  onDeletePlayer(playerId: string) {
+    this.playerService.deletePlayer(playerId).subscribe({
+      next: () => {
+        console.log(`Jugador con ID ${playerId} eliminado correctamente.`);
+        this.filteredPlayers$(); // 🔁 Volvemos a cargar la lista tras el borrado
+      },
+      error: (err) => {
+        console.error('Error al eliminar el jugador:', err);
+      }
+    });
+  }
 
 
 
