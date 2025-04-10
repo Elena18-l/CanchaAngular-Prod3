@@ -111,15 +111,30 @@ button.close {
   background-color: rgb(255, 199, 94);
   border: 0;
   color: black;
+  display: flex;
+  align-items: left;
+  justify-content: space-between;
+  gap: 12px;
   min-width: 200px;
   width: 40%;
   height: 100px;
   margin-bottom: 12px;
-  padding: 8px;
-  resize: vertical; /* permite que el usuario ajuste el tamaño si querés */
-  border-radius: 4px;
-  font-family: inherit;
-  font-size: 14px;
+}
+textarea::-webkit-scrollbar {
+  width: 8px;
+}
+textarea{
+  background-color: rgb(255, 199, 94);
+  border: 0;
+  color: black;
+  display: flex;
+  align-items: left;
+  justify-content: space-between;
+  gap: 12px;
+  min-width: 200px;
+  width: 40%;
+  height: 100px;
+  margin-bottom: 12px
 }
 
 /* === Sección de habilidades === */
