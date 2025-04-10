@@ -70,7 +70,7 @@
           <div *ngIf="playerForm.get('portrait')?.value">
             <img [src]="playerForm.get('portrait')?.value" width="100" alt="Retrato" />
           </div>
-        </div>
+          </div>
 
 
         <div class="media-player-principal">
@@ -82,7 +82,18 @@
         </div>
 
         <hr>
-        
+        <div class="media-player-galeria">
+          <!-- 🗂️ Galería -->
+          <button type="button" (click)="openCloudinaryWidget('gallery')">Subir Galería</button>
+          <div *ngIf="playerForm.get('gallery')?.value?.length">
+            <div *ngFor="let imgUrl of playerForm.get('gallery')?.value; let i = index">
+              <img [src]="imgUrl" width="100" alt="Imagen de galería" />
+              <button type="button" (click)="removeGalleryImage(i)">
+                <i class="bi bi-eraser-fill"></i>
+              </button>
+            </div>
+          </div>
+        </div>
         <div class="media-player-video">
           <!-- 🎥 Video -->
           <button type="button" (click)="openVideoSourceSelector()">Agregar Video</button>
@@ -101,25 +112,10 @@
               </button>
             </ng-container>
           </div>
-
         </div>
 
-
-        <div class="media-player-galeria">
-          <!-- 🗂️ Galería -->
-          <button type="button" (click)="openCloudinaryWidget('gallery')">Subir Galería</button>
-          <div *ngIf="playerForm.get('gallery')?.value?.length">
-            <div *ngFor="let imgUrl of playerForm.get('gallery')?.value; let i = index">
-              <img [src]="imgUrl" width="100" alt="Imagen de galería" />
-              <button type="button" (click)="removeGalleryImage(i)">
-                <i class="bi bi-eraser-fill"></i>
-              </button>
-            </div>
-          </div>
-        </div>
       </div>
-
-        <button type="submit" [disabled]="playerForm.invalid">Guardar</button>
+        <button class="btn-outline-primary" type="submit" [disabled]="playerForm.invalid">Guardar</button>
       </form>
     </div> <!-- modal-body -->
   </div> <!-- modal-content -->

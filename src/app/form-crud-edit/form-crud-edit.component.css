@@ -67,16 +67,15 @@ button.close {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding:0 100px;
-  gap: 12px;
   width: 100%;
   padding: 0 16px;
+  font-weight: bold;
 }
 
 .data-player input {
+  background-color: rgb(255, 199, 94);
   flex: 0 0 40%;
-  background-color: blue;
-  color: white;
+  color: black;
   text-align: center;
   border: none;
   border-radius: 4px;
@@ -84,8 +83,9 @@ button.close {
 }
 
 .data-player-bio textarea{
-  background-color: blue;
-  color: white;
+  background-color: rgb(255, 199, 94);
+  border: 0;
+  color: black;
   display: flex;
   align-items: left;
   justify-content: space-between;
@@ -93,6 +93,7 @@ button.close {
   min-width: 200px;
   width: 40%;
   height: 100px;
+  margin-bottom: 12px;
 }
 
 .data-player-bio label{
@@ -122,11 +123,13 @@ h2 {
 
 h3 {
   font-size: 18px;
+  margin-bottom: 12px;
 }
 
 label {
   font-size: 14px;
   align-items: center;
+  font-weight: bold;
 }
 
 button {
@@ -134,7 +137,6 @@ button {
 }
 
 .skills-player {
-  background-color: greenyellow;
   padding-bottom: 12px;
 }
 
@@ -149,9 +151,8 @@ button {
 
 .skills-player input[type="number"] {
   flex: 0 0 40%;
-  /* o el porcentaje que quieras que ocupe */
-  background-color: blue;
-  color: white;
+  background-color: rgb(255, 199, 94);
+  color: black;
   text-align: center;
   /* centra el número dentro del input */
   border: none;
@@ -165,15 +166,6 @@ div[formgroupname="skills"] {
   justify-content: space-around;
   padding: 0 16px;
   gap: 10px;
-  /* Espacio entre los labels */
-  background-color: orange;
-}
-
-/* div[formgroupname="skills"] input {
-   background-color: greenyellow;
-  } */
-input[formcontrolname="fisico"] {
-  background-color: red;
 }
 
 .header-modal-edit {
@@ -207,6 +199,7 @@ input[formcontrolname="fisico"] {
 .media-player *{
   display:flex;
   gap:10px;
+  flex-direction: column;
 }
 
 .media-player button{
@@ -231,4 +224,20 @@ hr {
   background-color: #C02A2D;
   margin: 0;
   width: 100%;
+}
+
+/* Ajustes del botón "Volver" */
+.btn-outline-primary {
+  border-radius: 4px;
+  margin-top: 20px;
+  border-color: #C02A2D;
+  color: white;
+  background-color: #C02A2D;
+  margin-bottom: 12px;
+}
+
+/* Efecto hover en el botón "Volver" */
+.btn-outline-primary:hover {
+  background-color: transparent;
+  color:#C02A2D;
 }

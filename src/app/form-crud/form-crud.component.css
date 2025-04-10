@@ -1,33 +1,227 @@
-/* 🔥 Hace que el fondo se oscurezca */
+/* Fondo oscuro para el modal */
 .modal-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.5); /* Fondo oscuro semi-transparente */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 1000; /* Asegura que esté por encima de todo */
-  }
-  
-  /* 🔥 Contenido centrado */
-  .modal-content {
-    background: white;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
-    width: 400px; /* Ajusta según necesites */
-    max-width: 90%;
-    z-index: 1001; /* Asegura que esté sobre el fondo oscuro */
-  }
-  
-  /* 🔥 Evita que el scroll de la página se mueva cuando el modal está abierto */
-  body.modal-open {
-    overflow: hidden;
-  }
-  
-  .bi-eraser-fill{
-    color:black;
-  }
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+/* Contenedor principal del modal */
+.modal-content {
+  background: rgba(255, 237, 171);
+  padding: 12px 24px;
+  border-radius: 8px;
+  border: 4px solid #C02A2D;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  width: 90%;
+  max-width: 1000px;
+  max-height: 90vh;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  z-index: 1001;
+}
+
+/* Cierra el scroll del body */
+body.modal-open {
+  overflow: hidden;
+}
+
+/* Botón cerrar (X) */
+.close {
+  background: transparent;
+  border: none;
+  color: black;
+  font-size: 32px;
+  cursor: pointer;
+  padding: 0;
+  margin: 0;
+}
+
+/* Encabezado modal */
+.header-modal-edit {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  background-color: rgba(255, 237, 171);
+  padding: 8px 0;
+  z-index: 2;
+}
+
+.modal-body {
+  overflow-y: auto;
+  max-height: 80vh;
+  padding: 0;
+  margin: 0;
+}
+
+/* Sección datos jugador */
+.data-player,
+.skills-player label {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 0 24px;
+  width: 100%;
+}
+
+.data-player label,
+.skills-player label {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: bold;
+}
+
+.data-player input,
+.skills-player input[type="number"] {
+  background-color: rgb(255, 199, 94);
+  color: black;
+  border: none;
+  border-radius: 4px;
+  height: 24px;
+  text-align: center;
+  flex: 0 0 40%;
+}
+
+/* Biografía */
+.data-player-bio textarea {
+  background-color: rgb(255, 199, 94);
+  color: black;
+  border: none;
+  border-radius: 4px;
+  width: 100%;
+  min-width: 200px;
+  height: 100px;
+  margin-top: 4px;
+}
+
+.data-player-bio label {
+  display: flex;
+  flex-direction: column;
+  font-weight: bold;
+}
+
+/* Agrupación de habilidades */
+div[formgroupname="skills"] {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 0 24px;
+}
+
+/* Estilos generales */
+h2 {
+  font-size: 20px;
+  margin-bottom: 0;
+}
+
+h3 {
+  font-size: 18px;
+  margin-bottom: 12px;
+  padding-left: 24px;
+}
+
+label {
+  font-size: 14px;
+}
+
+button {
+  font-size: 14px;
+  cursor: pointer;
+}
+
+/* Botón guardar */
+.btn-outline-primary {
+  margin: 20px auto 12px auto;
+  padding: 6px 16px;
+  border: 2px solid #C02A2D;
+  background-color: #C02A2D;
+  color: white;
+  border-radius: 4px;
+}
+
+.btn-outline-primary:hover {
+  background-color: transparent;
+  color: #C02A2D;
+}
+
+/* Sección media */
+.media-player {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  gap: 20px;
+  padding: 0 24px;
+}
+
+.media-player > div {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.media-player button {
+  background-color: transparent;
+  border: 1px solid #C02A2D;
+  border-radius: 4px;
+  padding: 4px 8px;
+}
+
+.media-player button:hover {
+  background-color: #C02A2D;
+  color: white;
+  transition: all 0.3s ease-in-out;
+}
+
+/* Línea divisora */
+hr {
+  border: none;
+  height: 1px;
+  background-color: #C02A2D;
+  width: 100%;
+  margin: 16px 0;
+}
+
+/* Botón con icono (borrar imagen/video) */
+.icon-button {
+  background: transparent;
+  border: none;
+  color: #C02A2D;
+  font-size: 16px;
+  padding: 0;
+  margin-top: 4px;
+}
+
+.icon-button:hover {
+  color: black;
+}
+
+.bi-eraser-fill {
+  font-size: 20px;
+}
+
+/* Botón subir individual (dentro de media-player) */
+.upload-button button {
+  width: 130px;
+  height: 30px;
+}
+
+.btn-add-player {
+  position:relative; 
+  background-color: rgb(255, 199, 94);
+  color: black;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size:14px;
+}

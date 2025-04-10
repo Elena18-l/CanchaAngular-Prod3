@@ -17,6 +17,13 @@
     padding-left: 10px;
 }
 
+.add-jugadores{
+    margin-top: 12px;
+    margin-right: 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
 
 /* filtros  */
 

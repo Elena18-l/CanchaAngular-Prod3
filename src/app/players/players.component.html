@@ -57,19 +57,15 @@
         </option>
       </select>
       <button (click)="clearFilters()" class="filter-button">Limpiar filtros</button>
-      
-      
-      <app-form-crud ></app-form-crud>
-
-
     </div>
   </div>
-
+  
   <!-- Título -->
   <!-- <button (click)="addPlayer()" class="btn-add-player">Añadir Jugador</button> -->
-
-  <h2 class="team-title">El equipo Shohoku está formado por:</h2>
-
+  <div class ="add-jugadores">
+    <h2 class="team-title">El equipo Shohoku está formado por:</h2>
+    <app-form-crud ></app-form-crud>
+  </div>
   <!-- Lista de jugadores -->
   <div class="players-grid">
     <div class="playerCard" *ngFor="let player of (filteredPlayersList$ | async); trackBy: trackByPlayerId" 
