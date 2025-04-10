@@ -61,18 +61,25 @@
         <div class="media-player">
           <h3>Imágenes y Videos</h3>
 
+          <div class="media-player-retrato">
           <!-- 📸 Retrato -->
           <button type="button" (click)="openCloudinaryWidget('portrait')">Subir Retrato</button>
           <div *ngIf="playerForm.get('portrait')?.value">
             <img [src]="playerForm.get('portrait')?.value" width="100" alt="Retrato" />
           </div>
+        </div>
 
+
+        <div class="media-player-principal">
           <!-- 🖼️ Foto Principal -->
           <button type="button" (click)="openCloudinaryWidget('foto')">Subir Foto Principal</button>
           <div *ngIf="playerForm.get('foto')?.value">
             <img [src]="playerForm.get('foto')?.value" width="100" alt="Foto principal" />
           </div>
+        </div>
 
+
+        <div class="media-player-video">
           <!-- 🎥 Video -->
           <button type="button" (click)="openVideoSourceSelector()">Agregar Video</button>
           <div *ngFor="let videoCtrl of videoArray.controls; let i = index">
@@ -91,6 +98,10 @@
             </ng-container>
           </div>
 
+        </div>
+
+
+        <div class="media-player-galeria">
           <!-- 🗂️ Galería -->
           <button type="button" (click)="openCloudinaryWidget('gallery')">Subir Galería</button>
           <div *ngIf="playerForm.get('gallery')?.value?.length">
@@ -102,6 +113,7 @@
             </div>
           </div>
         </div>
+      </div>
 
         <button type="submit" [disabled]="playerForm.invalid">Guardar</button>
       </form>
