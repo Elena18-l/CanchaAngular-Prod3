@@ -163,15 +163,15 @@ export class FormCrudComponent {
         const playersRef = collection(this.firestore, 'players');
         const docRef = await addDoc(playersRef, this.playerForm.value);
         console.log('Jugador añadido con éxito, ID:', docRef.id);
-
+  
         const db = getDatabase();
         const playersRefRealtime = dbRef(db, 'players/' + docRef.id);
         await set(playersRefRealtime, this.playerForm.value);
-
+  
         this.snackBar.open('¡Jugador creado y archivo subido correctamente!', 'Cerrar', {
           duration: 3000,  // Duración en milisegundos
         });
-
+  
         this.onPlayerAdded();
         this.closeModal();
         this.closeForm();
@@ -180,9 +180,10 @@ export class FormCrudComponent {
       }
     } else {
       console.log('Formulario inválido');
-      this.playerForm.markAllAsTouched();
+      this.playerForm.markAllAsTouched();  // Marca todos los controles como tocados
     }
   }
+  
 
   onPlayerAdded() {
     console.log('Jugador añadido. Recargando lista...');

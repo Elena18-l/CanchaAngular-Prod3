@@ -328,3 +328,8 @@ hr {
   gap:10px;
   flex-direction: column;
 }
+p{
+  font-size: smaller;
+  margin-top: 12px;
+  margin-bottom: 0px;
+}
