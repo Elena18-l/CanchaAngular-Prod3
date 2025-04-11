@@ -16,38 +16,25 @@
       <div class="data-player">
         <label>Nombre:*
           <input type="text" formControlName="name" required />
-          <!-- Mostrar error si el campo está tocado e inválido -->
-          <div *ngIf="playerForm.get('name')?.touched && playerForm.get('name')?.invalid">
-            <small *ngIf="playerForm.get('name')?.hasError('required')">El nombre es requerido</small>
-          </div>
         </label>
-      
         <label>Posición:*
           <input type="text" formControlName="position" required />
-          <div *ngIf="playerForm.get('position')?.touched && playerForm.get('position')?.invalid">
-            <small *ngIf="playerForm.get('position')?.hasError('required')">La posición es requerida</small>
-          </div>
         </label>
-      
         <label>Camiseta:*
           <input type="number" formControlName="shirtNumber" required />
-          <div *ngIf="playerForm.get('shirtNumber')?.touched && playerForm.get('shirtNumber')?.invalid">
-            <small *ngIf="playerForm.get('shirtNumber')?.hasError('required')">El número de camiseta es requerido</small>
-          </div>
         </label>
-      
-        <!-- Similar para otros campos -->
         <label>Edad:*
           <input type="number" formControlName="age" required />
-          <div *ngIf="playerForm.get('age')?.touched && playerForm.get('age')?.invalid">
-            <small *ngIf="playerForm.get('age')?.hasError('required')">La edad es requerida</small>
-          </div>
         </label>
         <label>Altura:*
           <input type="number" formControlName="stature" required />
-          <div *ngIf="playerForm.get('stature')?.touched && playerForm.get('stature')?.invalid">
-            <small *ngIf="playerForm.get('stature')?.hasError('required')">La altura es requerida</small>
-          </div>
+        </label>
+        <label>Media:*
+          <input type="number" step="0.1" formControlName="average" required />
+        </label>
+
+        <label>Biografía:*
+          <textarea formControlName="bio"></textarea>
         </label>
       </div>
       
