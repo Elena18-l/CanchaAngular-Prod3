@@ -1,6 +1,0 @@
-{
-  "rules": {
-    ".read": "auth != null",  // Permite lectura solo a usuarios autenticados
-    ".write": "auth != null"  // Permite escritura solo a usuarios autenticados
-  }
-}
