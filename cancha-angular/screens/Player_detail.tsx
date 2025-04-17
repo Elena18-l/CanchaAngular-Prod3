@@ -16,12 +16,13 @@ export default function App() {
   );
 }*/
 import React, { useEffect, useState } from 'react';
-import { View, Text, FlatList, TouchableOpacity, Image, StyleSheet, ActivityIndicator } from 'react-native';
+import { View, Text, FlatList, TouchableOpacity, Image, StyleSheet, ActivityIndicator, ScrollView } from 'react-native';
 import { collection, getDocs } from 'firebase/firestore';
 import { db } from '../config/firebase-setup'; // ✅ Así debe ser ahora
 import { Player } from '../type/player'
 import { useRoute } from '@react-navigation/native';
 import { doc, getDoc } from 'firebase/firestore';
+import PentagonChart from '../components/PentagonChart';
 type PlayerDetailProps = {
   id: string;
   name: string;
@@ -78,12 +79,82 @@ const PlayerDetail = () => {
   }
 
   return (
-    <View>
-      <Image source={{ uri: player.portrait }} style={{ width: 100, height: 100 }} />
-      <Text>{player.name}</Text>
-      <Text>{player.position}</Text>
-      {/* Aquí podrías meter PentagonChart con player.skills */}
-    </View>
+    <ScrollView contentContainerStyle={styles.container}>
+      <Image source={{ uri: player.portrait }} style={styles.image} />
+      <Text style={styles.name}>{player.name}</Text>
+      <Text style={styles.position}>{player.position}</Text>
+      <View style={styles.infoRow}>
+  <Text style={styles.label}>Número:</Text>
+  <Text style={styles.value}>{player.shirtNumber ?? 'N/A'}</Text>
+</View>
+<View style={styles.infoRow}>
+  <Text style={styles.label}>Promedio:</Text>
+  <Text style={styles.value}>{player.average ?? 'N/A'}</Text>
+</View>
+<View style={styles.infoRow}>
+  <Text style={styles.label}>Altura:</Text>
+  <Text style={styles.value}>{player.stature ? `${player.stature} cm` : 'N/A'}</Text>
+</View>
+
+      <View style={styles.chartContainer}>
+        <PentagonChart skills={player.skills} />
+      </View>
+
+      <Text style={styles.sectionTitle}>Biografía</Text>
+      <Text style={styles.bio}>{player.bio}</Text>
+    </ScrollView>
   );
 };
+const styles = StyleSheet.create({
+  container: {
+    padding: 20,
+    backgroundColor: '#fff',
+    alignItems: 'center',
+  },
+  image: {
+    width: 140,
+    height: 140,
+    borderRadius: 70,
+    marginBottom: 16,
+  },
+  name: {
+    fontSize: 24,
+    fontWeight: 'bold',
+  },
+  position: {
+    fontSize: 18,
+    color: '#666',
+    marginBottom: 20,
+  },
+  chartContainer: {
+    marginBottom: 30,
+  },
+  sectionTitle: {
+    fontSize: 20,
+    fontWeight: '600',
+    marginTop: 10,
+    marginBottom: 6,
+    alignSelf: 'flex-start',
+  },
+  bio: {
+    fontSize: 16,
+    color: '#444',
+    textAlign: 'justify',
+  },
+  infoRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: '100%',
+    marginVertical: 4,
+  },
+  label: {
+    fontWeight: 'bold',
+    fontSize: 16,
+  },
+  value: {
+    fontSize: 16,
+    color: '#333',
+  },
+  
+});
 export default PlayerDetail;
