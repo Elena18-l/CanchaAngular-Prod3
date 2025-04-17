@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@expo/metro-runtime": "~4.0.1",
+    "@firebasegen/default-connector": "file:dataconnect-generated/js/default-connector",
     "expo": "~52.0.46",
     "expo-status-bar": "~2.0.1",
     "firebase": "^11.6.0",
