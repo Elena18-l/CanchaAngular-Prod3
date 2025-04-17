@@ -2,32 +2,33 @@ import React, { useEffect, useState } from 'react';
 import { View, Text, FlatList, TouchableOpacity, Image, StyleSheet, ActivityIndicator } from 'react-native';
 import { collection, getDocs } from 'firebase/firestore';
 import { db } from '../config/firebase-setup'; // ✅ Así debe ser ahora
-
-type Player = {
+import { Player, PlayerShort } from '../type/player'
+type PlayerCard = {
   id: string;
   name: string;
-  number: number;
+  shirtNumber: number;
   position: string;
-  avatarUrl: string;
+  portrait: string;
+ 
 };
 
 const TeamScreen = () => {
-  const [players, setPlayers] = useState<Player[]>([]);
+  const [players, setPlayers] = useState<PlayerShort[]>([]);
   const [loading, setLoading] = useState(true);
 
   const fetchPlayers = async () => {
     try {
       const querySnapshot = await getDocs(collection(db, 'players'));
-      const playersData: Player[] = [];
+      const playersData: PlayerShort[] = [];
 
       querySnapshot.forEach((doc) => {
         const data = doc.data();
         playersData.push({
           id: doc.id,
           name: data.name,
-          number: data.number,
+          shirtNumber: data.number,
           position: data.position,
-          avatarUrl: data.avatarUrl,
+          portrait: data.portrait,          
         });
       });
 
@@ -43,11 +44,11 @@ const TeamScreen = () => {
     fetchPlayers();
   }, []);
 
-  const renderItem = ({ item }: { item: Player }) => (
+  const renderItem = ({ item }: { item: PlayerShort }) => (
     <TouchableOpacity style={styles.card} onPress={() => console.log('Ver detalle de:', item.name)}>
-      <Image source={{ uri: item.avatarUrl }} style={styles.avatar} />
+      <Image source={{ uri: item.portrait }} style={styles.avatar} />
       <View>
-        <Text style={styles.name}>{item.number} - {item.name}</Text>
+        <Text style={styles.name}>{item.shirtNumber} - {item.name}</Text>
         <Text style={styles.position}>{item.position}</Text>
       </View>
     </TouchableOpacity>
@@ -107,9 +108,4 @@ const styles = StyleSheet.create({
 
 export default TeamScreen;
 
-const getPlayers = async () => {
-  const querySnapshot = await getDocs(collection(db, 'players'));
-  querySnapshot.forEach((doc) => {
-    console.log(`${doc.id} =>`, doc.data());
-  });
-};
+
