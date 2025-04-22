@@ -16,13 +16,19 @@ export default function App() {
   );
 }*/
 import React, { useEffect, useState } from 'react';
-import { View, Text, FlatList, TouchableOpacity, Image, StyleSheet, ActivityIndicator, ScrollView } from 'react-native';
+import { View, Text,Pressable, FlatList, TouchableOpacity, Image, StyleSheet, ActivityIndicator, ScrollView } from 'react-native';
 import { collection, getDocs } from 'firebase/firestore';
 import { db } from '../config/firebase-setup'; // ✅ Así debe ser ahora
 import { Player } from '../type/player'
 import { useRoute } from '@react-navigation/native';
 import { doc, getDoc } from 'firebase/firestore';
 import PentagonChart from '../components/PentagonChart';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { useNavigation } from '@react-navigation/native';
+import { RootStackParamList } from '../navigation/AppNavigator';
+
+type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'PlayerDetail'>;
+
 type PlayerDetailProps = {
   id: string;
   name: string;
@@ -47,12 +53,17 @@ type Skills = {
   habilidadEspecial:number
 };
 
+
 const PlayerDetail = () => {
   const route = useRoute();
   const { playerId } = route.params as { playerId: string };
-
   const [player, setPlayer] = useState<Player | null>(null);
   const [loading, setLoading] = useState(true);
+  const navigation = useNavigation<NavigationProp>();
+
+  const handlePress = () => {
+    navigation.navigate('PlayerMedia', { playerId });
+  };
 
   const fetchPlayer = async () => {
     try {
@@ -66,6 +77,7 @@ const PlayerDetail = () => {
       setLoading(false);
     }
   };
+  
   useEffect(() => {
     fetchPlayer();
   }, []);
@@ -80,6 +92,11 @@ const PlayerDetail = () => {
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
+
+      <Pressable style={({ pressed }) => [styles.button, pressed && styles.pressed]} onPress={handlePress}>
+            <Text style={styles.text}>Ver Media</Text>
+          </Pressable>
+
       <Image source={{ uri: player.portrait }} style={styles.image} />
       <Text style={styles.name}>{player.name}</Text>
       <Text style={styles.position}>{player.position}</Text>
@@ -155,6 +172,26 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: '#333',
   },
-  
+  button: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#e74c3c',
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 8,
+    alignSelf: 'center',
+    marginTop: 15,
+  },
+  text: {
+    color: '#fff',
+    fontWeight: 'bold',
+    fontSize: 16,
+  },
+  icon: {
+    marginRight: 8,
+  },
+  pressed: {
+    opacity: 0.8,
+  },
 });
 export default PlayerDetail;
