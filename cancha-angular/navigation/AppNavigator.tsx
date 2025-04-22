@@ -3,11 +3,13 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import TeamScreen from '../screens/Team';
 import PlayerDetail from '../screens/Player_detail';
+import PlayerMedia from '../screens/Player_media';
 
 // Tipos de navegación
 export type RootStackParamList = {
   Team: undefined;
   PlayerDetail: { playerId: string };
+  PlayerMedia: { playerId: string };
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -25,6 +27,11 @@ const AppNavigator = () => {
           name="PlayerDetail"
           component={PlayerDetail}
           options={{ title: 'Detalle del Jugador' }}
+        />
+        <Stack.Screen
+          name="PlayerMedia"
+          component={PlayerMedia}
+          options={{ title: 'Media del Jugador' }}
         />
       </Stack.Navigator>
     </NavigationContainer>
