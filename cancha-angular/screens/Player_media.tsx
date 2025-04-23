@@ -10,7 +10,14 @@ import {
 } from 'react-native';
 import { useRoute } from '@react-navigation/native';
 import { getFirestore, doc, getDoc } from 'firebase/firestore';
-import { ResizeMode, Video } from 'expo-av';
+import YoutubePlayer from 'react-native-youtube-iframe';
+
+// Función para extraer el ID de YouTube
+const extractYouTubeId = (url) => {
+  const regex = /(?:youtube\.com\/(?:[^\/\n\s]+\/\S+\/|(?:.*v=|\/)([a-zA-Z0-9_-]{11}))|youtu\.be\/([a-zA-Z0-9_-]{11}))/;
+  const match = url.match(regex);
+  return match ? (match[1] || match[2]) : null;
+};
 
 const PlayerMedia = () => {
   const route = useRoute();
@@ -86,14 +93,21 @@ const PlayerMedia = () => {
             <Image source={{ uri: selectedMedia }} style={styles.mainImage} resizeMode="contain" />
           )}
 
-          {selectedMedia && mediaType === 'video' && (
-            <Video
-              source={{ uri: selectedMedia }}
-              useNativeControls
-              resizeMode={ResizeMode.CONTAIN}
-              style={styles.mainImage}
-            />
-          )}
+          {selectedMedia && mediaType === 'video' && (() => {
+            const videoId = extractYouTubeId(selectedMedia);
+            console.log('Selected media URL:', selectedMedia);
+
+            return videoId ? (
+              <YoutubePlayer
+                videoId={videoId}
+                height={315}
+                width={560}
+                play={false}
+              />
+            ) : (
+              <Text>No se pudo cargar el video.</Text>
+            );
+          })()}
 
           <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.scrollContainer}>
             {currentList.map((item, index) => (
