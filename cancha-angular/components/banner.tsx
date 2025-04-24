@@ -40,18 +40,18 @@ const Banner = ({ playerId }: BannerProps) => {
 };
 
 const styles = StyleSheet.create({
-    banner: {
-        backgroundColor: '#C02A2D',
-        alignItems: 'center',
-        flexDirection: 'row',
-        justifyContent: 'flex-start',
-        },
-    bannerImage: {
-        width: 120,
-        height: 60,
-        maxWidth: '100%',
-        marginRight: 100,
-    },
+  banner: {
+    backgroundColor: '#C02A2D',
+    alignItems: 'center',
+    paddingVertical: 10,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingHorizontal: 20,
+  },
+  bannerImage: {
+    width: 120,
+    height: 60,
+  },
     playerName: {
         color: 'white',
         fontSize: 18,
