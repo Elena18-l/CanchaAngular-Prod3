@@ -6,7 +6,7 @@ import { PlayerShort } from '../type/player';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../navigation/AppNavigator';
-
+import { ImageBackground } from 'react-native';
 type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Team'>;
 
 const TeamScreen = () => {
@@ -50,13 +50,14 @@ const TeamScreen = () => {
       style={styles.card}
       onPress={() => navigation.navigate('PlayerDetail', { playerId: item.id })}
     >
-      <Image source={{ uri: item.portrait }} style={styles.avatar} />
-      <View>
+   <ImageBackground source={{ uri: item.portrait }} style={styles.avatar} imageStyle={{ borderRadius: 10 }}>
+      <View style={{ padding: 10 }}>
         <Text style={styles.name}>{item.shirtNumber} - {item.name}</Text>
         <Text style={styles.position}>{item.position}</Text>
       </View>
-    </Pressable>
-  );
+    </ImageBackground>
+  </Pressable>
+);
 
   if (loading) {
     return (
@@ -81,27 +82,29 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   card: {
-    flexDirection: 'row',
-    backgroundColor: '#fff',
     marginVertical: 8,
-    padding: 10,
     borderRadius: 10,
+    overflow: 'hidden',
     elevation: 3,
-    alignItems: 'center',
+    padding: 6,
+    backgroundColor: '#C02A2D',
   },
   avatar: {
-    width: 60,
-    height: 60,
-    borderRadius: 30,
-    marginRight: 12,
+    width: '100%',
+    height: 120,
+    borderRadius: 10,
+    justifyContent: 'flex-end',
+    
   },
+
   name: {
     fontSize: 16,
     fontWeight: 'bold',
+    color: '#fff',
   },
   position: {
     fontSize: 14,
-    color: '#666',
+    color: '#fff',
   },
   centered: {
     flex: 1,
