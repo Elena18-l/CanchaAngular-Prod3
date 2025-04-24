@@ -91,40 +91,46 @@ const PlayerDetail = () => {
   }
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
+    <View style={{ flex: 1 }}>
       <Banner playerId={playerId} />
-      <Pressable style={({ pressed }) => [styles.button, pressed && styles.pressed]} onPress={() => handlePress()}>
-        <Text style={styles.text}>Ver Media</Text>
-      </Pressable>
-
       
-      <Image source={{ uri: player.foto }} style={styles.fullimage} />
-      <Text style={styles.name}>{player.name}</Text>
-      <Text style={styles.position}>{player.position}</Text>      
-      <View style={styles.infoRow}>
-  <Text style={styles.label}>Número:</Text>
-  <Text style={styles.value}>{player.shirtNumber ?? 'N/A'}</Text>
-</View>
-<View style={styles.infoRow}>
-  <Text style={styles.label}>Edad:</Text>
-  <Text style={styles.value}>{player.age ?? 'N/A'}</Text>
-</View>
-<View style={styles.infoRow}>
-  <Text style={styles.label}>Promedio:</Text>
-  <Text style={styles.value}>{player.average ?? 'N/A'}</Text>
-</View>
-<View style={styles.infoRow}>
-  <Text style={styles.label}>Altura:</Text>
-  <Text style={styles.value}>{player.stature ? `${player.stature} cm` : 'N/A'}</Text>
-</View>
-
-      <View style={styles.chartContainer}>
-        <PentagonChart skills={player.skills} />
-      </View>
-
-      <Text style={styles.sectionTitle}>Biografía</Text>
-      <Text style={styles.bio}>{player.bio}</Text>
-    </ScrollView>
+      <ScrollView contentContainerStyle={styles.container}>
+        <Pressable
+          style={({ pressed }) => [styles.button, pressed && styles.pressed]}
+          onPress={handlePress}
+        >
+          <Text style={styles.text}>Ver Media</Text>
+        </Pressable>
+  
+        <Image source={{ uri: player.foto }} style={styles.fullimage} />
+        <Text style={styles.name}>{player.name}</Text>
+        <Text style={styles.position}>{player.position}</Text>
+  
+        <View style={styles.infoRow}>
+          <Text style={styles.label}>Número:</Text>
+          <Text style={styles.value}>{player.shirtNumber ?? 'N/A'}</Text>
+        </View>
+        <View style={styles.infoRow}>
+          <Text style={styles.label}>Edad:</Text>
+          <Text style={styles.value}>{player.age ?? 'N/A'}</Text>
+        </View>
+        <View style={styles.infoRow}>
+          <Text style={styles.label}>Promedio:</Text>
+          <Text style={styles.value}>{player.average ?? 'N/A'}</Text>
+        </View>
+        <View style={styles.infoRow}>
+          <Text style={styles.label}>Altura:</Text>
+          <Text style={styles.value}>{player.stature ? `${player.stature} cm` : 'N/A'}</Text>
+        </View>
+  
+        <View style={styles.chartContainer}>
+          <PentagonChart skills={player.skills} />
+        </View>
+  
+        <Text style={styles.sectionTitle}>Biografía</Text>
+        <Text style={styles.bio}>{player.bio}</Text>
+      </ScrollView>
+    </View>
   );
 };
 const styles = StyleSheet.create({

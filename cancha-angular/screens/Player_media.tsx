@@ -76,8 +76,9 @@ const PlayerMedia = () => {
   const currentList = mediaType === 'photo' ? gallery : videos;
 
   return (
-    <View style={styles.container}>
+    <View style={{ flex: 1 }}>
       <Banner playerId={playerId} />
+    <View style={styles.container}>
       <Text style={styles.title}>Contenido multimedia</Text>
       <Text style={styles.subtitle}>Jugador ID: {playerId}</Text>
 
@@ -132,6 +133,7 @@ const PlayerMedia = () => {
           </ScrollView>
         </>
       )}
+    </View>
     </View>
   );
 };

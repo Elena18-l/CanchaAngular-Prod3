@@ -41,13 +41,10 @@ const Banner = ({ playerId }: BannerProps) => {
 
 const styles = StyleSheet.create({
     banner: {
-        marginTop: -20,
         backgroundColor: '#C02A2D',
         alignItems: 'center',
         flexDirection: 'row',
         justifyContent: 'flex-start',
-        paddingRight: 25,
-        paddingLeft: 25,
         },
     bannerImage: {
         width: 120,
