@@ -1,0 +1,65 @@
+import React, { useEffect, useState } from 'react';
+import { View, Image, Text, StyleSheet } from 'react-native';
+import { doc, getDoc } from 'firebase/firestore';
+import { db } from '../config/firebase-setup';
+
+type BannerProps = {
+  playerId: string;
+};
+
+const Banner = ({ playerId }: BannerProps) => {
+  const [playerName, setPlayerName] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchPlayerName = async () => {
+      try {
+        const docRef = doc(db, 'players', playerId);
+        const docSnap = await getDoc(docRef);
+        if (docSnap.exists()) {
+          const playerData = docSnap.data();
+          setPlayerName(playerData.name);
+        }
+      } catch (error) {
+        console.error('Error fetching player name:', error);
+      }
+    };
+
+    fetchPlayerName();
+  }, [playerId]);
+
+  return (
+    <View style={styles.banner}>
+      <Image
+        source={require('../assets/logosho.png')}
+        style={styles.bannerImage}
+        resizeMode="contain"
+      />
+      {playerName && <Text style={styles.playerName}>{playerName}</Text>}
+    </View>
+  );
+};
+
+const styles = StyleSheet.create({
+    banner: {
+        marginTop: -20,
+        backgroundColor: '#C02A2D',
+        alignItems: 'center',
+        flexDirection: 'row',
+        justifyContent: 'flex-start',
+        paddingRight: 25,
+        paddingLeft: 25,
+        },
+    bannerImage: {
+        width: 120,
+        height: 60,
+        maxWidth: '100%',
+        marginRight: 100,
+    },
+    playerName: {
+        color: 'white',
+        fontSize: 18,
+        fontWeight: 'bold',
+    },
+});
+
+export default Banner;

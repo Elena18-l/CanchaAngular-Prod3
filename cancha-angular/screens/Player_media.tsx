@@ -11,6 +11,7 @@ import {
 import { useRoute } from '@react-navigation/native';
 import { getFirestore, doc, getDoc } from 'firebase/firestore';
 import YoutubePlayer from 'react-native-youtube-iframe';
+import Banner from '../components/banner';
 
 // Función para extraer el ID de YouTube
 const extractYouTubeId = (url) => {
@@ -76,6 +77,7 @@ const PlayerMedia = () => {
 
   return (
     <View style={styles.container}>
+      <Banner playerId={playerId} />
       <Text style={styles.title}>Contenido multimedia</Text>
       <Text style={styles.subtitle}>Jugador ID: {playerId}</Text>
 
@@ -144,7 +146,6 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 24,
     fontWeight: 'bold',
-    marginBottom: 6,
   },
   subtitle: {
     fontSize: 16,

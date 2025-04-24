@@ -3,6 +3,8 @@ import { StyleSheet, View } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { enableScreens } from 'react-native-screens';
 import AppNavigator from './navigation/AppNavigator';
+import Banner from './components/banner';
+
 enableScreens();
 
 export default function App() {
@@ -21,4 +23,11 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#222',
   },
+  banner: {
+    marginTop: -20,
+    backgroundColor: '#C02A2D',
+    alignItems: 'center',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    },
 });

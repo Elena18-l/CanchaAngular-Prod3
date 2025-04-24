@@ -25,6 +25,7 @@ import { doc, getDoc } from 'firebase/firestore';
 import PentagonChart from '../components/PentagonChart';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../navigation/AppNavigator';
+import Banner from '../components/banner';
 
 type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'PlayerDetail'>;
 
@@ -91,7 +92,7 @@ const PlayerDetail = () => {
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
-
+      <Banner playerId={playerId} />
       <Pressable style={({ pressed }) => [styles.button, pressed && styles.pressed]} onPress={() => handlePress()}>
         <Text style={styles.text}>Ver Media</Text>
       </Pressable>

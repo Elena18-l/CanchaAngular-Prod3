@@ -5,6 +5,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import TeamScreen from '../screens/Team';
 import PlayerDetail from '../screens/Player_detail';
 import PlayerMedia from '../screens/Player_media';
+import Banner from '../components/banner';
 
 export type RootStackParamList = {
   Team: undefined;
@@ -37,8 +38,9 @@ const AppNavigator = () => {
                 resizeMode="contain"
               />
             </Pressable>
-          ),
-        })}
+            
+            ),
+          })}
       >
         <Stack.Screen
           name="Team"
