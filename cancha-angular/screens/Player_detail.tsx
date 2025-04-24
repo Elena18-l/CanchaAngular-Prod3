@@ -41,15 +41,15 @@ type PlayerDetailProps = {
   position: string;
   gallery: string[];
   bio: string;
-  skills:Skills;
+  skills: Skills;
   video: string[];
 }
 type Skills = {
-  fisico:number
-  tecnica:number
-  fuerzaMental:number
-  resistencia:number
-  habilidadEspecial:number
+  fisico: number
+  tecnica: number
+  fuerzaMental: number
+  resistencia: number
+  habilidadEspecial: number
 };
 
 const PlayerDetail = () => {
@@ -58,7 +58,7 @@ const PlayerDetail = () => {
   const [player, setPlayer] = useState<Player | null>(null);
   const [loading, setLoading] = useState(true);
   const navigation = useNavigation<NavigationProp>();
-  
+
   const handlePress = () => {
     console.log('Boton activado');
     console.log('Navegando a PlayerMedia con ID:', playerId);
@@ -92,7 +92,7 @@ const PlayerDetail = () => {
   return (
     <ScrollView contentContainerStyle={styles.container}>
 
-      <Pressable style={({ pressed }) => [styles.button, pressed && styles. pressed]} onPress={() => handlePress()}>
+      <Pressable style={({ pressed }) => [styles.button, pressed && styles.pressed]} onPress={() => handlePress()}>
         <Text style={styles.text}>Ver Media</Text>
       </Pressable>
 
@@ -100,17 +100,17 @@ const PlayerDetail = () => {
       <Text style={styles.name}>{player.name}</Text>
       <Text style={styles.position}>{player.position}</Text>
       <View style={styles.infoRow}>
-  <Text style={styles.label}>Número:</Text>
-  <Text style={styles.value}>{player.shirtNumber ?? 'N/A'}</Text>
-</View>
-<View style={styles.infoRow}>
-  <Text style={styles.label}>Promedio:</Text>
-  <Text style={styles.value}>{player.average ?? 'N/A'}</Text>
-</View>
-<View style={styles.infoRow}>
-  <Text style={styles.label}>Altura:</Text>
-  <Text style={styles.value}>{player.stature ? `${player.stature} cm` : 'N/A'}</Text>
-</View>
+        <Text style={styles.label}>Número:</Text>
+        <Text style={styles.value}>{player.shirtNumber ?? 'N/A'}</Text>
+      </View>
+      <View style={styles.infoRow}>
+        <Text style={styles.label}>Promedio:</Text>
+        <Text style={styles.value}>{player.average ?? 'N/A'}</Text>
+      </View>
+      <View style={styles.infoRow}>
+        <Text style={styles.label}>Altura:</Text>
+        <Text style={styles.value}>{player.stature ? `${player.stature} cm` : 'N/A'}</Text>
+      </View>
 
       <View style={styles.chartContainer}>
         <PentagonChart skills={player.skills} />
@@ -192,6 +192,6 @@ const styles = StyleSheet.create({
   pressed: {
     opacity: 0.8,
   },
-  
+
 });
 export default PlayerDetail;
