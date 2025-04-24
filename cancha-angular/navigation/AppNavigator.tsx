@@ -17,7 +17,19 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 const AppNavigator = () => {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Team">
+      <Stack.Navigator
+        initialRouteName="Team"
+        screenOptions={{
+          headerStyle: {
+            backgroundColor: '#fff', // color vino
+          },
+          headerTintColor: '#000', // color del texto e íconos
+          headerTitleStyle: {
+            fontWeight: 'bold',
+            fontSize: 20,
+          },
+        }}
+      >
         <Stack.Screen
           name="Team"
           component={TeamScreen}
