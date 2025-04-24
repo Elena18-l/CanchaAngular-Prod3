@@ -96,12 +96,17 @@ const PlayerDetail = () => {
         <Text style={styles.text}>Ver Media</Text>
       </Pressable>
 
-      <Image source={{ uri: player.portrait }} style={styles.image} />
+      
+      <Image source={{ uri: player.foto }} style={styles.fullimage} />
       <Text style={styles.name}>{player.name}</Text>
-      <Text style={styles.position}>{player.position}</Text>
+      <Text style={styles.position}>{player.position}</Text>      
       <View style={styles.infoRow}>
   <Text style={styles.label}>Número:</Text>
   <Text style={styles.value}>{player.shirtNumber ?? 'N/A'}</Text>
+</View>
+<View style={styles.infoRow}>
+  <Text style={styles.label}>Edad:</Text>
+  <Text style={styles.value}>{player.age ?? 'N/A'}</Text>
 </View>
 <View style={styles.infoRow}>
   <Text style={styles.label}>Promedio:</Text>
@@ -131,6 +136,11 @@ const styles = StyleSheet.create({
     width: 140,
     height: 140,
     borderRadius: 70,
+    marginBottom: 16,
+  },
+  fullimage: {
+    width: '60%',
+   height:'60%',
     marginBottom: 16,
   },
   name: {
