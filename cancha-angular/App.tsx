@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, Image } from 'react-native';
 import TeamScreen from './screens/Team';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import {Layout} from './components/Layout';
@@ -15,12 +15,19 @@ export default function App() {
 
         {/* Header personalizado */}
         <View style={styles.header}>
-          <Text style={styles.headerText}>Cancha Angular</Text>
+          <Image 
+          source={require('./assets/logo.png')} 
+          style={{ width: 50, height: 50 }} 
+          resizeMode="contain" />
+         
         </View>
 
         {/* Banner del grupo */}
         <View style={styles.banner}>
-          <Text style={styles.bannerText}>Shohoku</Text>
+        <Image 
+          source={require('./assets/logosho.png')} 
+          style={{ width:100, height: 60 }} 
+          resizeMode="contain" />
         </View>
 
         {/* Navegación */}
@@ -39,9 +46,11 @@ const styles = StyleSheet.create({
   },
   header: {
     backgroundColor: '#F5D59A', // rojo fuerte
-    paddingTop: 40,
+    paddingTop: 10,
     paddingBottom: 10,
     paddingHorizontal: 16,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   headerText: {
     color: '#000',
@@ -50,7 +59,6 @@ const styles = StyleSheet.create({
   },
   banner: {
     backgroundColor: '#C02A2D',
-    paddingVertical: 10,
     alignItems: 'center',
   },
   bannerText: {
