@@ -1,20 +1,3 @@
-/*import PentagonChart from './PentagonChart';
-
-const stats = {
-  fisico: 8,
-  tecnica: 7,
-  fuerzaMental: 9,
-  resistencia: 6,
-  habilidadEspecial: 7,
-};
-
-export default function App() {
-  return (
-    <View style={{ flex: 1, justifyContent: 'center', backgroundColor: '#111' }}>
-      <PentagonChart skills={stats} />
-    </View>
-  );
-}*/
 import React, { useEffect, useState } from 'react';
 import { View, Text, FlatList, TouchableOpacity, Image, StyleSheet, ActivityIndicator, ScrollView, Pressable } from 'react-native';
 import { collection, getDocs } from 'firebase/firestore';
@@ -25,6 +8,8 @@ import { doc, getDoc } from 'firebase/firestore';
 import PentagonChart from '../components/PentagonChart';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../navigation/AppNavigator';
+import { BlurView } from 'expo-blur';
+
 
 type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'PlayerDetail'>;
 
@@ -90,15 +75,8 @@ const PlayerDetail = () => {
   }
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
-
-      <Pressable style={({ pressed }) => [styles.button, pressed && styles.pressed]} onPress={() => handlePress()}>
-        <Text style={styles.text}>Ver Media</Text>
-      </Pressable>
-
-      
-      <Image source={{ uri: player.foto }} style={styles.fullimage} />
-      <Text style={styles.name}>{player.name}</Text>
+    <ScrollView contentContainerStyle={styles.container}>   
+     <Text style={styles.name}>{player.name}</Text>
       <Text style={styles.position}>{player.position}</Text>      
       <View style={styles.infoRow}>
   <Text style={styles.label}>Número:</Text>
@@ -115,14 +93,32 @@ const PlayerDetail = () => {
 <View style={styles.infoRow}>
   <Text style={styles.label}>Altura:</Text>
   <Text style={styles.value}>{player.stature ? `${player.stature} cm` : 'N/A'}</Text>
+</View>   
+     <View style={styles.imageContainer}>
+  <Image source={{ uri: player.foto }} style={styles.fullimage} />
+
+  {/* Bio con efecto glass encima de la imagen */}
+    <BlurView
+    intensity={40}
+    tint="light"
+    style={styles.bioGlass}
+  >
+
+<Text style={styles.sectionTitle}>Biografía</Text>
+    <Text style={styles.bio}>{player.bio}</Text>
+  </BlurView>
 </View>
+     
+<Pressable style={({ pressed }) => [styles.button, pressed && styles.pressed]} onPress={() => handlePress()}>
+        <Text style={styles.text}>Ver Media</Text>
+      </Pressable>
 
       <View style={styles.chartContainer}>
         <PentagonChart skills={player.skills} />
       </View>
 
-      <Text style={styles.sectionTitle}>Biografía</Text>
-      <Text style={styles.bio}>{player.bio}</Text>
+     
+  
     </ScrollView>
   );
 };
@@ -132,26 +128,59 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
   },
+  imageContainer: {
+    position: 'relative',
+    width: '100%',
+    height: 300,
+    marginBottom: 20,
+    borderRadius: 15,
+    overflow: 'hidden',
+  },
+  
+  fullimage: {
+    width: '100%',
+    height: '100%',
+    resizeMode: 'contain',
+  },
+  
+  bioGlass: {
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    right: 0,
+    padding: 16,
+    backgroundColor: 'rgba(255, 255, 255, 0.2)',
+    borderTopLeftRadius: 15,
+    borderTopRightRadius: 15,
+  },
+  
+  name: {
+    fontSize: 22,
+    fontWeight: 'bold',
+    color: '#000',
+  },
+  
+  position: {
+    fontSize: 16,
+    color: '#222',
+    marginBottom: 6,
+  },
+  
+  bio: {
+    fontSize: 14,
+    color: '#111',
+    textAlign: 'justify',
+  },
+  
   image: {
     width: 140,
     height: 140,
     borderRadius: 70,
     marginBottom: 16,
   },
-  fullimage: {
-    width: '60%',
-   height:'60%',
-    marginBottom: 16,
-  },
-  name: {
-    fontSize: 24,
-    fontWeight: 'bold',
-  },
-  position: {
-    fontSize: 18,
-    color: '#666',
-    marginBottom: 20,
-  },
+
+ 
+
   chartContainer: {
     marginBottom: 30,
   },
@@ -162,11 +191,7 @@ const styles = StyleSheet.create({
     marginBottom: 6,
     alignSelf: 'flex-start',
   },
-  bio: {
-    fontSize: 16,
-    color: '#444',
-    textAlign: 'justify',
-  },
+ 
   infoRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -174,12 +199,30 @@ const styles = StyleSheet.create({
     marginVertical: 4,
   },
   label: {
-    fontWeight: 'bold',
-    fontSize: 16,
+    
+    backgroundColor: 'black',
+    color: 'white',
+    paddingVertical: 2,
+    paddingHorizontal: 10,
+    flexBasis: '50%',
+    textAlign: 'left',
+    maxWidth: 100,
   },
+  
   value: {
+    fontWeight: 'bold',
+    backgroundColor: 'white',
     fontSize: 16,
-    color: '#333',
+    paddingVertical: 2,
+    paddingHorizontal: 10,
+    flexGrow: 1,
+    textAlign: 'center',
+    overflow: 'hidden',
+  
+    // 🔽 AÑADIDOS para mostrar el borde
+    borderWidth: 1,
+    borderColor: '#000',
+  
   },
   button: {
     flexDirection: 'row',

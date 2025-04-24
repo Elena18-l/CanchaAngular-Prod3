@@ -77,7 +77,7 @@ const PlayerMedia = () => {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Contenido multimedia</Text>
-      <Text style={styles.subtitle}>Jugador ID: {playerId}</Text>
+      
 
       <TouchableOpacity onPress={handleMediaToggle} style={styles.toggleButton}>
         <Text style={styles.toggleButtonText}>
