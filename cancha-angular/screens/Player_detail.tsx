@@ -76,51 +76,56 @@ const PlayerDetail = () => {
 
   return (
     <ScrollView contentContainerStyle={styles.container}>   
-     <Text style={styles.name}>{player.name}</Text>
-      <Text style={styles.position}>{player.position}</Text>      
-      <View style={styles.infoRow}>
-  <Text style={styles.label}>Número:</Text>
-  <Text style={styles.value}>{player.shirtNumber ?? 'N/A'}</Text>
-</View>
-<View style={styles.infoRow}>
-  <Text style={styles.label}>Edad:</Text>
-  <Text style={styles.value}>{player.age ?? 'N/A'}</Text>
-</View>
-<View style={styles.infoRow}>
-  <Text style={styles.label}>Promedio:</Text>
-  <Text style={styles.value}>{player.average ?? 'N/A'}</Text>
-</View>
-<View style={styles.infoRow}>
-  <Text style={styles.label}>Altura:</Text>
-  <Text style={styles.value}>{player.stature ? `${player.stature} cm` : 'N/A'}</Text>
-</View>   
-     <View style={styles.imageContainer}>
-  <Image source={{ uri: player.foto }} style={styles.fullimage} />
-
-  {/* Bio con efecto glass encima de la imagen */}
-    <BlurView
-    intensity={40}
-    tint="light"
-    style={styles.bioGlass}
-  >
-
-<Text style={styles.sectionTitle}>Biografía</Text>
-    <Text style={styles.bio}>{player.bio}</Text>
-  </BlurView>
-</View>
-     
-<Pressable style={({ pressed }) => [styles.button, pressed && styles.pressed]} onPress={() => handlePress()}>
+      <Text style={styles.name}>{player.name}</Text>
+      
+      {/* Contenedor con todos los elementos: */}
+      <View style={styles.stackContainer}>
+        {/* 🖼️ Imagen encima */}
+        <Image source={{ uri: player.foto }} style={styles.fullimage} />
+        
+        {/* 👇 Los textos con los datos debajo de la imagen */}
+        <View style={styles.infoUnderImage}>
+          <View style={styles.infoRow}>
+            <Text style={styles.label}>Posición:</Text>      
+            <Text style={styles.value}>{player.position ?? 'N/A'}</Text>
+          </View>
+          <View style={styles.infoRow}>
+            <Text style={styles.label}>Número:</Text>
+            <Text style={styles.value}>{player.shirtNumber ?? 'N/A'}</Text>
+          </View>
+          <View style={styles.infoRow}>
+            <Text style={styles.label}>Edad:</Text>
+            <Text style={styles.value}>{player.age ?? 'N/A'}</Text>
+          </View>
+          <View style={styles.infoRow}>
+            <Text style={styles.label}>Promedio:</Text>
+            <Text style={styles.value}>{player.average ?? 'N/A'}</Text>
+          </View>
+          <View style={styles.infoRow}>
+            <Text style={styles.label}>Altura:</Text>
+            <Text style={styles.value}>{player.stature ? `${player.stature} cm` : 'N/A'}</Text>
+          </View>
+        </View>
+  
+        {/* ✨ Bio con efecto glass encima de la imagen */}
+        <BlurView intensity={40} tint="light" style={styles.bioGlass}>
+          <Text style={styles.sectionTitle}>Biografía</Text>
+          <Text style={styles.bio}>{player.bio}</Text>
+        </BlurView>
+      </View>
+  
+      {/* Botón para ver media */}
+      <Pressable style={({ pressed }) => [styles.button, pressed && styles.pressed]} onPress={() => handlePress()}>
         <Text style={styles.text}>Ver Media</Text>
       </Pressable>
-
+  
+      {/* Gráfico de habilidades */}
       <View style={styles.chartContainer}>
         <PentagonChart skills={player.skills} />
       </View>
-
-     
-  
     </ScrollView>
   );
+  
 };
 const styles = StyleSheet.create({
   container: {
@@ -136,15 +141,40 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     overflow: 'hidden',
   },
+  stackContainer: {
+    position: 'relative',
+    width: 360,
+    height: 650,
+    marginBottom: 20,
+    borderRadius: 15,
+    overflow: 'hidden',
+  },
+  
+  infoUnderImage: {
+    position: 'absolute',
+    zIndex: 0,
+    top: 0,
+    left: 0,
+    right: 0,
+    padding: 10,
+    
+    
+  },
   
   fullimage: {
+    
+    display: 'flex',
+    justifyContent: 'flex-end',
+    zIndex: 1,  // La imagen está encima de los textos
     width: '100%',
     height: '100%',
     resizeMode: 'contain',
+    
   },
   
   bioGlass: {
     position: 'absolute',
+    zIndex: 2,  // Bio encima de la imagen y los textos
     bottom: 0,
     left: 0,
     right: 0,
@@ -152,6 +182,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(255, 255, 255, 0.2)',
     borderTopLeftRadius: 15,
     borderTopRightRadius: 15,
+   
   },
   
   name: {
@@ -173,8 +204,8 @@ const styles = StyleSheet.create({
   },
   
   image: {
-    width: 140,
-    height: 140,
+    width: 600,
+    height: 600,
     borderRadius: 70,
     marginBottom: 16,
   },
@@ -216,7 +247,7 @@ const styles = StyleSheet.create({
     paddingVertical: 2,
     paddingHorizontal: 10,
     flexGrow: 1,
-    textAlign: 'center',
+    textAlign: 'right',
     overflow: 'hidden',
   
     // 🔽 AÑADIDOS para mostrar el borde
