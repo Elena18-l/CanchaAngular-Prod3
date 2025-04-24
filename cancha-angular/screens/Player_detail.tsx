@@ -135,7 +135,7 @@ const styles = StyleSheet.create({
   },
   imageContainer: {
     position: 'relative',
-    width: '100%',
+    width: '80%',
     height: 300,
     marginBottom: 20,
     borderRadius: 15,
@@ -166,7 +166,7 @@ const styles = StyleSheet.create({
     display: 'flex',
     justifyContent: 'flex-end',
     zIndex: 1,  // La imagen está encima de los textos
-    width: '100%',
+    width: '95%',
     height: '100%',
     resizeMode: 'contain',
     
