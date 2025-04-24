@@ -1,11 +1,11 @@
 import React from 'react';
+import { Image, Pressable } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import TeamScreen from '../screens/Team';
 import PlayerDetail from '../screens/Player_detail';
 import PlayerMedia from '../screens/Player_media';
 
-// Tipos de navegación
 export type RootStackParamList = {
   Team: undefined;
   PlayerDetail: { playerId: string };
@@ -19,21 +19,31 @@ const AppNavigator = () => {
     <NavigationContainer>
       <Stack.Navigator
         initialRouteName="Team"
-        screenOptions={{
+        screenOptions={({ navigation }) => ({
           headerStyle: {
-            backgroundColor: '#fff', // color vino
+            backgroundColor: '#F5D59A',
           },
-          headerTintColor: '#000', // color del texto e íconos
+          headerTintColor: '#000',
           headerTitleStyle: {
             fontWeight: 'bold',
             fontSize: 20,
           },
-        }}
+          headerTitleAlign: 'center',
+          headerLeft: () => (
+            <Pressable onPress={() => navigation.navigate('Team')}>
+              <Image
+                source={require('../assets/logo.png')}
+                style={{ width: 40, height: 40, marginLeft: 10 }}
+                resizeMode="contain"
+              />
+            </Pressable>
+          ),
+        })}
       >
         <Stack.Screen
           name="Team"
           component={TeamScreen}
-          options={{ title: 'Equipo' }}
+          options={{ title: 'Shohoku' }}
         />
         <Stack.Screen
           name="PlayerDetail"

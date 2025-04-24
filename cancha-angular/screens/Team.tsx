@@ -19,7 +19,7 @@ const TeamScreen = () => {
       try {
         const querySnapshot = await getDocs(collection(db, 'players'));
         const playersData: PlayerShort[] = [];
-        
+
         querySnapshot.forEach((doc) => {
           const data = doc.data();
           console.log('Fetched player:', data);  // Agrega este log
@@ -31,7 +31,7 @@ const TeamScreen = () => {
             portrait: data.portrait,
           });
         });
-  
+
         console.log('Players data:', playersData);  // Verifica si se llenó correctamente
         setPlayers(playersData);
       } catch (error) {
@@ -40,10 +40,10 @@ const TeamScreen = () => {
         setLoading(false);
       }
     };
-  
+
     fetchPlayers();
   }, []); // Solo se ejecuta una vez cuando se monta el componente
-   // Solo se ejecuta una vez cuando se monta el componente
+  // Solo se ejecuta una vez cuando se monta el componente
 
   const PlayerCard = ({ item }: { item: PlayerShort }) => (
     <Pressable
@@ -67,12 +67,23 @@ const TeamScreen = () => {
   }
 
   return (
-    <FlatList
-      data={players}
-      renderItem={({ item }) => <PlayerCard item={item} />}
-      keyExtractor={(player) => player.id}
-      contentContainerStyle={styles.container}
-    />
+    <View style={{ flex: 1 }}>
+      {/* 🔴 Banner Shohoku */}
+      <View style={styles.banner}>
+        <Image
+          source={require('../assets/logosho.png')}
+          style={styles.bannerImage}
+          resizeMode="contain"
+        />
+      </View>
+
+      <FlatList
+        data={players}
+        renderItem={({ item }) => <PlayerCard item={item} />}
+        keyExtractor={(player) => player.id}
+        contentContainerStyle={styles.container}
+      />
+    </View>
   );
 };
 
@@ -108,6 +119,17 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  banner: {
+    backgroundColor: '#C02A2D',
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingVertical: 10,
+  },
+  bannerImage: {
+    width: 120,
+    height: 60,
+  },
+
 });
 
 export default TeamScreen;
