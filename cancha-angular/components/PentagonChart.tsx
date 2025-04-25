@@ -68,7 +68,6 @@ const PentagonChart: React.FC<Props> = ({ skills }) => {
     <View style={styles.container}>
       <Svg width={size} height={size}>
         <G>
-          {/* Polígonos concéntricos */}
           {[...Array(levels)].map((_, i) => (
             <Polygon
               key={i}
@@ -79,7 +78,6 @@ const PentagonChart: React.FC<Props> = ({ skills }) => {
             />
           ))}
 
-          {/* Líneas desde el centro */}
           {angles.map((angle, i) => {
             const [x, y] = getPoint(angle, levels).split(',');
             return (
@@ -94,7 +92,6 @@ const PentagonChart: React.FC<Props> = ({ skills }) => {
             );
           })}
 
-          {/* Área de estadísticas */}
           <Polygon
             points={getStatsPoints()}
             fill="rgba(255, 165, 0, 0.4)"
@@ -102,7 +99,6 @@ const PentagonChart: React.FC<Props> = ({ skills }) => {
             strokeWidth={3}
           />
 
-          {/* Puntos de datos */}
           {getStatsPoints()
             .split(' ')
             .map((point, i) => {
@@ -118,7 +114,6 @@ const PentagonChart: React.FC<Props> = ({ skills }) => {
               );
             })}
 
-          {/* Etiquetas con nombre (fondo negro) y valor (fondo blanco) */}
           {angles.map((angle, i) => {
             const rad = (angle * Math.PI) / 180;
             const labelRadius = radius + 28;
@@ -128,7 +123,8 @@ const PentagonChart: React.FC<Props> = ({ skills }) => {
             const labelWidth = 62;
             const labelHeight = 28;
             const valueHeight = 25;
-            
+
+            const splitName = skillNames[i].split(' ');
 
             return (
               <G key={`label-${i}`}>
@@ -140,24 +136,45 @@ const PentagonChart: React.FC<Props> = ({ skills }) => {
                   height={labelHeight}
                   fill="black"
                 />
-                <Text
-                  x={x}
-                  y={y - valueHeight / 2}
-                  fontSize="11"
-                  fill="white"
-                  fontWeight="bold"
-                  textAnchor="middle"
-                  fontFamily='Arial'
-                >
-                 {skillNames[i].includes(' ') ? (
+
+                {splitName.length > 1 ? (
                   <>
-                    <tspan x={x} dy="-5">{skillNames[i].split(' ')[0]}</tspan>
-                    <tspan x={x} dy="12">{skillNames[i].split(' ')[1]}</tspan>
+                    <Text
+                      x={x}
+                      y={y - valueHeight / 2 - 5}
+                      fontSize="11"
+                      fill="white"
+                      fontWeight="bold"
+                      textAnchor="middle"
+                      fontFamily="Arial"
+                    >
+                      {splitName[0]}
+                    </Text>
+                    <Text
+                      x={x}
+                      y={y - valueHeight / 2 + 7}
+                      fontSize="11"
+                      fill="white"
+                      fontWeight="bold"
+                      textAnchor="middle"
+                      fontFamily="Arial"
+                    >
+                      {splitName[1]}
+                    </Text>
                   </>
                 ) : (
-                  <tspan>{skillNames[i]}</tspan>
-                 )}
-                </Text>
+                  <Text
+                    x={x}
+                    y={y - valueHeight / 2}
+                    fontSize="11"
+                    fill="white"
+                    fontWeight="bold"
+                    textAnchor="middle"
+                    fontFamily="Arial"
+                  >
+                    {skillNames[i]}
+                  </Text>
+                )}
 
                 {/* Fondo blanco para el valor */}
                 <Rect
@@ -167,13 +184,12 @@ const PentagonChart: React.FC<Props> = ({ skills }) => {
                   height={valueHeight}
                   fill="white"
                   stroke="black"
-                  
                 />
                 <Text
                   x={x}
                   y={y + valueHeight - 2}
                   fontSize="11"
-                  fontFamily='Arial'
+                  fontFamily="Arial"
                   fontWeight="bold"
                   fill="black"
                   textAnchor="middle"
