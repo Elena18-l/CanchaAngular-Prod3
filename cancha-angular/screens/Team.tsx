@@ -61,12 +61,14 @@ const TeamScreen = () => {
         style={styles.avatar}
         imageStyle={{ borderRadius: 10 }}
       >
+       
         <View style={{ padding: 10 }}>
           <Text style={styles.name}>
             {item.shirtNumber} - {item.name}
           </Text>
           <Text style={styles.position}>{item.position}</Text>
         </View>
+       
       </ImageBackground>
     </Pressable>
   );
@@ -117,15 +119,26 @@ const styles = StyleSheet.create({
     height: 120,
     borderRadius: 10,
     justifyContent: 'flex-end',
+   
   },
   name: {
     fontSize: 16,
     fontWeight: 'bold',
     color: '#fff',
+    backgroundColor:'#C02A2D',
+    width: '50%',
+    borderRadius: 5,
+    paddingLeft: 10,
+    marginBottom: 5,
+    
   },
   position: {
     fontSize: 14,
     color: '#fff',
+    backgroundColor:'#C02A2D',
+    width: '20%',
+    borderRadius: 5,
+    paddingLeft: 10,
   },
   centered: {
     flex: 1,
