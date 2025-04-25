@@ -62,6 +62,6 @@ const AppNavigator = () => {
   );
 };
 
-//dejeme hace rla comitacions!!!
+
 
 export default AppNavigator;
