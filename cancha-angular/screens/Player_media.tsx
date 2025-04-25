@@ -84,7 +84,7 @@ const PlayerMedia = () => {
       <ScrollView style={styles.outerContainer}>
       <Banner playerId={playerId} />
       <View style={styles.container}>
-        <Text style={styles.title}>Contenido multimedia</Text>
+
 
 
         <TouchableOpacity onPress={handleMediaToggle} style={styles.toggleButton}>

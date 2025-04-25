@@ -49,12 +49,12 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
   },
   bannerImage: {
-    width: 120,
-    height: 60,
+    width: 80,
+    height: 40,
   },
     playerName: {
         color: 'white',
-        fontSize: 18,
+        fontSize: 22,
         fontWeight: 'bold',
     },
 });

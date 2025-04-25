@@ -10,7 +10,7 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../navigation/AppNavigator';
 import Banner from '../components/banner';
 import { BlurView } from 'expo-blur';
-import Icon from 'react-native-vector-icons/FontAwesome';
+// import Icon from 'react-native-vector-icons/FontAwesome';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
   // Usando FontAwesome, pero puedes elegir otro conjunt
 
