@@ -98,7 +98,7 @@ const PlayerMedia = () => {
           ) : (
             <>
               {selectedMedia && mediaType === 'photo' && (
-                <Image source={{ uri: selectedMedia }} style={styles.mainImage} resizeMode="contain" />
+                <Image source={{ uri: selectedMedia }} style={styles.mainImage} resizeMode="cover" />
               )}
 
               {selectedMedia && mediaType === 'video' && (() => {
