@@ -81,6 +81,7 @@ const PlayerMedia = () => {
 
   return (
     <View style={{ flex: 1 }}>
+      <ScrollView style={styles.outerContainer}>
       <Banner playerId={playerId} />
       <View style={styles.container}>
         <Text style={styles.title}>Contenido multimedia</Text>
@@ -138,6 +139,7 @@ const PlayerMedia = () => {
           </>
         )}
       </View>
+      </ScrollView>
     </View>
   );
 };
@@ -207,8 +209,9 @@ const styles = StyleSheet.create({
   videoContainer: {
     flex: 1,
   },
- 
+ outerContainer: {
+    flex: 1,
+  },
 });
 
 export default PlayerMedia;
-//actualizte
