@@ -4,6 +4,7 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { enableScreens } from 'react-native-screens';
 import AppNavigator from './navigation/AppNavigator';
 import Banner from './components/banner';
+import Footer from './components/Footer';
 
 enableScreens();
 
@@ -13,6 +14,7 @@ export default function App() {
       <View style={styles.container}>
         <StatusBar style="light" />
         <AppNavigator />
+        <Footer />
       </View>
     </SafeAreaProvider>
   );
