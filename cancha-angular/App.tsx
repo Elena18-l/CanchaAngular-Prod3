@@ -3,6 +3,7 @@ import { StyleSheet, View } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { enableScreens } from 'react-native-screens';
 import AppNavigator from './navigation/AppNavigator';
+import Footer from './components/Footer';
 
 
 enableScreens();
@@ -12,17 +13,18 @@ export default function App() {
     <SafeAreaProvider>
       <View style={styles.container}>
 
-      
+
 
 
         <StatusBar style="light" />
         <AppNavigator />
 
-  {/* Franja vertical roja */}
-  <View style={styles.redStripe} />
+        {/* Franja vertical roja */}
+        <View style={styles.redStripe} />
 
-
+        <Footer />
       </View>
+
     </SafeAreaProvider>
   );
 }
@@ -31,9 +33,9 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#222',
-    position:'relative',
+    position: 'relative',
   },
- redStripe: {
+  redStripe: {
     position: 'absolute',
     top: 0,
     bottom: 0,
