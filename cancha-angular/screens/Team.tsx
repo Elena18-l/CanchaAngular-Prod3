@@ -1,5 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, FlatList, Image, StyleSheet, ActivityIndicator, Pressable } from 'react-native';
+import {
+  View,
+  Text,
+  FlatList,
+  Image,
+  StyleSheet,
+  ActivityIndicator,
+  Pressable,
+  ImageBackground,
+} from 'react-native';
 import { collection, getDocs } from 'firebase/firestore';
 import { db } from '../config/firebase-setup';
 import { PlayerShort } from '../type/player';
@@ -22,7 +31,6 @@ const TeamScreen = () => {
 
         querySnapshot.forEach((doc) => {
           const data = doc.data();
-          console.log('Fetched player:', data);  // Agrega este log
           playersData.push({
             id: doc.id,
             name: data.name,
@@ -32,7 +40,6 @@ const TeamScreen = () => {
           });
         });
 
-        console.log('Players data:', playersData);  // Verifica si se llenó correctamente
         setPlayers(playersData);
       } catch (error) {
         console.error('Error fetching players:', error);
@@ -42,19 +49,25 @@ const TeamScreen = () => {
     };
 
     fetchPlayers();
-  }, []); // Solo se ejecuta una vez cuando se monta el componente
-  // Solo se ejecuta una vez cuando se monta el componente
+  }, []);
 
   const PlayerCard = ({ item }: { item: PlayerShort }) => (
     <Pressable
       style={styles.card}
       onPress={() => navigation.navigate('PlayerDetail', { playerId: item.id })}
     >
-      <Image source={{ uri: item.portrait }} style={styles.avatar} />
-      <View>
-        <Text style={styles.name}>{item.shirtNumber} - {item.name}</Text>
-        <Text style={styles.position}>{item.position}</Text>
-      </View>
+      <ImageBackground
+        source={{ uri: item.portrait }}
+        style={styles.avatar}
+        imageStyle={{ borderRadius: 10 }}
+      >
+        <View style={{ padding: 10 }}>
+          <Text style={styles.name}>
+            {item.shirtNumber} - {item.name}
+          </Text>
+          <Text style={styles.position}>{item.position}</Text>
+        </View>
+      </ImageBackground>
     </Pressable>
   );
 
@@ -92,27 +105,27 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   card: {
-    flexDirection: 'row',
-    backgroundColor: '#fff',
     marginVertical: 8,
-    padding: 10,
     borderRadius: 10,
+    overflow: 'hidden',
     elevation: 3,
-    alignItems: 'center',
+    padding: 6,
+    backgroundColor: '#C02A2D',
   },
   avatar: {
-    width: 60,
-    height: 60,
-    borderRadius: 30,
-    marginRight: 12,
+    width: '100%',
+    height: 120,
+    borderRadius: 10,
+    justifyContent: 'flex-end',
   },
   name: {
     fontSize: 16,
     fontWeight: 'bold',
+    color: '#fff',
   },
   position: {
     fontSize: 14,
-    color: '#666',
+    color: '#fff',
   },
   centered: {
     flex: 1,
@@ -120,16 +133,16 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   banner: {
+    height: 90,
     backgroundColor: '#C02A2D',
     alignItems: 'center',
     justifyContent: 'center',
-    paddingVertical: 10,
+   
   },
   bannerImage: {
     width: 120,
     height: 60,
   },
-
 });
 
 export default TeamScreen;

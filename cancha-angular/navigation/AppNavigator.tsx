@@ -45,7 +45,7 @@ const AppNavigator = () => {
         <Stack.Screen
           name="Team"
           component={TeamScreen}
-          options={{ title: 'Shohoku' }}
+          options={{ title: 'Equipo' }}
         />
         <Stack.Screen
           name="PlayerDetail"
