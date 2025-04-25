@@ -268,7 +268,7 @@ const styles = StyleSheet.create({
   button: {
     flexDirection: 'row',
     alignItems: 'flex-end',
-    backgroundColor: '#FF9809', // Rojo Shohoku
+    backgroundColor: '#FF9809', 
     paddingVertical: 10,
     paddingHorizontal: 20,
     borderRadius: 8,
