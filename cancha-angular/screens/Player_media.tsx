@@ -31,6 +31,9 @@ const PlayerMedia = () => {
   const [mediaType, setMediaType] = useState<'photo' | 'video'>('photo');
   const [loading, setLoading] = useState(true);
 
+  const screenWidth = Dimensions.get('window').width;
+  const videoHeight = (screenWidth - 16) * (9 / 16);
+
   useEffect(() => {
     const fetchMedia = async () => {
       try {
@@ -79,62 +82,62 @@ const PlayerMedia = () => {
   return (
     <View style={{ flex: 1 }}>
       <Banner playerId={playerId} />
-    <View style={styles.container}>
-      <Text style={styles.title}>Contenido multimedia</Text>
-  
+      <View style={styles.container}>
+        <Text style={styles.title}>Contenido multimedia</Text>
 
-      <TouchableOpacity onPress={handleMediaToggle} style={styles.toggleButton}>
-        <Text style={styles.toggleButtonText}>
-          {mediaType === 'photo' ? 'Ver videos' : 'Ver fotos'}
-        </Text>
-      </TouchableOpacity>
 
-      {loading ? (
-        <ActivityIndicator size="large" color="#e91e63" />
-      ) : (
-        <>
-          {selectedMedia && mediaType === 'photo' && (
-            <Image source={{ uri: selectedMedia }} style={styles.mainImage} resizeMode="contain" />
-          )}
+        <TouchableOpacity onPress={handleMediaToggle} style={styles.toggleButton}>
+          <Text style={styles.toggleButtonText}>
+            {mediaType === 'photo' ? 'Ver videos' : 'Ver fotos'}
+          </Text>
+        </TouchableOpacity>
 
-          {selectedMedia && mediaType === 'video' && (() => {
-            const videoId = extractYouTubeId(selectedMedia);
-            console.log('Selected media URL:', selectedMedia);
-            const screenWidth = Dimensions.get('window').width;
-            return videoId ? (
-              <YoutubePlayer
-                videoId={videoId}
-                // height={300}
-                width={screenWidth - 16}
-                play={false}
-              />
-            ) : (
-              <Text>No se pudo cargar el video.</Text>
-            );
-          })()}
+        {loading ? (
+          <ActivityIndicator size="large" color="#e91e63" />
+        ) : (
+          <>
+            {selectedMedia && mediaType === 'photo' && (
+              <Image source={{ uri: selectedMedia }} style={styles.mainImage} resizeMode="contain" />
+            )}
 
-          <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.scrollContainer}>
-            {currentList.map((item, index) => (
-              <TouchableOpacity key={index} onPress={() => setSelectedMedia(item)}>
-                {mediaType === 'photo' ? (
-                  <Image
-                    source={{ uri: item }}
-                    style={[
-                      styles.thumbnail,
-                      item === selectedMedia && styles.thumbnailSelected,
-                    ]}
+            {selectedMedia && mediaType === 'video' && (() => {
+              const videoId = extractYouTubeId(selectedMedia);
+              return videoId ? (
+                <View style={styles.videoWrapper}>
+                  <YoutubePlayer
+                    videoId={videoId}
+                    height={videoHeight}
+                    play={false}
+                    
                   />
-                ) : (
-                  <View style={[styles.thumbnail, styles.videoThumbnail]}>
-                    <Text style={{ color: '#fff' }}>🎥</Text>
-                  </View>
-                )}
-              </TouchableOpacity>
-            ))}
-          </ScrollView>
-        </>
-      )}
-    </View>
+                </View>
+              ) : (
+                <Text>No se pudo cargar el video.</Text>
+              );
+            })()}
+
+            <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.scrollContainer}>
+              {currentList.map((item, index) => (
+                <TouchableOpacity key={index} onPress={() => setSelectedMedia(item)}>
+                  {mediaType === 'photo' ? (
+                    <Image
+                      source={{ uri: item }}
+                      style={[
+                        styles.thumbnail,
+                        item === selectedMedia && styles.thumbnailSelected,
+                      ]}
+                    />
+                  ) : (
+                    <View style={[styles.thumbnail, styles.videoThumbnail]}>
+                      <Text style={{ color: '#fff' }}>🎥</Text>
+                    </View>
+                  )}
+                </TouchableOpacity>
+              ))}
+            </ScrollView>
+          </>
+        )}
+      </View>
     </View>
   );
 };
@@ -192,6 +195,19 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  videoWrapper: {
+    width: '100%',
+    aspectRatio: 16 / 9,
+    borderRadius: 12,
+    overflow: 'hidden',
+    marginBottom: 12,
+    backgroundColor: '#000',
+  },
+
+  videoContainer: {
+    flex: 1,
+  },
+ 
 });
 
 export default PlayerMedia;
