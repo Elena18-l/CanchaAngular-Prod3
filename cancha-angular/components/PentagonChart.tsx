@@ -1,6 +1,6 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
-import Svg, { Polygon, Circle, Line, G } from 'react-native-svg';
+import { View, StyleSheet } from 'react-native';
+import Svg, { Polygon, Circle, Line, G, Text, Rect } from 'react-native-svg';
 
 interface Skills {
   fisico: number;
@@ -17,9 +17,9 @@ interface Props {
 const PentagonChart: React.FC<Props> = ({ skills }) => {
   const size = 300;
   const center = size / 2;
-  const radius = size / 2.5;
+  const radius = size / 3.1;
   const levels = 5;
-  const angles = [270, 342, 54, 126, 198]; // en grados para cada eje
+  const angles = [270, 342, 54, 126, 198];
 
   const getPoint = (angle: number, level: number) => {
     const rad = (angle * Math.PI) / 180;
@@ -48,10 +48,27 @@ const PentagonChart: React.FC<Props> = ({ skills }) => {
       .join(' ');
   };
 
+  const skillNames = [
+    'Físico',
+    'Técnica',
+    'Fuerza mental',
+    'Resistencia',
+    'Habilidades especiales',
+  ];
+
+  const values = [
+    skills.fisico,
+    skills.tecnica,
+    skills.fuerzaMental,
+    skills.resistencia,
+    skills.habilidadEspecial,
+  ];
+
   return (
     <View style={styles.container}>
       <Svg width={size} height={size}>
         <G>
+          {/* Polígonos concéntricos */}
           {[...Array(levels)].map((_, i) => (
             <Polygon
               key={i}
@@ -85,7 +102,7 @@ const PentagonChart: React.FC<Props> = ({ skills }) => {
             strokeWidth={3}
           />
 
-          {/* Puntos */}
+          {/* Puntos de datos */}
           {getStatsPoints()
             .split(' ')
             .map((point, i) => {
@@ -100,6 +117,72 @@ const PentagonChart: React.FC<Props> = ({ skills }) => {
                 />
               );
             })}
+
+          {/* Etiquetas con nombre (fondo negro) y valor (fondo blanco) */}
+          {angles.map((angle, i) => {
+            const rad = (angle * Math.PI) / 180;
+            const labelRadius = radius + 28;
+            const x = center + labelRadius * Math.cos(rad);
+            const y = center + labelRadius * Math.sin(rad);
+
+            const labelWidth = 62;
+            const labelHeight = 28;
+            const valueHeight = 25;
+            
+
+            return (
+              <G key={`label-${i}`}>
+                {/* Fondo negro para el nombre */}
+                <Rect
+                  x={x - labelWidth / 2}
+                  y={y - (labelHeight + valueHeight) / 2}
+                  width={labelWidth}
+                  height={labelHeight}
+                  fill="black"
+                />
+                <Text
+                  x={x}
+                  y={y - valueHeight / 2}
+                  fontSize="11"
+                  fill="white"
+                  fontWeight="bold"
+                  textAnchor="middle"
+                  fontFamily='Arial'
+                >
+                 {skillNames[i].includes(' ') ? (
+                  <>
+                    <tspan x={x} dy="-5">{skillNames[i].split(' ')[0]}</tspan>
+                    <tspan x={x} dy="12">{skillNames[i].split(' ')[1]}</tspan>
+                  </>
+                ) : (
+                  <tspan>{skillNames[i]}</tspan>
+                 )}
+                </Text>
+
+                {/* Fondo blanco para el valor */}
+                <Rect
+                  x={x - labelWidth / 2}
+                  y={y + 2}
+                  width={labelWidth}
+                  height={valueHeight}
+                  fill="white"
+                  stroke="black"
+                  
+                />
+                <Text
+                  x={x}
+                  y={y + valueHeight - 2}
+                  fontSize="11"
+                  fontFamily='Arial'
+                  fontWeight="bold"
+                  fill="black"
+                  textAnchor="middle"
+                >
+                  {values[i]}
+                </Text>
+              </G>
+            );
+          })}
         </G>
       </Svg>
     </View>

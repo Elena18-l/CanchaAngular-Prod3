@@ -10,6 +10,11 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../navigation/AppNavigator';
 import Banner from '../components/banner';
 import { BlurView } from 'expo-blur';
+import Icon from 'react-native-vector-icons/FontAwesome';
+import MaterialIcons from '@expo/vector-icons/MaterialIcons';
+  // Usando FontAwesome, pero puedes elegir otro conjunt
+
+
 
 type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'PlayerDetail'>;
 
@@ -78,7 +83,12 @@ const PlayerDetail = () => {
         <View style={{ flex: 1 }}>
       <Banner playerId={playerId} />
       <ScrollView contentContainerStyle={styles.container}>   
-      <Text style={styles.name}>{player.name}</Text>
+          {/* Botón para ver media */}
+          <Pressable style={({ pressed }) => [styles.button, pressed && styles.pressed]} onPress={() => handlePress()}>
+          <Text style={styles.text}>Ver Media </Text>
+          <MaterialIcons name="perm-media" size={20} color="#fff" paddingRight={5}/>
+        </Pressable>
+
       
       {/* Contenedor con todos los elementos: */}
       <View style={styles.stackContainer}>
@@ -116,14 +126,11 @@ const PlayerDetail = () => {
         </BlurView>
       </View>
   
-      {/* Botón para ver media */}
-      <Pressable style={({ pressed }) => [styles.button, pressed && styles.pressed]} onPress={() => handlePress()}>
-        <Text style={styles.text}>Ver Media</Text>
-      </Pressable>
+  
   
       {/* Gráfico de habilidades */}
       <View style={styles.chartContainer}>
-        <PentagonChart skills={player.skills} />
+        <PentagonChart skills={player.skills} />        
       </View>
     </ScrollView>
     </View>
@@ -260,13 +267,13 @@ const styles = StyleSheet.create({
   },
   button: {
     flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: '#e74c3c', // Rojo Shohoku
+    alignItems: 'flex-end',
+    backgroundColor: '#FF9809', // Rojo Shohoku
     paddingVertical: 10,
     paddingHorizontal: 20,
     borderRadius: 8,
-    alignSelf: 'center',
-    marginTop: 15,
+    alignSelf: 'flex-end',
+    
   },
   text: {
     color: '#fff',
