@@ -30,11 +30,11 @@ const AppNavigator = () => {
             fontSize: 20,
           },
           headerTitleAlign: 'center',
-          headerLeft: () => (
+          headerRight: () => (
             <Pressable onPress={() => navigation.navigate('Team')}>
               <Image
                 source={require('../assets/logo.png')}
-                style={{ width: 40, height: 40, marginLeft: 10 }}
+                style={{ width: 40, height: 40, marginRight: 10 }}
                 resizeMode="contain"
               />
             </Pressable>

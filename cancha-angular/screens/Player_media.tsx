@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Dimensions } from 'react-native';
 import {
   View,
   Text,
@@ -80,7 +81,7 @@ const PlayerMedia = () => {
       <Banner playerId={playerId} />
     <View style={styles.container}>
       <Text style={styles.title}>Contenido multimedia</Text>
-      <Text style={styles.subtitle}>Jugador ID: {playerId}</Text>
+  
 
       <TouchableOpacity onPress={handleMediaToggle} style={styles.toggleButton}>
         <Text style={styles.toggleButtonText}>
@@ -99,12 +100,12 @@ const PlayerMedia = () => {
           {selectedMedia && mediaType === 'video' && (() => {
             const videoId = extractYouTubeId(selectedMedia);
             console.log('Selected media URL:', selectedMedia);
-
+            const screenWidth = Dimensions.get('window').width;
             return videoId ? (
               <YoutubePlayer
                 videoId={videoId}
-                height={315}
-                width={560}
+                // height={300}
+                width={screenWidth - 16}
                 play={false}
               />
             ) : (
