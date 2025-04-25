@@ -96,26 +96,26 @@ const PlayerDetail = () => {
         <Text style={styles.text}>Ver Media</Text>
       </Pressable>
 
-      
+
       <Image source={{ uri: player.foto }} style={styles.fullimage} />
       <Text style={styles.name}>{player.name}</Text>
-      <Text style={styles.position}>{player.position}</Text>      
+      <Text style={styles.position}>{player.position}</Text>
       <View style={styles.infoRow}>
-  <Text style={styles.label}>Número:</Text>
-  <Text style={styles.value}>{player.shirtNumber ?? 'N/A'}</Text>
-</View>
-<View style={styles.infoRow}>
-  <Text style={styles.label}>Edad:</Text>
-  <Text style={styles.value}>{player.age ?? 'N/A'}</Text>
-</View>
-<View style={styles.infoRow}>
-  <Text style={styles.label}>Promedio:</Text>
-  <Text style={styles.value}>{player.average ?? 'N/A'}</Text>
-</View>
-<View style={styles.infoRow}>
-  <Text style={styles.label}>Altura:</Text>
-  <Text style={styles.value}>{player.stature ? `${player.stature} cm` : 'N/A'}</Text>
-</View>
+        <Text style={styles.label}>Número:</Text>
+        <Text style={styles.value}>{player.shirtNumber ?? 'N/A'}</Text>
+      </View>
+      <View style={styles.infoRow}>
+        <Text style={styles.label}>Edad:</Text>
+        <Text style={styles.value}>{player.age ?? 'N/A'}</Text>
+      </View>
+      <View style={styles.infoRow}>
+        <Text style={styles.label}>Promedio:</Text>
+        <Text style={styles.value}>{player.average ?? 'N/A'}</Text>
+      </View>
+      <View style={styles.infoRow}>
+        <Text style={styles.label}>Altura:</Text>
+        <Text style={styles.value}>{player.stature ? `${player.stature} cm` : 'N/A'}</Text>
+      </View>
 
       <View style={styles.chartContainer}>
         <PentagonChart skills={player.skills} />
@@ -140,7 +140,7 @@ const styles = StyleSheet.create({
   },
   fullimage: {
     width: '60%',
-   height:'60%',
+    height: '60%',
     marginBottom: 16,
   },
   name: {
