@@ -13,15 +13,41 @@ import { Player } from '../type/player';
 
 type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'PlayerDetail'>;
 
+type PlayerDetailProps = {
+  id: string;
+  name: string;
+  age: number;
+  foto: string;
+  portrait: string;
+  team: string;
+  stature?: number;
+  average?: number;
+  shirtNumber?: number;
+  position: string;
+  gallery: string[];
+  bio: string;
+  skills: Skills;
+  video: string[];
+}
+type Skills = {
+  fisico: number
+  tecnica: number
+  fuerzaMental: number
+  resistencia: number
+  habilidadEspecial: number
+};
+
 const PlayerDetail = () => {
   const route = useRoute();
   const { playerId } = route.params as { playerId: string };
   const [player, setPlayer] = useState<Player | null>(null);
   const [loading, setLoading] = useState(true);
+  const [modalVisible, setModalVisible] = useState(false); // Aquí defines el estado del modal
   const navigation = useNavigation<NavigationProp>();
-  const [modalVisible, setModalVisible] = useState(false);
 
   const handlePress = () => {
+    console.log('Boton activado');
+    console.log('Navegando a PlayerMedia con ID:', playerId);
     navigation.navigate('PlayerMedia', { playerId });
   };
 
@@ -55,37 +81,56 @@ const PlayerDetail = () => {
       <Banner playerId={playerId} />
 
       <ScrollView contentContainerStyle={styles.container}>
-
-        
-        <Pressable style={({ pressed }) => [styles.button, pressed && styles.pressed]} onPress={handlePress}>
-          <Text style={styles.text}>Ver Media </Text>
-          <MaterialIcons name="perm-media" size={20} color="#fff" style={{ marginLeft: 5 }} />
-        </Pressable>
-
         <View style={styles.stackContainer}>
-          {/* Imagen grande */}
-          <View style={styles.imageWrapper}>
-            <Image source={{ uri: player.foto }} style={styles.fullimage} />
-
-            {/* Para abrir modal al tocar imagen */}
-            <Pressable style={StyleSheet.absoluteFill} onPress={() => setModalVisible(true)} />
+          <Pressable style={({ pressed }) => [styles.button, pressed && styles.pressed]} onPress={handlePress}>
+            <Text style={styles.text}>Ver Media </Text>
+            <MaterialIcons name="perm-media" size={20} color="#fff" style={{ marginLeft: 5 }} />
+          </Pressable>
+          {/* 👇 Los textos con los datos debajo de la imagen */}
+          <View style={styles.infoUnderImage}>
+            <View style={styles.infoRow}>
+              <Text style={styles.label}>Posición:</Text>
+              <Text style={styles.value}>{player.position ?? 'N/A'}</Text>
+            </View>
+            <View style={styles.infoRow}>
+              <Text style={styles.label}>Número:</Text>
+              <Text style={styles.value}>{player.shirtNumber ?? 'N/A'}</Text>
+            </View>
+            <View style={styles.infoRow}>
+              <Text style={styles.label}>Edad:</Text>
+              <Text style={styles.value}>{player.age ?? 'N/A'}</Text>
+            </View>
+            <View style={styles.infoRow}>
+              <Text style={styles.label}>Promedio:</Text>
+              <Text style={styles.value}>{player.average ?? 'N/A'}</Text>
+            </View>
+            <View style={styles.infoRow}>
+              <Text style={styles.label}>Altura:</Text>
+              <Text style={styles.value}>{player.stature ? `${player.stature} cm` : 'N/A'}</Text>
+            </View>
           </View>
 
-          {/* Bio encima */}
-          <BlurView intensity={40} tint="light" style={styles.bioGlass}>
-            <Text style={styles.sectionTitle}>Biografía</Text>
-            <Text style={styles.bio}>{player.bio}</Text>
-          </BlurView>
+          <View style={styles.stackContainer}>
+            {/* Imagen grande */}
+            <View style={styles.imageWrapper}>
+              <Image source={{ uri: player.foto }} style={styles.fullimage} />
 
-         
+              {/* Para abrir modal al tocar imagen */}
+              <Pressable style={StyleSheet.absoluteFill} onPress={() => setModalVisible(true)} />
+            </View>
 
+            {/* Bio encima */}
+            <BlurView intensity={40} tint="light" style={styles.bioGlass}>
+              <Text style={styles.sectionTitle}>Biografía</Text>
+              <Text style={styles.bio}>{player.bio}</Text>
+            </BlurView>
+          </View>
+
+          {/* Gráfico de habilidades */}
+          <View style={styles.chartContainer}>
+            <PentagonChart skills={player.skills} />
+          </View>
         </View>
-
-        {/* Gráfico de habilidades */}
-        <View style={styles.chartContainer}>
-          <PentagonChart skills={player.skills} />
-        </View>
-
       </ScrollView>
 
       {/* Modal de imagen grande */}
@@ -124,13 +169,13 @@ const styles = StyleSheet.create({
     zIndex: 2,
   },
   fullimage: {
-    width: '95%',
-    height: 400,
-    resizeMode: 'cover',
+    width: '100%',
+    height: 600,
+    resizeMode: 'contain',
     borderRadius: 10,
   },
   infoUnderImage: {
-    marginTop: 420,
+    marginTop: 10,
     width: '100%',
     padding: 10,
     backgroundColor: 'transparent',
@@ -142,16 +187,27 @@ const styles = StyleSheet.create({
     marginVertical: 4,
   },
   label: {
-    fontWeight: 'bold',
-    color: '#000',
+    
+    backgroundColor: 'black',
+    color: 'white',
+    paddingVertical: 2,
+    paddingHorizontal: 10,
     flexBasis: '50%',
+    textAlign: 'left',
+    maxWidth: 100,
   },
+  
   value: {
+    fontWeight: 'bold',
+    backgroundColor: 'white',
     fontSize: 16,
-    color: '#333',
+    paddingVertical: 2,
+    paddingHorizontal: 10,
     flexGrow: 1,
     textAlign: 'right',
-  },
+    borderWidth: 1,
+    borderColor: '#000',
+    overflow: 'hidden',},
   bioGlass: {
     position: 'absolute',
     bottom: 0,
@@ -218,3 +274,4 @@ const styles = StyleSheet.create({
 });
 
 export default PlayerDetail;
+  
