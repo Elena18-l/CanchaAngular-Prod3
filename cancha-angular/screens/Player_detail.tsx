@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, Image, StyleSheet, ActivityIndicator, ScrollView, Pressable, Modal } from 'react-native';
-import { getDoc, doc } from 'firebase/firestore';
+import { doc } from 'firebase/firestore';
 import { db } from '../config/firebase-setup';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
